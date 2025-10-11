@@ -736,8 +736,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1884803049}
+  playerSettings: {fileID: 11400000, guid: 66b3d6f078f82d84fb5b78c33d2bbf90, type: 2}
   speed: 200
-  hp: 0
 --- !u!114 &1884803053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -881,6 +881,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: skull1
       objectReference: {fileID: 0}
+    - target: {fileID: 7862437019647267866, guid: 1a94c460fd452c341984580e9519ecd8, type: 3}
+      propertyPath: skullSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 4cebd662435d5614b8d400caaae89884, type: 2}
     - target: {fileID: 8855266897424033838, guid: 1a94c460fd452c341984580e9519ecd8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.34

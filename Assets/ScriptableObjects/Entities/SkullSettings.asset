@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71ca1c30e3ff97243a391971804d9aad, type: 3}
   m_Name: SkullSettings
   m_EditorClassIdentifier: 
-  hp: 0
-  maxHp: 0
+  hp: 1
+  maxHp: 1
