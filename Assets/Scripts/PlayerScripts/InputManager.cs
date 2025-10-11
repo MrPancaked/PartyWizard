@@ -14,9 +14,8 @@ public class InputManager : MonoBehaviour
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; } // Singleton
         Instance = this;
-        DontDestroyOnLoad(gameObject);
         
-        moveAction = InputSystem.actions.FindAction("Move");
+        moveAction = InputSystem.actions.FindAction("Movement");
     }
     private void OnEnable()
     {
@@ -35,10 +34,5 @@ public class InputManager : MonoBehaviour
             action.Disable();
         }
         moveAction.Disable();
-    }
-
-    private void Update()
-    {
-        moveAction.ReadValue<Vector2>();
     }
 }

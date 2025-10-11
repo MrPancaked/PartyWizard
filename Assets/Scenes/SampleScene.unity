@@ -600,7 +600,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1884803049}
-  speed: 10
+  speed: 200
+  hp: 0
 --- !u!114 &1884803053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -626,7 +627,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 20
   m_AngularDamping: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
