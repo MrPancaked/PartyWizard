@@ -6,45 +6,53 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance;
+    
     [Header("references")]
     [SerializeField] private Animator animator;
+    [SerializeField] private EntitySettings playerSettings;
     
+    private InputManager _inputManager;
+    private Rigidbody2D _rb;
+    private SpriteRenderer _spriteRenderer;
+    private HpManager _hpManager;
     
     [Header("Movement settings")]
     [SerializeField] private float speed;
-    [SerializeField] private int hp;
     
-    //private stuff
-    private InputManager inputManager;
-    private Rigidbody2D rb;
-    private SpriteRenderer spriteRenderer;
-    
-    private Vector2 moveDirection;
+    //variables
+    private Vector2 _moveDirection;
+
+    private void OnEnable()
+    {
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; } // Singleton
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void Start()
     {
-        inputManager = InputManager.Instance;
-        rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _inputManager = InputManager.Instance;
+        _rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _hpManager = new HpManager(playerSettings);
     }
-
-    private void Update()
-    {
-        UpdateSprite();
-    }
-
     private void FixedUpdate()
     { 
-        moveDirection = inputManager.MoveAction.ReadValue<Vector2>();
-        rb.AddForce(moveDirection * speed, ForceMode2D.Force);
+        PlayerForces();
+        UpdateSprite();
     }
-
+    private void PlayerForces()
+    {
+        _moveDirection = _inputManager.MoveAction.ReadValue<Vector2>();
+        _rb.AddForce(_moveDirection * speed, ForceMode2D.Force);
+    }
     private void UpdateSprite() //maybe place in separate class to be reused by different sprites
     {
-        if (rb.linearVelocity.magnitude >= 1f) animator.Play("WalkAnimation");
+        if (_rb.linearVelocity.magnitude >= 1f) animator.Play("WalkAnimation");
         else animator.Play("IdleAnimation");
 
-        if (rb.linearVelocity.x < -1f) spriteRenderer.flipX = true;
-        else if (rb.linearVelocity.x > 1f) spriteRenderer.flipX = false;
+        if (_moveDirection.x < -0.1f) _spriteRenderer.flipX = true;
+        else if (_moveDirection.x > 0.1f) _spriteRenderer.flipX = false;
     }
 }
