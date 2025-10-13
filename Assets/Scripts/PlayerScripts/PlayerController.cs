@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
     
+    //events
+    public event Action<>
+    
     [Header("references")]
     [SerializeField] private Animator animator;
     [SerializeField] private EntitySettings playerSettings;
@@ -45,7 +48,7 @@ public class PlayerController : MonoBehaviour
     private void PlayerForces()
     {
         _moveDirection = _inputManager.MoveAction.ReadValue<Vector2>();
-        _rb.AddForce(_moveDirection * speed, ForceMode2D.Force);
+        _rb.AddForce(_moveDirection * playerSettings.speed, ForceMode2D.Force);
     }
     private void UpdateSprite() //maybe place in separate class to be reused by different sprites
     {

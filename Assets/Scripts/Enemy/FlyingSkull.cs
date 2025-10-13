@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class FlyingSkull : MonoBehaviour
+public class FlyingSkull : Damageble
 {
     private Rigidbody2D rb;
     private PlayerController playerController;
@@ -9,7 +9,6 @@ public class FlyingSkull : MonoBehaviour
 
     [Header("settings")] 
     [SerializeField] private EntitySettings skullSettings;
-    [SerializeField] private float acceleration;
     
     //variables
     private Vector3 direction;
@@ -30,7 +29,7 @@ public class FlyingSkull : MonoBehaviour
     private void ChasePlayer()
     {
         direction = (playerController.transform.position - this.transform.position).normalized;
-        rb.AddForce(direction * acceleration, ForceMode2D.Force);
+        rb.AddForce(direction * skullSettings.speed, ForceMode2D.Force);
     }
     
     private void UpdateSprite() //maybe place in separate class to be reused by different sprites
