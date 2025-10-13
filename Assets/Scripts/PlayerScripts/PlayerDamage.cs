@@ -8,7 +8,7 @@ public class PlayerDamage : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            DamageData damageData = other.gameObject.GetComponent<Damageble>().damageData;
+            DamageData damageData = other.gameObject.GetComponent<Damageable>().damageData;
             onHit?.Invoke(damageData);
         }
     }

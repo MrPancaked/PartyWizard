@@ -8,9 +8,6 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
     
-    //events
-    public event Action<>
-    
     [Header("references")]
     [SerializeField] private Animator animator;
     [SerializeField] private EntitySettings playerSettings;
