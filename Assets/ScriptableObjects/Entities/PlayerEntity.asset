@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   maxHp: 10
+  speed: 200
