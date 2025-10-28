@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class FlyingSkull : Damageble
+public class FlyingSkull : MonoBehaviour
 {
     private Rigidbody2D rb;
     private PlayerController playerController;

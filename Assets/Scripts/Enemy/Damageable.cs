@@ -14,6 +14,6 @@ public class Damageable : MonoBehaviour
 
     private void MoveDamageable(Vector3 direction)
     {
-        _moveDamageableType.MoveDamagable();
+        //_moveDamageableType.MoveDamagable();
     }
 }
