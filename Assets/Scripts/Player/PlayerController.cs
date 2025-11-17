@@ -1,57 +1,60 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+namespace Player
 {
-    public InputManager inputManager {get; private set;}
-
-    public MovementData movementData;
-    public MovementController movementController;
-    
-    public SpellData spellData;
-    public AttackController attackController;
-    
-    public HpData hpData;
-    public HpController hpController;
-
-    private void Start()
+    public class PlayerController : MonoBehaviour
     {
-        inputManager = InputManager.Instance;
-    }
+        public InputManager inputManager {get; private set;}
+
+        public ScriptableObjects.Player.MovementData movementData;
+        public MovementController movementController;
     
-    public void Move(InputAction.CallbackContext context)
-    {
-        if (movementController != null)
+        public ScriptableObjects.Player.SpellData spellData;
+        public AttackController attackController;
+    
+        public ScriptableObjects.Player.HpData hpData;
+        public HpController hpController;
+
+        private void Start()
         {
-            movementController.moveDirection = context.ReadValue<Vector2>();
-            Debug.Log("trying to walk");
+            inputManager = InputManager.Instance;
         }
-        else Debug.LogWarning("MovementController is null");
-    }
+    
+        public void Move(InputAction.CallbackContext context)
+        {
+            if (movementController != null)
+            {
+                movementController.moveDirection = context.ReadValue<Vector2>();
+                Debug.Log("trying to walk");
+            }
+            else Debug.LogWarning("MovementController is null");
+        }
     
     
-    public void Attack(InputAction.CallbackContext context)
-    {
-        if (attackController != null)
+        public void Attack(InputAction.CallbackContext context)
         {
-            attackController.Attack();
-            Debug.Log("trying to cast spell");
+            if (attackController != null)
+            {
+                attackController.Attack();
+                Debug.Log("trying to cast spell");
+            }
+            else Debug.LogWarning("AttackController is null");
         }
-        else Debug.LogWarning("AttackController is null");
-    }
 
-    public void SetHp()
-    {
-        if (hpController != null)
+        public void SetHp()
         {
-            hpController.Initialize();
+            if (hpController != null)
+            {
+                hpController.Initialize();
+            }
         }
-    }
 
-    public void UpdateControllerData()
-    {
-        movementController.movementData = this.movementData;
-        attackController.spellData =  this.spellData;
-        hpController.hpData = this.hpData;
+        public void UpdateControllerData()
+        {
+            movementController.movementData = this.movementData;
+            attackController.spellData =  this.spellData;
+            hpController.hpData = this.hpData;
+        }
     }
 }

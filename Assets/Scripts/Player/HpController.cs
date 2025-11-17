@@ -1,23 +1,26 @@
 using UnityEngine;
 
-public class HpController : MonoBehaviour
+namespace Player
 {
-    public int hp;
-    public int shield;
+    public class HpController : MonoBehaviour
+    {
+        public int hp;
+        public int shield;
 
-    private PlayerController playerController;
+        private PlayerController playerController;
     
-    [HideInInspector] public HpData hpData; //public so playercontroller can update the controller data classes
+        [HideInInspector] public ScriptableObjects.Player.HpData hpData; //public so playercontroller can update the controller data classes
     
-    private void Start()
-    {
-        playerController = GetComponent<PlayerController>();
-        hpData = playerController.hpData;
-        Initialize();
-    }
-    public void Initialize()
-    {
-        hp = hpData.startHp;
-        shield = hpData.startShield;
+        private void Start()
+        {
+            playerController = GetComponent<PlayerController>();
+            hpData = playerController.hpData;
+            Initialize();
+        }
+        public void Initialize()
+        {
+            hp = hpData.startHp;
+            shield = hpData.startShield;
+        }
     }
 }

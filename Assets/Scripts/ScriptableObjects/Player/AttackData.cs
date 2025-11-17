@@ -1,7 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AttackData", menuName = "Scriptable Objects/AttackData")]
-public class AttackData : ScriptableObject
+namespace ScriptableObjects.Player
 {
+    [CreateAssetMenu(fileName = "AttackData", menuName = "Scriptable Objects/AttackData")]
+    public class AttackData : ScriptableObject
+    {
     
+    }
+
 }

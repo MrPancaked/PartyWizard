@@ -5,9 +5,7 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
     
-    
-    
-    [SerializeField] private PlayerController playerController;
+    [SerializeField] private Player.PlayerController playerController;
     
     //Actions
     private InputAction moveAction;

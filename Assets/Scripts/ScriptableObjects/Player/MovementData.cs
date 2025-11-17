@@ -1,8 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MovementData", menuName = "Scriptable Objects/MovementData")]
-public class MovementData : ScriptableObject
+namespace ScriptableObjects.Player
 {
-    public float speed;
-    public float friction;
+    [CreateAssetMenu(fileName = "MovementData", menuName = "Scriptable Objects/MovementData")]
+    public class MovementData : ScriptableObject
+    {
+        public float speed;
+        public float friction;
+    }
 }
