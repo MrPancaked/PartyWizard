@@ -40,6 +40,5 @@ public class InputManager : MonoBehaviour
         attackAction.performed -= playerController.Attack;
         
         attackAction.performed -= playerController.Attack;
-        
     }
 }
