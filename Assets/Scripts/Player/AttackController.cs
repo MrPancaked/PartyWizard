@@ -9,12 +9,10 @@ namespace Player
         private PlayerController playerController;
     
         [SerializeField] private GameObject projectile;
-        [HideInInspector] public ScriptableObjects.Player.SpellData spellData; //public so playercontroller can update the controller data classes
     
         private void Start()
         {
             playerController = GetComponent<PlayerController>();
-            spellData = playerController.spellData;
         }
         public void Attack()
         {
@@ -26,7 +24,6 @@ namespace Player
             //change to work with inputmanager? but idk maybe this is more efficient and basically the same?
         
             var projectileController = projectileInstance.GetComponent<Projectiles.ProjectileController>();
-            projectileController.spellData = spellData;
             projectileController.Initiate(playerPosition, mousePosition);
         }
     }

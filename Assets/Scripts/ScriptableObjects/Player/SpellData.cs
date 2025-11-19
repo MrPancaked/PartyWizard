@@ -6,7 +6,12 @@ namespace ScriptableObjects.Player
     public class SpellData : ScriptableObject
     {
         public int damage;
-        public bool splashDamage;
+        public int amount;
+        public float angleBetweenSpells;
+        public bool aoeEffect;
+        public int aoeDamage;
+        public float aoeRadius;
+        public float aoePower;
         public float startSpeed;
         public float maxTimeAlive;
         public bool hurtPlayer;

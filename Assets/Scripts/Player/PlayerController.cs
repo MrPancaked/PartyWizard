@@ -5,17 +5,19 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
+        public static PlayerController Instance;
         public InputManager inputManager {get; private set;}
 
         public ScriptableObjects.Player.MovementData movementData;
         public MovementController movementController;
-    
-        public ScriptableObjects.Player.SpellData spellData;
+        
         public AttackController attackController;
-    
-        public ScriptableObjects.Player.HpData hpData;
-        public HpController hpController;
 
+        private void Awake()
+        {
+            if (Instance != null && Instance != this) { Destroy(gameObject); return;} // Singleton
+            Instance = this;
+        }
         private void Start()
         {
             inputManager = InputManager.Instance;
@@ -42,19 +44,10 @@ namespace Player
             else Debug.LogWarning("AttackController is null");
         }
 
-        public void SetHp()
-        {
-            if (hpController != null)
-            {
-                hpController.Initialize();
-            }
-        }
-
-        public void UpdateControllerData()
-        {
-            movementController.movementData = this.movementData;
-            attackController.spellData =  this.spellData;
-            hpController.hpData = this.hpData;
-        }
+        //public void UpdateControllerData()
+        //{
+        //    movementController.movementData = this.movementData;
+        //    attackController.spellData =  this.spellData;
+        //}
     }
 }
