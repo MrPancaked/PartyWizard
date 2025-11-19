@@ -8,6 +8,7 @@ namespace ScriptableObjects.Player
         public int startHp;
         public int startShield;
         public int contactDamage;
+        public bool takeDamage;
     }
 }
 

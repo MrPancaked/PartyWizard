@@ -34,7 +34,7 @@ namespace Player
     
         private void UpdateSprite() //maybe place in separate class to be reused by different sprites
         {
-            if (rb.linearVelocity.magnitude >= 1f) animator.Play("WalkAnimation");
+            if (moveDirection.magnitude > 0f) animator.Play("WalkAnimation");
             else animator.Play("IdleAnimation");
 
             if (moveDirection.x < -0.1f) spriteRenderer.flipX = true;

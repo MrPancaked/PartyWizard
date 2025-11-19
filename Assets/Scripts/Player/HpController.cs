@@ -8,11 +8,12 @@ namespace Player
 {
     public class HpController : MonoBehaviour
     {
-        public event Action<int> TakeDamageEvent;
+        public event Action TakeDamageEvent;
         
-        private int hp;
-        private int shield;
-        private int contactDamage;
+        public int hp {get; private set;}
+        public int shield {get; private set;}
+        public int contactDamage {get; private set;}
+        public bool takeDamage {get; private set;}
         public ScriptableObjects.Player.HpData hpData; //public so playercontroller can update the controller data classes
     
         private void Start()
@@ -20,21 +21,12 @@ namespace Player
             Initialize();
         }
 
-        private void OnEnable()
-        {
-            TakeDamageEvent += TakeDamage;
-        }
-
-        private void OnDisable()
-        {
-            TakeDamageEvent -= TakeDamage;
-        }
-
         public void Initialize()
         {
             hp = hpData.startHp;
             shield = hpData.startShield;
             contactDamage = hpData.contactDamage;
+            takeDamage = hpData.takeDamage;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -45,7 +37,9 @@ namespace Player
                 if (collidedObj.CompareTag("Enemy"))
                 {
                     int receivedDamage = collidedObj.GetComponent<HpController>().contactDamage;
-                    TakeDamageEvent?.Invoke(receivedDamage);
+                    
+                    TakeDamage(receivedDamage);
+                    TakeDamageEvent?.Invoke();
                 }
                 else if (collidedObj.CompareTag("Projectile"))
                 {
@@ -54,7 +48,9 @@ namespace Player
                     {
                         int receivedDamage = spellData.damage;
                         if (spellData.aoeEffect) receivedDamage += spellData.aoeDamage;
-                        TakeDamageEvent?.Invoke(receivedDamage);
+                        
+                        TakeDamage(receivedDamage);
+                        TakeDamageEvent?.Invoke();
                         Destroy(collidedObj);
                     }
                 }
@@ -64,7 +60,9 @@ namespace Player
                 if (collidedObj.CompareTag("Player"))
                 {
                     int receivedDamage = collidedObj.GetComponent<HpController>().contactDamage;
-                    TakeDamageEvent?.Invoke(receivedDamage);
+                    
+                    TakeDamage(receivedDamage);
+                    TakeDamageEvent?.Invoke();
                 }
                 else if (collidedObj.CompareTag("Projectile"))
                 {
@@ -73,7 +71,9 @@ namespace Player
                     {
                         int receivedDamage = spellData.damage;
                         if (spellData.aoeEffect) receivedDamage += spellData.aoeDamage;
-                        TakeDamageEvent?.Invoke(receivedDamage);
+                        
+                        TakeDamage(receivedDamage);
+                        TakeDamageEvent?.Invoke();
                         Destroy(collidedObj);
                     }
                 }
@@ -82,7 +82,15 @@ namespace Player
         
         private void TakeDamage(int damage)
         {
-            Debug.Log($"taken damage: {damage}");
+            if (takeDamage)
+            {
+                hp -= damage;
+                Debug.Log($"{gameObject.name} has taken damage: {damage}, current hp: {hp}");
+                if (hp <= 0)
+                {
+                
+                }
+            }
         }
     }
 }
