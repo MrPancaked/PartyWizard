@@ -20,7 +20,7 @@ public class HealthBar : MonoBehaviour
     {
         if (playerHpController.hp > 0)
         {
-            image.sprite = healthBarSprites[playerHpController.hp];
+            image.sprite = healthBarSprites[playerHpController.hp - 1];
         }
     }
 }
