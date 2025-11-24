@@ -39,7 +39,7 @@ namespace Player
                     int receivedDamage = collidedObj.GetComponent<HpController>().contactDamage;
                     
                     TakeDamage(receivedDamage);
-                    TakeDamageEvent?.Invoke();
+                    
                 }
                 else if (collidedObj.CompareTag("Projectile"))
                 {
@@ -47,10 +47,7 @@ namespace Player
                     if (spellData.hurtPlayer)
                     {
                         int receivedDamage = spellData.damage;
-                        if (spellData.aoeEffect) receivedDamage += spellData.aoeDamage;
-                        
                         TakeDamage(receivedDamage);
-                        TakeDamageEvent?.Invoke();
                         Destroy(collidedObj);
                     }
                 }
@@ -62,7 +59,6 @@ namespace Player
                     int receivedDamage = collidedObj.GetComponent<HpController>().contactDamage;
                     
                     TakeDamage(receivedDamage);
-                    TakeDamageEvent?.Invoke();
                 }
                 else if (collidedObj.CompareTag("Projectile"))
                 {
@@ -70,27 +66,35 @@ namespace Player
                     if (spellData.hurtEnemy)
                     {
                         int receivedDamage = spellData.damage;
-                        if (spellData.aoeEffect) receivedDamage += spellData.aoeDamage;
-                        
                         TakeDamage(receivedDamage);
-                        TakeDamageEvent?.Invoke();
                         Destroy(collidedObj);
                     }
                 }
             }
         }
         
-        private void TakeDamage(int damage)
+        public void TakeDamage(int damage)
         {
             if (takeDamage)
             {
-                hp -= damage;
-                Debug.Log($"{gameObject.name} has taken damage: {damage}, current hp: {hp}");
-                if (hp <= 0)
+                shield -= damage;
+                if (shield < 0)
                 {
-                
+                    hp -= -shield;
+                    shield = 0;
+                    if (hp < 0) hp = 0;
+                }
+                Debug.Log($"{gameObject.name} has taken damage: {damage}, current hp: {hp}");
+                TakeDamageEvent?.Invoke();
+                if (hp == 0)
+                {
+                    Die();
                 }
             }
+        }
+        private void Die()
+        {
+            Destroy(gameObject);
         }
     }
 }

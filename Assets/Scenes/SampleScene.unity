@@ -159,7 +159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae7d2d6120306a47bf1c5835b0cc240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
-  playerController: {fileID: 240591864}
 --- !u!4 &435556032
 Transform:
   m_ObjectHideFlags: 0
@@ -909,6 +908,14 @@ PrefabInstance:
     - target: {fileID: 725479168565907076, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945399989797448915, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
+      propertyPath: angle
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945399989797448915, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
+      propertyPath: amount
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8858981020453878362, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
       propertyPath: m_LocalPosition.x

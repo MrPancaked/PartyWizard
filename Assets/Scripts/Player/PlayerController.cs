@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,7 +7,7 @@ namespace Player
     public class PlayerController : MonoBehaviour
     {
         public static PlayerController Instance;
-        public InputManager inputManager {get; private set;}
+        private InputManager inputManager;
 
         public ScriptableObjects.Player.MovementData movementData;
         public MovementController movementController;
@@ -18,11 +19,29 @@ namespace Player
             if (Instance != null && Instance != this) { Destroy(gameObject); return;} // Singleton
             Instance = this;
         }
+
         private void Start()
         {
             inputManager = InputManager.Instance;
+            Debug.Log($"inputManager: {inputManager}");
+            if (inputManager != null)
+            {
+                inputManager.MoveAction.performed += Move;
+                inputManager.MoveAction.canceled += Move;
+        
+                inputManager.AttackAction.performed += Attack;
+            }
         }
-    
+        private void OnDestroy()
+        {
+            if (inputManager != null)
+            {
+                inputManager.MoveAction.performed -= Move;
+                inputManager.MoveAction.canceled -= Move;
+        
+                inputManager.AttackAction.performed += Attack;
+            }
+        }
         public void Move(InputAction.CallbackContext context)
         {
             if (movementController != null)

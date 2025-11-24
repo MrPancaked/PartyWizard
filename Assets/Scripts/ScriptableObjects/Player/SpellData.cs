@@ -5,26 +5,30 @@ namespace ScriptableObjects.Player
     [CreateAssetMenu(fileName = "SpellData", menuName = "Scriptable Objects/SpellData")]
     public class SpellData : ScriptableObject
     {
-        public int damage;
-        public int amount;
-        public float angleBetweenSpells;
+        [Header("AOE settings")]
         public bool aoeEffect;
         public int aoeDamage;
         public float aoeRadius;
         public float aoePower;
+        [Header("SpeedSettings")]
         public float startSpeed;
+        public float endSpeed;
         public float maxTimeAlive;
-        public bool hurtPlayer;
-        public bool hurtEnemy;
         public SpeedScaling speedScaling;
         public DirectionChange directionChange;
+        public float directionChangeStrength;
+        [Header("damage Settings")]
+        public int damage;
+        public bool hurtPlayer;
+        public bool hurtEnemy;
+        public bool hurtProjectile;
         public enum SpeedScaling
         {
-            None, LinearInc, LinearDec 
+            None, Linear
         }
         public enum DirectionChange
         {
-            None
+            None, RandomCurve, RandomWiggle
         }
     }
 }

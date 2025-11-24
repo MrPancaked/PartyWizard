@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: PlayerHpData
   m_EditorClassIdentifier: Assembly-CSharp::ScriptableObjects.Player.HpData
   startHp: 10
-  startShield: 5
+  startShield: 0
   contactDamage: 1
+  takeDamage: 0

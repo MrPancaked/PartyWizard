@@ -22,7 +22,8 @@ namespace Enemies
         protected override void Move()
         {
             base.Move();
-            direction = (playerController.transform.position - this.transform.position).normalized;
+            if (playerController != null) direction = (playerController.transform.position - this.transform.position).normalized;
+            else direction = Vector2.zero;
             rb.AddForce(direction * speed, ForceMode2D.Force);
         }
         private void UpdateSprite() //maybe place in separate class to be reused by different sprites

@@ -15,3 +15,4 @@ MonoBehaviour:
   startHp: 1
   startShield: 0
   contactDamage: 1
+  takeDamage: 0

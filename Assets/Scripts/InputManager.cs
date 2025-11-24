@@ -5,8 +5,6 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
     
-    [SerializeField] private Player.PlayerController playerController;
-    
     //Actions
     private InputAction moveAction;
     public InputAction MoveAction => moveAction;
@@ -26,19 +24,9 @@ public class InputManager : MonoBehaviour
     private void OnEnable()
     {
         InputSystem.actions.Enable();
-        
-        moveAction.performed += playerController.Move;
-        moveAction.canceled += playerController.Move;
-        
-        attackAction.performed += playerController.Attack;
     }
     private void OnDisable()
     {
         InputSystem.actions.Disable();
-        
-        moveAction.performed -= playerController.Move;
-        attackAction.performed -= playerController.Attack;
-        
-        attackAction.performed -= playerController.Attack;
     }
 }

@@ -1,7 +1,7 @@
 using System;
-using UnityEditor.Experimental.GraphView;
+using Player;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
+using Random = UnityEngine.Random;
 
 namespace Projectiles
 {
@@ -13,34 +13,46 @@ namespace Projectiles
         [HideInInspector] public float speed;
         [HideInInspector] public Vector2 direction;
         public ScriptableObjects.Player.SpellData spellData;
-        private float timeAlive;
         
-        private void OnDestroy()
+        private float timeAlive;
+        private float linearSpeedChange;
+        private Vector2 randomCurveDirection;
+        
+        private void OnDestroy() //do AOE stuff when destroyed could be put in separate method to be used multiple times among the spells path
         {
-            LayerMask layerMask = 0;
-            if (spellData.hurtEnemy && !spellData.hurtPlayer) layerMask = LayerMask.GetMask("Enemy");
-            else if (spellData.hurtPlayer && !spellData.hurtEnemy) layerMask = LayerMask.GetMask("Player");
-            else if (spellData.hurtPlayer && spellData.hurtEnemy) layerMask = LayerMask.GetMask("Player") | LayerMask.GetMask("Enemy");
-            
-            Vector2 explosionPos = transform.position;
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(explosionPos, spellData.aoeRadius, layerMask);
-            foreach (Collider2D hit in colliders)
+            if (spellData.aoeEffect)
             {
-                Rigidbody2D hitRb = hit.GetComponent<Rigidbody2D>();
-                if (hitRb != null)
+                LayerMask layerMask = 0;
+                if (spellData.hurtEnemy) layerMask |= LayerMask.GetMask("Enemy");
+                if (spellData.hurtPlayer) layerMask |=  LayerMask.GetMask("Player");
+                if (spellData.hurtProjectile) layerMask |= LayerMask.GetMask("Projectile");
+                
+                Vector2 explosionPos = transform.position;
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(explosionPos, spellData.aoeRadius, layerMask);
+                foreach (Collider2D hit in colliders)
                 {
-                    Vector2 hitRbPos = hitRb.transform.position;
-                    hitRb.AddForce((hitRbPos - explosionPos).normalized * spellData.aoePower, ForceMode2D.Impulse);
+                    Rigidbody2D hitRb = hit.GetComponent<Rigidbody2D>();
+                    if (hitRb != null)
+                    {
+                        Vector2 hitRbPos = hitRb.transform.position;
+                        hitRb.AddForce((hitRbPos - explosionPos).normalized * spellData.aoePower, ForceMode2D.Impulse);
+                    }
+                    HpController hpController = hit.gameObject.GetComponent<HpController>();
+                    if (hpController != null) hpController.TakeDamage(spellData.aoeDamage);
                 }
             }
         }
-        public void Initiate(Vector2 playerPosition, Vector2 mousePosition)
+        public void Initiate(Vector2 castDirection)
         {
             rb.linearDamping = 0f;
             rb.gravityScale = 0f;
-            direction = (mousePosition - playerPosition).normalized;
             speed = spellData.startSpeed;
+            direction = castDirection;
             timeAlive = 0;
+            
+            linearSpeedChange = (spellData.endSpeed - spellData.startSpeed) / spellData.maxTimeAlive;
+            randomCurveDirection = Random.insideUnitCircle.normalized;
+            
             SetRigidbodyValues();
             InitiateCollider();
         }
@@ -63,14 +75,9 @@ namespace Projectiles
                 {
                     break;
                 }
-                case (ScriptableObjects.Player.SpellData.SpeedScaling.LinearInc):
+                case (ScriptableObjects.Player.SpellData.SpeedScaling.Linear):
                 {
-                    //TODO: add scaling option
-                    break;
-                }
-                case (ScriptableObjects.Player.SpellData.SpeedScaling.LinearDec):
-                {
-                    //TODO: add scaling option
+                    speed += linearSpeedChange * Time.fixedDeltaTime;
                     break;
                 }
             }
@@ -84,7 +91,15 @@ namespace Projectiles
                 {
                     break;
                 }
-                //TODO: add scaling options
+                case (ScriptableObjects.Player.SpellData.DirectionChange.RandomCurve):
+                {
+                    direction = (direction + spellData.directionChangeStrength * Time.fixedDeltaTime * randomCurveDirection).normalized;
+                    break;
+                }
+                case (ScriptableObjects.Player.SpellData.DirectionChange.RandomWiggle):
+                {
+                    break;
+                }
             }
         }
 
@@ -102,6 +117,7 @@ namespace Projectiles
                 int mask = 0;
                 if (!spellData.hurtEnemy) mask |= LayerMask.GetMask("Enemy");
                 if (!spellData.hurtPlayer) mask |= LayerMask.GetMask("Player");
+                if (!spellData.hurtProjectile) mask |= LayerMask.GetMask("Projectile");
                 collider.excludeLayers = mask;
             }
         }
