@@ -6,6 +6,7 @@ namespace ScriptableObjects.Player
     public class HpData : ScriptableObject
     {
         public int startHp;
+        public int maxHp;
         public int startShield;
         public int contactDamage;
         public bool takeDamage;

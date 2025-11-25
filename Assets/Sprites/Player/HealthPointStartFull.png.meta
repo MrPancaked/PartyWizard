@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5c4184c0048604c4ca87e75ed5ffcae7
+guid: 4b403cf07a964b44db28ef06e1235337
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2149814990330679717
-    second: HealthPointEmpty_0
+      213: -7442733904068951378
+    second: HealthPointStartFull_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,12 +100,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HealthPointEmpty_0
+      name: HealthPointStartFull_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 8
+        width: 10
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b5ea78018a25a22e0800000000000000
-      internalID: -2149814990330679717
+      spriteID: ea2c63292f816b890800000000000000
+      internalID: -7442733904068951378
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      HealthPointEmpty_0: -2149814990330679717
+      HealthPointStartFull_0: -7442733904068951378
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

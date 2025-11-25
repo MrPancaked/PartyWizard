@@ -8,7 +8,7 @@ namespace Player
 {
     public class HpController : MonoBehaviour
     {
-        public event Action TakeDamageEvent;
+        public event Action<int> TakeDamageEvent;
         
         public int hp {get; private set;}
         public int shield {get; private set;}
@@ -16,13 +16,14 @@ namespace Player
         public bool takeDamage {get; private set;}
         public ScriptableObjects.Player.HpData hpData; //public so playercontroller can update the controller data classes
     
-        private void Start()
+        private void Awake()
         {
             Initialize();
         }
 
         public void Initialize()
         {
+            if (hpData.startHp > hpData.maxHp) hpData.startHp = hpData.maxHp;
             hp = hpData.startHp;
             shield = hpData.startShield;
             contactDamage = hpData.contactDamage;
@@ -85,7 +86,7 @@ namespace Player
                     if (hp < 0) hp = 0;
                 }
                 Debug.Log($"{gameObject.name} has taken damage: {damage}, current hp: {hp}");
-                TakeDamageEvent?.Invoke();
+                TakeDamageEvent?.Invoke(damage);
                 if (hp == 0)
                 {
                     Die();
