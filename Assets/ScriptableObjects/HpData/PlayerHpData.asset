@@ -16,4 +16,5 @@ MonoBehaviour:
   maxHp: 10
   startShield: 0
   contactDamage: 1
+  contactKnockback: 10
   takeDamage: 1

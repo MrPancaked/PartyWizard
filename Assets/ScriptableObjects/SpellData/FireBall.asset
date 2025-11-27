@@ -15,13 +15,14 @@ MonoBehaviour:
   aoeEffect: 1
   aoeDamage: 0
   aoeRadius: 2
-  aoePower: 10
+  aoeKnockback: 10
   startSpeed: 20
   endSpeed: 0
   maxTimeAlive: 1
   speedScaling: 1
   directionChange: 1
   directionChangeStrength: 1
+  knockback: 10
   damage: 10
   hurtPlayer: 0
   hurtEnemy: 1

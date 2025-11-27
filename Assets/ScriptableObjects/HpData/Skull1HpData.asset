@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a10bee321a8bb8745ae9f35e980c9024, type: 3}
   m_Name: Skull1HpData
   m_EditorClassIdentifier: Assembly-CSharp::ScriptableObjects.Player.HpData
-  startHp: 1
+  startHp: 50
+  maxHp: 100
   startShield: 0
   contactDamage: 1
-  takeDamage: 0
+  contactKnockback: 10
+  takeDamage: 1
