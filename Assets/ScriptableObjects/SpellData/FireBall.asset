@@ -23,7 +23,7 @@ MonoBehaviour:
   directionChange: 1
   directionChangeStrength: 1
   knockback: 10
-  damage: 10
+  damage: 4
   hurtPlayer: 0
   hurtEnemy: 1
   hurtProjectile: 0

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a10bee321a8bb8745ae9f35e980c9024, type: 3}
   m_Name: PlayerHpData
   m_EditorClassIdentifier: Assembly-CSharp::ScriptableObjects.Player.HpData
-  startHp: 5
-  maxHp: 10
+  startHp: 1
+  maxHp: 1
   startShield: 0
   contactDamage: 1
   contactKnockback: 10
