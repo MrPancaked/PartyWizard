@@ -9,6 +9,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private HpController hpController;
     [SerializeField] private HorizontalLayoutGroup horizontalLayoutGroup;
 
+    [SerializeField] private Sprite singleFull;
     [SerializeField] private Sprite startFull;
     [SerializeField] private Sprite startEmpty;
     [SerializeField] private Sprite middleFull;
@@ -50,7 +51,8 @@ public class HealthBar : MonoBehaviour
         }
         for (int i = 0; i < internalMaxHp; i++)
         {
-            if (i == 0) 
+            if (internalMaxHp == 1) hpPointList[i].sprite = singleFull;
+            else if (i == 0)
             {
                 if (internalHpCounter == 0) hpPointList[i].sprite = startEmpty;
                 else hpPointList[i].sprite = startFull;
@@ -83,11 +85,11 @@ public class HealthBar : MonoBehaviour
     {
         for (int i = internalHpCounter; i > internalHpCounter - damageData.damage; i--)
         {
-            if (i - 1 == 0) 
+            if (i == 0)
             {
-                hpPointList[i-1].sprite = startEmpty;
+                hpPointList[i].sprite = startEmpty;
             }
-            else if (i == internalMaxHp) 
+            else if (i == internalMaxHp)
             {
                 hpPointList[i-1].sprite = endEmpty;
             }
@@ -95,7 +97,7 @@ public class HealthBar : MonoBehaviour
             {
                 hpPointList[i-1].sprite = middleEmpty;
             }
-            Debug.Log($"healthpoint {i} updated: {hpPointList[i]}");
+            if (i == 0) break;
         }
         internalHpCounter = hpController.hp;
     }
