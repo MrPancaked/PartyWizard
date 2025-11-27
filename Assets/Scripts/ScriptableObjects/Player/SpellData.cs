@@ -9,7 +9,7 @@ namespace ScriptableObjects.Player
         public bool aoeEffect;
         public int aoeDamage;
         public float aoeRadius;
-        public float aoePower;
+        public float aoeKnockback;
         [Header("SpeedSettings")]
         public float startSpeed;
         public float endSpeed;
@@ -18,6 +18,7 @@ namespace ScriptableObjects.Player
         public DirectionChange directionChange;
         public float directionChangeStrength;
         [Header("damage Settings")]
+        public float knockback;
         public int damage;
         public bool hurtPlayer;
         public bool hurtEnemy;

@@ -35,10 +35,14 @@ namespace Projectiles
                     if (hitRb != null)
                     {
                         Vector2 hitRbPos = hitRb.transform.position;
-                        hitRb.AddForce((hitRbPos - explosionPos).normalized * spellData.aoePower, ForceMode2D.Impulse);
+                        //hitRb.AddForce((hitRbPos - explosionPos).normalized * spellData.aoePower, ForceMode2D.Impulse);
                     }
                     HpController hpController = hit.gameObject.GetComponent<HpController>();
-                    if (hpController != null) hpController.TakeDamage(spellData.aoeDamage);
+                    if (hpController != null)
+                    {
+                        TakeDamageData takeDamageData = new TakeDamageData(spellData.aoeDamage, explosionPos, spellData.aoeKnockback);
+                        hpController.TakeDamage(takeDamageData);
+                    }
                 }
             }
         }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8926108303104493732}
   - component: {fileID: 1662136402228553271}
   - component: {fileID: 6597478374692479005}
+  - component: {fileID: -3431269045116782152}
   - component: {fileID: 7426757249236374293}
   - component: {fileID: -5902037317185273110}
   - component: {fileID: 3888119952464389076}
@@ -121,6 +122,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &-3431269045116782152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2569219723795775860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6394ed1f135f914468ecb91c80c6a2a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Knockback
+  hpController: {fileID: -5902037317185273110}
 --- !u!114 &7426757249236374293
 MonoBehaviour:
   m_ObjectHideFlags: 0

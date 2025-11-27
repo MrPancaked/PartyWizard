@@ -9,6 +9,7 @@ namespace ScriptableObjects.Player
         public int maxHp;
         public int startShield;
         public int contactDamage;
+        public float contactKnockback;
         public bool takeDamage;
     }
 }

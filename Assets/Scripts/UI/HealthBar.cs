@@ -9,43 +9,23 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private HpController hpController;
     [SerializeField] private HorizontalLayoutGroup horizontalLayoutGroup;
 
-    [SerializeField] private GameObject startFull;
-    [SerializeField] private GameObject startEmpty;
-    [SerializeField] private GameObject middleFull;
-    [SerializeField] private GameObject middleEmpty;
-    [SerializeField] private GameObject endFull;
-    [SerializeField] private GameObject endEmpty;
+    [SerializeField] private Sprite startFull;
+    [SerializeField] private Sprite startEmpty;
+    [SerializeField] private Sprite middleFull;
+    [SerializeField] private Sprite middleEmpty;
+    [SerializeField] private Sprite endFull;
+    [SerializeField] private Sprite endEmpty;
+    [SerializeField] private GameObject healthPointObject;
+    
+    [SerializeField] private AnimationCurve animationCurve;
 
-    private List<GameObject> hpPointList;
+    private List<Image> hpPointList;
     private int internalHpCounter;
     private int internalMaxHp;
 
     private void Start()
     {
-        hpPointList = new List<GameObject>();
-        internalHpCounter = hpController.hp;
-        internalMaxHp = hpController.hpData.maxHp;
-        for (int i = 0; i < internalMaxHp; i++)
-        {
-            GameObject hpPoint;
-            if (i == 0) 
-            {
-                if (internalHpCounter == 0) hpPoint = startEmpty;
-                else hpPoint = startFull;
-            }
-            else if (i < internalMaxHp - 1)
-            {
-                if (i < internalHpCounter) hpPoint = middleFull;
-                else hpPoint = middleEmpty;
-            }
-            else 
-            {
-                if (internalHpCounter == internalMaxHp) hpPoint = endFull;
-                else hpPoint = endEmpty;
-            }
-            hpPointList.Add(hpPoint);
-        }
-        DrawHealthBar(hpPointList, horizontalLayoutGroup);
+        InitiateHealthBar();
     }
     private void OnEnable()
     {
@@ -55,43 +35,73 @@ public class HealthBar : MonoBehaviour
     {
         hpController.TakeDamageEvent -= UpdateHealthBar;
     }
-    private void UpdateHealthBar(int damage)
+
+    private void InitiateHealthBar()
     {
-        for (int i = internalHpCounter; i > internalHpCounter - damage; i--)
+        ClearHorizontalLayout();
+        hpPointList = new List<Image>();
+        internalHpCounter = hpController.hp;
+        internalMaxHp = hpController.hpData.maxHp;
+
+        for (int i = 0; i < internalMaxHp; i++)
         {
-            if (i - 1 == 0) 
+            GameObject hpObject = Instantiate(healthPointObject, horizontalLayoutGroup.transform);
+            hpPointList.Add(hpObject.GetComponent<Image>());
+        }
+        for (int i = 0; i < internalMaxHp; i++)
+        {
+            if (i == 0) 
             {
-                hpPointList[i-1] = startEmpty;
+                if (internalHpCounter == 0) hpPointList[i].sprite = startEmpty;
+                else hpPointList[i].sprite = startFull;
             }
-            else if (i == internalMaxHp) 
+            else if (i < internalMaxHp - 1)
             {
-                hpPointList[i-1] = endEmpty;
+                if (i < internalHpCounter) hpPointList[i].sprite = middleFull;
+                else hpPointList[i].sprite = middleEmpty;
             }
             else 
             {
-                hpPointList[i-1] = middleEmpty;
+                if (internalHpCounter == internalMaxHp) hpPointList[i].sprite = endFull;
+                else hpPointList[i].sprite = endEmpty;
             }
-            Debug.Log($"healthpoint {i} updated: {hpPointList[i]}");
         }
-        internalHpCounter = hpController.hp;
-        DrawHealthBar(hpPointList, horizontalLayoutGroup);
     }
 
-    private void DrawHealthBar(List<GameObject> hpPointList, HorizontalLayoutGroup horizontalLayout)
+    private void ClearHorizontalLayout()
     {
-        List<Image> sceneHpPointList = horizontalLayout.GetComponentsInChildren<Image>().ToList();
+        List<Image> sceneHpPointList = horizontalLayoutGroup.GetComponentsInChildren<Image>().ToList(); //if I do gameobject type instead of image it gives error
         int i = 0;
-        while (sceneHpPointList.Count > 0 && i < 100)
+        while (sceneHpPointList.Count > 0 && i < 100) //increase 100 in i < 100 if you need enemies with more than 100 hp. this only makes sure there is no infinite loop
         {
             Destroy(sceneHpPointList[0].gameObject);
             sceneHpPointList.RemoveAt(0);
             i++;
-            //Debug.Log($"HLG lenght: {sceneHpPointList.Count}, i = {i}");
         }
-        foreach (GameObject hpPoint in hpPointList)
+    }
+    private void UpdateHealthBar(TakeDamageData damageData)
+    {
+        for (int i = internalHpCounter; i > internalHpCounter - damageData.damage; i--)
         {
-            Instantiate(hpPoint, horizontalLayout.transform);
-            Debug.Log($"hp point: {hpPoint.name}");
+            if (i - 1 == 0) 
+            {
+                hpPointList[i-1].sprite = startEmpty;
+            }
+            else if (i == internalMaxHp) 
+            {
+                hpPointList[i-1].sprite = endEmpty;
+            }
+            else 
+            {
+                hpPointList[i-1].sprite = middleEmpty;
+            }
+            Debug.Log($"healthpoint {i} updated: {hpPointList[i]}");
         }
+        internalHpCounter = hpController.hp;
+    }
+
+    private void AnimateHealthPoint()
+    {
+        
     }
 }

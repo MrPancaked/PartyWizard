@@ -8,11 +8,12 @@ namespace Player
 {
     public class HpController : MonoBehaviour
     {
-        public event Action<int> TakeDamageEvent;
+        public event Action<TakeDamageData> TakeDamageEvent;
         
         public int hp {get; private set;}
         public int shield {get; private set;}
         public int contactDamage {get; private set;}
+        public float contactKnockback {get; private set;}
         public bool takeDamage {get; private set;}
         public ScriptableObjects.Player.HpData hpData; //public so playercontroller can update the controller data classes
     
@@ -27,6 +28,7 @@ namespace Player
             hp = hpData.startHp;
             shield = hpData.startShield;
             contactDamage = hpData.contactDamage;
+            contactKnockback = hpData.contactKnockback;
             takeDamage = hpData.takeDamage;
         }
 
@@ -37,9 +39,11 @@ namespace Player
             {
                 if (collidedObj.CompareTag("Enemy"))
                 {
-                    int receivedDamage = collidedObj.GetComponent<HpController>().contactDamage;
+                    HpController otherHpController = collidedObj.GetComponent<HpController>();
+                    int receivedDamage = otherHpController.contactDamage;
                     
-                    TakeDamage(receivedDamage);
+                    TakeDamageData takeDamageData = new TakeDamageData(receivedDamage, collidedObj.transform.position, otherHpController.contactKnockback);
+                    TakeDamage(takeDamageData);
                     
                 }
                 else if (collidedObj.CompareTag("Projectile"))
@@ -48,7 +52,8 @@ namespace Player
                     if (spellData.hurtPlayer)
                     {
                         int receivedDamage = spellData.damage;
-                        TakeDamage(receivedDamage);
+                        TakeDamageData takeDamageData = new TakeDamageData(receivedDamage, collidedObj.transform.position, spellData.knockback);
+                        TakeDamage(takeDamageData);
                         Destroy(collidedObj);
                     }
                 }
@@ -57,9 +62,11 @@ namespace Player
             {
                 if (collidedObj.CompareTag("Player"))
                 {
-                    int receivedDamage = collidedObj.GetComponent<HpController>().contactDamage;
+                    HpController otherHpController = collidedObj.GetComponent<HpController>();
+                    int receivedDamage = otherHpController.contactDamage;
                     
-                    TakeDamage(receivedDamage);
+                    TakeDamageData takeDamageData = new TakeDamageData(receivedDamage, collidedObj.transform.position, otherHpController.contactKnockback);
+                    TakeDamage(takeDamageData);
                 }
                 else if (collidedObj.CompareTag("Projectile"))
                 {
@@ -67,15 +74,17 @@ namespace Player
                     if (spellData.hurtEnemy)
                     {
                         int receivedDamage = spellData.damage;
-                        TakeDamage(receivedDamage);
+                        TakeDamageData takeDamageData = new TakeDamageData(receivedDamage, collidedObj.transform.position, spellData.knockback);
+                        TakeDamage(takeDamageData);
                         Destroy(collidedObj);
                     }
                 }
             }
         }
         
-        public void TakeDamage(int damage)
+        public void TakeDamage(TakeDamageData takeDamageData)
         {
+            int damage = takeDamageData.damage;
             if (takeDamage)
             {
                 shield -= damage;
@@ -86,7 +95,9 @@ namespace Player
                     if (hp < 0) hp = 0;
                 }
                 Debug.Log($"{gameObject.name} has taken damage: {damage}, current hp: {hp}");
-                TakeDamageEvent?.Invoke(damage);
+                
+                TakeDamageEvent?.Invoke(takeDamageData);
+                
                 if (hp == 0)
                 {
                     Die();
@@ -96,6 +107,23 @@ namespace Player
         private void Die()
         {
             Destroy(gameObject);
+        }
+    }
+
+    public class TakeDamageData
+    {
+        public int damage { get; private set; }
+        public Vector2 hitLocation { get; private set; }
+        public float power { get; private set; }
+        public TakeDamageData(int damage, Vector2 hitLocation, float power)
+        {
+            this.damage = damage;
+            this.hitLocation = hitLocation;
+            this.power = power;
+        }
+        public TakeDamageData(int damage)
+        {
+            this.damage = damage;
         }
     }
 }
