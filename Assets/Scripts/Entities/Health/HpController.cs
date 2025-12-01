@@ -17,6 +17,7 @@ namespace Player
         public bool takeDamage {get; private set;}
         public ScriptableObjects.Player.HpData hpData; //public so playercontroller can update the controller data classes
         [SerializeField] private GameEvent deathEvent;
+        private bool dead = false;
     
         private void Awake()
         {
@@ -101,7 +102,8 @@ namespace Player
                 
                 if (hp == 0)
                 {
-                    Die();
+                    if (!dead) Die();
+                    dead = true;
                 }
             }
         }

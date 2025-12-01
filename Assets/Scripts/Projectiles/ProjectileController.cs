@@ -13,6 +13,8 @@ namespace Projectiles
         [HideInInspector] public float speed;
         [HideInInspector] public Vector2 direction;
         public ScriptableObjects.Player.SpellData spellData;
+        [SerializeField] private GameObject destroyEffectObject;
+        [SerializeField] private Transform effectsParentObject;
         
         private float timeAlive;
         private float linearSpeedChange;
@@ -45,6 +47,7 @@ namespace Projectiles
                     }
                 }
             }
+            Instantiate(destroyEffectObject, transform.position, Quaternion.identity); //Call a Coroutine in ParticleSystemDestroy instead
         }
         public void Initiate(Vector2 castDirection)
         {

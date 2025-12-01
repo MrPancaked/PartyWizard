@@ -2,6 +2,7 @@ using System;
 using Player;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,5 +46,17 @@ public class GameManager : MonoBehaviour
         enemyCount = enemyParent.GetComponentsInChildren<HpController>().Length;
         enemyCountText.text = $"{enemyCount}";
     }
-    
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void Quit()
+    {
+        Application.Quit();
+    }
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 }
