@@ -9,6 +9,7 @@ namespace Player
     public class HpController : MonoBehaviour
     {
         public event Action<TakeDamageData> TakeDamageEvent;
+        public event Action DeathEvent;
         
         public int hp {get; private set;}
         public int shield {get; private set;}
@@ -56,7 +57,6 @@ namespace Player
                         int receivedDamage = spellData.damage;
                         TakeDamageData takeDamageData = new TakeDamageData(receivedDamage, collidedObj.transform.position, spellData.knockback);
                         TakeDamage(takeDamageData);
-                        Destroy(collidedObj);
                     }
                 }
             }
@@ -78,7 +78,6 @@ namespace Player
                         int receivedDamage = spellData.damage;
                         TakeDamageData takeDamageData = new TakeDamageData(receivedDamage, collidedObj.transform.position, spellData.knockback);
                         TakeDamage(takeDamageData);
-                        Destroy(collidedObj);
                     }
                 }
             }
@@ -111,6 +110,7 @@ namespace Player
         {
             if (gameObject.CompareTag("Player")) deathEvent.Publish(new PlayerDieEventData(gameObject), this.gameObject);
             else if (gameObject.CompareTag("Enemy")) deathEvent.Publish(new EnemyDieEventData(gameObject), this.gameObject);
+            DeathEvent?.Invoke();
             Destroy(gameObject);
         }
     }

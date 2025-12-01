@@ -14,13 +14,19 @@ namespace Projectiles
         [HideInInspector] public Vector2 direction;
         public ScriptableObjects.Player.SpellData spellData;
         [SerializeField] private GameObject destroyEffectObject;
-        [SerializeField] private Transform effectsParentObject;
         
         private float timeAlive;
         private float linearSpeedChange;
         private Vector2 randomCurveDirection;
-        
-        private void OnDestroy() //do AOE stuff when destroyed could be put in separate method to be used multiple times among the spells path
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            AoeEffect();
+            Instantiate(destroyEffectObject, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
+
+        private void AoeEffect() //do AOE stuff when destroyed could be put in separate method to be used multiple times among the spells path
         {
             if (spellData.aoeEffect)
             {
@@ -47,7 +53,6 @@ namespace Projectiles
                     }
                 }
             }
-            Instantiate(destroyEffectObject, transform.position, Quaternion.identity); //Call a Coroutine in ParticleSystemDestroy instead
         }
         public void Initiate(Vector2 castDirection)
         {
@@ -120,7 +125,6 @@ namespace Projectiles
             Collider2D collider = gameObject.GetComponent<Collider2D>();
             if (collider != null)
             {
-                Debug.Log($"has collider : {collider.name}");
                 int mask = 0;
                 if (!spellData.hurtEnemy) mask |= LayerMask.GetMask("Enemy");
                 if (!spellData.hurtPlayer) mask |= LayerMask.GetMask("Player");

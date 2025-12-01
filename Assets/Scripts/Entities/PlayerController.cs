@@ -47,7 +47,6 @@ namespace Player
             if (movementController != null)
             {
                 movementController.moveDirection = context.ReadValue<Vector2>();
-                Debug.Log("trying to walk");
             }
             else Debug.LogWarning("MovementController is null");
         }
@@ -58,7 +57,6 @@ namespace Player
             if (attackController != null)
             {
                 attackController.Attack();
-                Debug.Log("trying to cast spell");
             }
             else Debug.LogWarning("AttackController is null");
         }

@@ -14,6 +14,7 @@ namespace Player
         public float delayBetweenSpells;
     
         [SerializeField] private GameObject projectile;
+        [SerializeField] private Transform projectileParent;
     
         private void Start()
         {
@@ -34,14 +35,14 @@ namespace Player
                 for (int i = 0; i < amount; i++)
                 {
                     Vector2 castDirection = RotateVector(direction, angleInterval * i);
-                    var projectileInstance = Instantiate(projectile, transform.position, transform.rotation);
+                    var projectileInstance = Instantiate(projectile, transform.position, transform.rotation, projectileParent);
                     var projectileController = projectileInstance.GetComponent<Projectiles.ProjectileController>();
                     projectileController.Initiate(castDirection);
                 }
             }
             else if (amount == 1)
             {
-                var projectileInstance = Instantiate(projectile, transform.position, transform.rotation);
+                var projectileInstance = Instantiate(projectile, transform.position, transform.rotation, projectileParent);
                 var projectileController = projectileInstance.GetComponent<Projectiles.ProjectileController>();
                 projectileController.Initiate(direction);
             }

@@ -24,7 +24,6 @@ public class Knockback : MonoBehaviour
         if (rb != null)
         {
             rb.AddForce(-hitDirection * takeDamageData.power, ForceMode2D.Impulse);
-            Debug.Log($"knockback: {-hitDirection},  power: {takeDamageData.power}");
         }
     }
 }
