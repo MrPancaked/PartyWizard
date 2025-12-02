@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1653619591319756164}
   - component: {fileID: 9203945937665621647}
   - component: {fileID: 4805567127737685787}
+  - component: {fileID: 1395298404781881824}
   m_Layer: 9
   m_Name: XP
   m_TagString: XP
@@ -188,3 +189,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &1395298404781881824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8616179483865393267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1deabcba45ba024f975be8e40f15fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemVacuum
+  entities:
+  - {fileID: 0}
+  range: 0
+  acceleration: 0
