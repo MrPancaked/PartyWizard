@@ -31,7 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8243803188704958260}
+  - {fileID: 9193550528808473238}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &679066021315823461
@@ -1367,7 +1367,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.7027648, b: 0, a: 1}
+        key0: {r: 1, g: 0.8468184, b: 0.2028302, a: 1}
         key1: {r: 0.9960785, g: 0.5137255, b: 0, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -3874,7 +3874,7 @@ ParticleSystem:
     enabled: 0
     subEmitters:
     - serializedVersion: 3
-      emitter: {fileID: 6828719015462633852}
+      emitter: {fileID: 0}
       type: 0
       properties: 0
       emitProbability: 1
@@ -4896,7 +4896,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!1001 &6316576865893631513
+--- !u!1001 &6510286537451389883
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -4906,31 +4906,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 405076774760550237, guid: 32c801b3958f9ab4985a913937ef7628, type: 3}
       propertyPath: m_Name
-      value: Explosion
-      objectReference: {fileID: 0}
-    - target: {fileID: 679066021315823461, guid: 32c801b3958f9ab4985a913937ef7628, type: 3}
-      propertyPath: stopAction
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 679066021315823461, guid: 32c801b3958f9ab4985a913937ef7628, type: 3}
-      propertyPath: playOnAwake
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 679066021315823461, guid: 32c801b3958f9ab4985a913937ef7628, type: 3}
-      propertyPath: SubModule.enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 679066021315823461, guid: 32c801b3958f9ab4985a913937ef7628, type: 3}
-      propertyPath: InitialModule.rotation3D
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 679066021315823461, guid: 32c801b3958f9ab4985a913937ef7628, type: 3}
-      propertyPath: EmissionModule.m_Bursts.Array.data[0].cycleCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 679066021315823461, guid: 32c801b3958f9ab4985a913937ef7628, type: 3}
-      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
-      value: 10
+      value: FireBallParticles
       objectReference: {fileID: 0}
     - target: {fileID: 2724434112289411373, guid: 32c801b3958f9ab4985a913937ef7628, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4977,13 +4953,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32c801b3958f9ab4985a913937ef7628, type: 3}
---- !u!198 &6828719015462633852 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 679066021315823461, guid: 32c801b3958f9ab4985a913937ef7628, type: 3}
-  m_PrefabInstance: {fileID: 6316576865893631513}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8243803188704958260 stripped
+--- !u!4 &9193550528808473238 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2724434112289411373, guid: 32c801b3958f9ab4985a913937ef7628, type: 3}
-  m_PrefabInstance: {fileID: 6316576865893631513}
+  m_PrefabInstance: {fileID: 6510286537451389883}
   m_PrefabAsset: {fileID: 0}
