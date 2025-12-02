@@ -196,8 +196,7 @@ MonoBehaviour:
   speed: 0
   direction: {x: 0, y: 0}
   spellData: {fileID: 11400000, guid: deba7e0550deaee41b188650c6ca90f1, type: 2}
-  destroyEffectObject: {fileID: 405076774760550237, guid: 32c801b3958f9ab4985a913937ef7628, type: 3}
-  effectsParentObject: {fileID: 0}
+  destroyEffectObject: {fileID: 405076774760550237, guid: c9f5ae89129ddd74898027d513f7f538, type: 3}
 --- !u!50 &6297893500592391658
 Rigidbody2D:
   serializedVersion: 5

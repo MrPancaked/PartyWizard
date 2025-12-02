@@ -76,7 +76,12 @@ namespace Projectiles
             SetRigidbodyValues();
         
             timeAlive += Time.fixedDeltaTime;
-            if (timeAlive >= spellData.maxTimeAlive) Destroy(gameObject);
+            if (timeAlive >= spellData.maxTimeAlive)
+            {
+                AoeEffect();
+                Instantiate(destroyEffectObject, transform.position, transform.rotation);
+                Destroy(gameObject);
+            }
         }
 
         private void SetSpeed()
