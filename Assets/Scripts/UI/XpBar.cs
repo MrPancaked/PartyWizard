@@ -69,20 +69,24 @@ public class XpBar : MonoBehaviour
     {
         for (int i = internalXpCounter; i <= internalXpCounter + xpGain; i++)
         {
+            Animator anim;
+            if (i == 0) anim = xpPointList[i].GetComponent<Animator>();
+            else anim =  xpPointList[i-1].GetComponent<Animator>();
             if (i == 1)
             {
-                xpPointList[i-1].GetComponent<Animator>().Play("XpBarStart");
+                anim.Play("XpBarStart");
             }
             else if (i > 1 && i < internalMaxXp)
             {
-                xpPointList[i-1].GetComponent<Animator>().Play("XpBarMiddle");
+                anim.Play("XpBarMiddle");
             }
             else if (i == internalMaxXp)
             {
-                xpPointList[i-1].GetComponent<Animator>().Play("XpBarEnd");
+                anim.Play("XpBarEnd");
                 AnimatorClipInfo[] clipInfo = xpPointList[internalMaxXp-1].GetComponent<Animator>().GetCurrentAnimatorClipInfo(0);
                 Debug.Log($"this should be XpBarEnd: {clipInfo[0].clip.name}");
             }
+            anim.Update(0f);
         }
         internalXpCounter = levelController.xpCount;
     }
@@ -102,20 +106,22 @@ public class XpBar : MonoBehaviour
     {
         for (int i = 1; i <= internalMaxXp; i++)
         {
+            Animator anim = xpPointList[i - 1].GetComponent<Animator>();
             if (i == 1)
             {
-                xpPointList[i-1].GetComponent<Animator>().Play("XpStartEmpty");
+                anim.Play("XpStartEmpty");
             }
             else if (i < internalMaxXp)
             {
-                xpPointList[i-1].GetComponent<Animator>().Play("XpMiddleEmpty");
+                anim.Play("XpMiddleEmpty");
             }
             else if (i == internalMaxXp)
             {
-                xpPointList[i-1].GetComponent<Animator>().Play("XpEndEmpty"); // idk this doesnt work for some mysterious reason
+                anim.Play("XpEndEmpty"); // idk this doesnt work for some mysterious reason
                 AnimatorClipInfo[] clipInfo = xpPointList[internalMaxXp-1].GetComponent<Animator>().GetCurrentAnimatorClipInfo(0);
                 Debug.Log($"this should be XpEndEmpty: {clipInfo[0].clip.name}");
             }
+            anim.Update(0f);
         }
         internalXpCounter = levelController.xpCount;
     }
