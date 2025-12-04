@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,24 +12,30 @@ public class XpBar : MonoBehaviour
     private int internalXpCounter;
     private int internalMaxXp;
 
-    private GameObject start;
-    private GameObject middle;
-    private GameObject end;
+    [SerializeField] private GameObject start;
+    [SerializeField] private GameObject middle;
+    [SerializeField] private GameObject end;
 
+    private void Start()
+    {
+        InitiateXpBar();
+    }
     private void OnEnable()
     {
-        levelController.XPEvent += UpdateXPBar;
+        levelController.XPEvent += UpdateXpBar;
+        levelController.LevelUpEvent += ClearXpBar;
     }
 
     private void OnDisable()
     {
-        levelController.XPEvent -= UpdateXPBar;
+        levelController.XPEvent -= UpdateXpBar;
+        levelController.LevelUpEvent -= ClearXpBar;
     }
-    private void InitiateHealthBar()
+    private void InitiateXpBar()
     {
         ClearHorizontalLayout();
         xpPointList = new List<GameObject>();
-        internalXpCounter = levelController.xpData.xpCount;
+        internalXpCounter = levelController.xpCount;
         internalMaxXp = levelController.xpData.xpForLevel;
         
         for (int i = 1; i <= internalMaxXp; i++)
@@ -50,34 +57,34 @@ public class XpBar : MonoBehaviour
             {
                 xpObject = end;
             }
-
             if (xpObject != null)
             {
-                Instantiate(xpObject, horizontalLayoutGroup.transform);
-                xpPointList.Add(xpObject);
+                GameObject instantiatedXP = Instantiate(xpObject, horizontalLayoutGroup.transform);
+                xpPointList.Add(instantiatedXP);
             }
             else Debug.Log($"no single XP sprite found");
         }
     }
-    private void UpdateXPBar(int xpGain)
+    private void UpdateXpBar(int xpGain)
     {
-        for (int i = internalXpCounter; i < internalXpCounter + xpGain; i++)
+        for (int i = internalXpCounter; i <= internalXpCounter + xpGain; i++)
         {
             if (i == 1)
             {
-                xpPointList[i].GetComponent<Animation>().Play("XpStartFull");
+                xpPointList[i-1].GetComponent<Animator>().Play("XpBarStart");
             }
-
-            if (i < internalMaxXp)
+            else if (i > 1 && i < internalMaxXp)
             {
-                xpPointList[i].GetComponent<Animation>().Play("XpMiddleFull");
+                xpPointList[i-1].GetComponent<Animator>().Play("XpBarMiddle");
             }
-
-            if (i == internalMaxXp)
+            else if (i == internalMaxXp)
             {
-                xpPointList[i].GetComponent<Animation>().Play("XpEndFull");
+                xpPointList[i-1].GetComponent<Animator>().Play("XpBarEnd");
+                AnimatorClipInfo[] clipInfo = xpPointList[internalMaxXp-1].GetComponent<Animator>().GetCurrentAnimatorClipInfo(0);
+                Debug.Log($"this should be XpBarEnd: {clipInfo[0].clip.name}");
             }
         }
+        internalXpCounter = levelController.xpCount;
     }
     private void ClearHorizontalLayout()
     {
@@ -89,5 +96,27 @@ public class XpBar : MonoBehaviour
             sceneXpPointList.RemoveAt(0);
             i++;
         }
+    }
+
+    private void ClearXpBar()
+    {
+        for (int i = 1; i <= internalMaxXp; i++)
+        {
+            if (i == 1)
+            {
+                xpPointList[i-1].GetComponent<Animator>().Play("XpStartEmpty");
+            }
+            else if (i < internalMaxXp)
+            {
+                xpPointList[i-1].GetComponent<Animator>().Play("XpMiddleEmpty");
+            }
+            else if (i == internalMaxXp)
+            {
+                xpPointList[i-1].GetComponent<Animator>().Play("XpEndEmpty"); // idk this doesnt work for some mysterious reason
+                AnimatorClipInfo[] clipInfo = xpPointList[internalMaxXp-1].GetComponent<Animator>().GetCurrentAnimatorClipInfo(0);
+                Debug.Log($"this should be XpEndEmpty: {clipInfo[0].clip.name}");
+            }
+        }
+        internalXpCounter = levelController.xpCount;
     }
 }

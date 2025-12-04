@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bfce104ad1d8684a938daf84baa210b, type: 3}
   m_Name: XpData
   m_EditorClassIdentifier: Assembly-CSharp::XpData
-  xpCount: 7
+  xpCount: 0
   xpForLevel: 10
   xpMultiplier: 1

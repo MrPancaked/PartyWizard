@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FireBall
   m_EditorClassIdentifier: Assembly-CSharp::SpellData
   aoeEffect: 1
-  aoeDamage: 0
+  aoeDamage: 1
   aoeRadius: 2
   aoeKnockback: 10
   startSpeed: 20

@@ -4,33 +4,41 @@ using UnityEngine;
 public class LevelController : MonoBehaviour
 {
     public XpData xpData;
-    private int level;
+    public int xpCount{ get; private set; }
+    public int level { get; private set; }
     
-    public Action<int> LevelUpEvent;
+    public Action LevelUpEvent;
     public Action<int> XPEvent;
 
-    private void OnEnable()
+    private void Start()
     {
-        
+        if (xpData.xpCount > xpData.xpForLevel) xpData.xpCount = xpData.xpForLevel;
+        xpCount =  xpData.xpCount;
     }
-    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject triggerObj = collision.gameObject;
         if (triggerObj.CompareTag("XP"))
         {
-            xpData.xpCount += xpData.xpMultiplier;
+            GainXp();
             Destroy(triggerObj.gameObject);
+        }
+    }
 
-            if (xpData.xpCount >= xpData.xpForLevel)
-            {
-                xpData.xpCount = 0;
-                LevelUp();
-            }
+    public void GainXp() //public for button
+    {
+        int xpGain = xpData.xpMultiplier;
+        xpCount += xpGain;
+        XPEvent?.Invoke(xpGain);
+        if (xpCount >= xpData.xpForLevel)
+        {
+            xpCount = 0;
+            LevelUp();
         }
     }
     private void LevelUp()
     {
+        LevelUpEvent?.Invoke();
         Debug.Log("LevelUp");
         level++;
     }
