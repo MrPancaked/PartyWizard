@@ -4,7 +4,6 @@ using UnityEngine;
 public class XpData : ScriptableObject
 {
     public int xpCount;
-    public int startXp;
-    public int xpForLevel;
-    public int xpMultiplier;
+    public int xpForLevel = 10;
+    public int xpMultiplier = 1;
 }

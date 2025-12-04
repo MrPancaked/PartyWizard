@@ -21,6 +21,6 @@ namespace Enemies
             rb.linearDamping = friction;
         }
 
-        protected virtual void Move(){}
+        protected abstract void Move();
     }
 }
