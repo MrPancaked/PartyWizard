@@ -36,7 +36,7 @@ public class LevelController : MonoBehaviour
             LevelUp();
         }
     }
-    private void LevelUp()
+    public void LevelUp() // public for button
     {
         LevelUpEvent?.Invoke();
         Debug.Log("LevelUp");

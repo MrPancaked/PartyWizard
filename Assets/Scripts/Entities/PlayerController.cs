@@ -23,7 +23,6 @@ namespace Player
         private void Start()
         {
             inputManager = InputManager.Instance;
-            Debug.Log($"inputManager: {inputManager}");
             if (inputManager != null)
             {
                 inputManager.MoveAction.performed += Move;

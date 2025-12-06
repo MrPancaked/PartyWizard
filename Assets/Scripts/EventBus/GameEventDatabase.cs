@@ -50,3 +50,24 @@ public class PlayerDieEventData : EventData
         }
     }
 }
+
+public class EnemySpawnEventData : EventData
+{
+    public GameObject enemyObject;
+
+    public EnemySpawnEventData(GameObject pEnemyObject)
+    {
+        name = "EnemySpawnEvent";
+        enemyObject = pEnemyObject;
+    }
+    public override string ToString()
+    {
+        if (enemyObject == null)
+            return "Enemy Object already destroyed";
+        else
+        {
+            return "Event name: " + name + "\n" +
+                   "Enemy Spawned: " + enemyObject.transform.position;
+        }
+    }
+}

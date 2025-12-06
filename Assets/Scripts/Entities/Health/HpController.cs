@@ -17,7 +17,6 @@ namespace Player
         public float contactKnockback {get; private set;}
         public bool takeDamage {get; private set;}
         public ScriptableObjects.Player.HpData hpData; //public so playercontroller can update the controller data classes
-        [SerializeField] private GameEvent deathEvent;
         private bool dead = false;
     
         private void Awake()
@@ -108,8 +107,8 @@ namespace Player
         }
         private void Die()
         {
-            if (gameObject.CompareTag("Player")) deathEvent.Publish(new PlayerDieEventData(gameObject), this.gameObject);
-            else if (gameObject.CompareTag("Enemy")) deathEvent.Publish(new EnemyDieEventData(gameObject), this.gameObject);
+            if (gameObject.CompareTag("Player")) EventBus<PlayerDieEventData>.Publish(new PlayerDieEventData(gameObject)); //deathEvent.Publish(new PlayerDieEventData(gameObject), this.gameObject);
+            else if (gameObject.CompareTag("Enemy")) EventBus<EnemyDieEventData>.Publish(new EnemyDieEventData(gameObject)); //deathEvent.Publish(new EnemyDieEventData(gameObject), this.gameObject);
             DeathEvent?.Invoke();
             Destroy(gameObject);
         }
