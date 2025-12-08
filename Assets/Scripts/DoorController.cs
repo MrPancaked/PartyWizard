@@ -4,41 +4,44 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour // probably just throw this out lol figure out something differently
 {
-    [SerializeField] private GameObject doorParent;
-    private GameManager gameManager;
-    public GameObject[] doorObjects;
-    private Animator[] doorAnimators;
+    [SerializeField] private Transform otherDoorTransform;
+    private Animator doorAnimator;
     private int roomNumber;
+    private GameManager gameManager;
     
     private void OnDisable()
     {
-        gameManager.RoomClearedEvent -= OpenDoors;
-        gameManager.RoomStartEvent -= CloseDoors;
+        gameManager.RoomStartEvent -= CloseDoor;
+        gameManager.RoomClearedEvent -= OpenDoor;
     }
 
     private void Start()
     {
         gameManager = GameManager.Instance;
-        gameManager.RoomClearedEvent += OpenDoors;
-        gameManager.RoomStartEvent += CloseDoors;
+
+        gameManager.RoomStartEvent += CloseDoor;
+        gameManager.RoomClearedEvent += OpenDoor;
         
-        doorObjects = doorParent.GetComponentsInChildren<GameObject>();
-        doorAnimators = doorParent.GetComponentsInChildren<Animator>();
+        doorAnimator = gameObject.GetComponent<Animator>();
     }
 
-    private void OpenDoors()
+    private void OpenDoor()
     {
-        foreach (Animator door in doorAnimators)
-        {
-            door.SetBool("Open", true);
-        }
+        doorAnimator.SetBool("Open", true);
     }
     
-    private void CloseDoors(List<GameObject> enemies)
+    private void CloseDoor()
     {
-        foreach (Animator door in doorAnimators)
+        doorAnimator.SetBool("Open", false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
         {
-            door.SetBool("Open", false);
+            StartCoroutine(gameManager.NewRound());
+            other.transform.position = otherDoorTransform.position - otherDoorTransform.up;
+            Debug.Log($"player entered {other.name} at position {other.transform.position}");
         }
     }
 }

@@ -20,27 +20,35 @@ namespace Player
             Instance = this;
         }
 
+        private void OnEnable()
+        {
+            if (InputManager.Instance != null)
+            {
+                InputManager.Instance.MoveAction.performed += Move;
+                InputManager.Instance.MoveAction.canceled += Move;
+        
+                InputManager.Instance.AttackAction.performed += Attack;
+            }
+            else Debug.Log($"OnEnable {name} did not find InputManager.Instance");
+        }
+        private void OnDisable()
+        {
+            if (InputManager.Instance != null)
+            {
+                InputManager.Instance.MoveAction.performed -= Move;
+                InputManager.Instance.MoveAction.canceled -= Move;
+        
+                InputManager.Instance.AttackAction.performed -= Attack;
+            }
+            else Debug.Log($"Ondisable: {name} did not find InputManager.Instance");
+        }
+
         private void Start()
         {
-            inputManager = InputManager.Instance;
-            if (inputManager != null)
-            {
-                inputManager.MoveAction.performed += Move;
-                inputManager.MoveAction.canceled += Move;
-        
-                inputManager.AttackAction.performed += Attack;
-            }
+            attackController = gameObject.GetComponent<AttackController>();
+            movementController = gameObject.GetComponent<MovementController>();
         }
-        private void OnDestroy()
-        {
-            if (inputManager != null)
-            {
-                inputManager.MoveAction.performed -= Move;
-                inputManager.MoveAction.canceled -= Move;
-        
-                inputManager.AttackAction.performed += Attack;
-            }
-        }
+
         public void Move(InputAction.CallbackContext context)
         {
             if (movementController != null)
@@ -57,7 +65,7 @@ namespace Player
             {
                 attackController.Attack();
             }
-            else Debug.LogWarning("AttackController is null");
+            else Debug.LogWarning($"AttackController is null {context}");
         }
 
         //public void UpdateControllerData()

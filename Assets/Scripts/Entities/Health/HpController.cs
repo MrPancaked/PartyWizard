@@ -107,10 +107,14 @@ namespace Player
         }
         private void Die()
         {
-            if (gameObject.CompareTag("Player")) EventBus<PlayerDieEventData>.Publish(new PlayerDieEventData(gameObject)); //deathEvent.Publish(new PlayerDieEventData(gameObject), this.gameObject);
-            else if (gameObject.CompareTag("Enemy")) EventBus<EnemyDieEventData>.Publish(new EnemyDieEventData(gameObject)); //deathEvent.Publish(new EnemyDieEventData(gameObject), this.gameObject);
             DeathEvent?.Invoke();
-            Destroy(gameObject);
+            if (gameObject.CompareTag("Player")) EventBus<PlayerDieEventData>.Publish(new PlayerDieEventData(gameObject)); //deathEvent.Publish(new PlayerDieEventData(gameObject), this.gameObject);
+            else if (gameObject.CompareTag("Enemy")) 
+            {
+                EventBus<EnemyDieEventData>.Publish(new EnemyDieEventData(gameObject)); //deathEvent.Publish(new EnemyDieEventData(gameObject), this.gameObject);
+                Destroy(gameObject);
+            }
+            
         }
     }
 

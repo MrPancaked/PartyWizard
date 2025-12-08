@@ -19,12 +19,12 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         gameManager = GameManager.Instance;
-        gameManager.RoomStartEvent += SpawnEnemies;
+        gameManager.SpawnEnemiesEvent += SpawnEnemies;
     }
 
     private void OnDisable()
     {
-        gameManager.RoomStartEvent -= SpawnEnemies;
+        gameManager.SpawnEnemiesEvent -= SpawnEnemies;
     }
 
     public void SpawnSkullsMethod()
@@ -45,15 +45,16 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void SpawnEnemies(List<GameObject> enemies)
+    private void SpawnEnemies(EnemyWaveData enemies)
     {
-        foreach (GameObject enemy in enemies)
+        foreach (GameObject enemy in enemies.enemyWave)
         {
             Vector2 spawnPosition = new Vector2(Random.Range(spawnArea.xMin, spawnArea.xMax),  Random.Range(spawnArea.yMin, spawnArea.yMax));
             while ((spawnPosition - (Vector2)playerController.transform.position).magnitude < playerRange) {
                 spawnPosition = new Vector2(Random.Range(spawnArea.xMin, spawnArea.xMax),  Random.Range(spawnArea.yMin, spawnArea.yMax));
             }
             GameObject instantiatedEnemy = Instantiate(enemy, spawnPosition, Quaternion.identity, enemyParent);
+            EventBus<EnemySpawnEventData>.Publish(new EnemySpawnEventData(instantiatedEnemy));
         }
     }
 

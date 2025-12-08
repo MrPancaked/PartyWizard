@@ -1,23 +1,34 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Player;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [SerializeField] private GameObject victoryUI;
+    [SerializeField] private GameObject pauseGameUI;
     [SerializeField] private GameObject playerDeathUI;
     [SerializeField] private GameObject enemyParent;
-    [SerializeField] private TextMeshProUGUI enemyCountText;
-    [SerializeField] private List<GameObject> enemies;
+    [SerializeField] private TextMeshProUGUI enemyCounter;
+    [SerializeField] private TextMeshProUGUI roundCounter;
+    [SerializeField] private List<EnemyWaveData> enemyWaves;
+
+    [Header("GameState Variables")] 
+    [SerializeField] private TextMeshProUGUI countdownText;
+    [SerializeField] private int waitTime;
     
     private int enemyCount;
+    private int round;
 
     public Action RoomClearedEvent;
-    public Action<List<GameObject>> RoomStartEvent;
+    public Action RoomStartEvent;
+    public Action<EnemyWaveData> SpawnEnemiesEvent;
 
     private void Awake()
     {
@@ -29,6 +40,11 @@ public class GameManager : MonoBehaviour
         EventBus<EnemySpawnEventData>.OnEventPublished += OnEnemySpawned;
         EventBus<EnemyDieEventData>.OnEventPublished += OnEnemyDied;
         EventBus<PlayerDieEventData>.OnEventPublished += OnPlayerDied;
+        
+        if (InputManager.Instance != null)
+        {
+            InputManager.Instance.PauseGameAction.performed += PauseGame;
+        }
     }
 
     private void OnDisable()
@@ -36,48 +52,98 @@ public class GameManager : MonoBehaviour
         EventBus<EnemySpawnEventData>.OnEventPublished -= OnEnemySpawned;
         EventBus<EnemyDieEventData>.OnEventPublished -= OnEnemyDied;
         EventBus<PlayerDieEventData>.OnEventPublished -= OnPlayerDied;
+
+        if (InputManager.Instance != null)
+        {
+            InputManager.Instance.PauseGameAction.performed -= PauseGame; // somettimes this gets called after 
+        }
     }
 
     private void Start()// ONLY TO COUNT ENEMIES FOR TESTING RN, CHANGE LATER WHEN SPAWNERS ARE ADDED
     {
+        Time.timeScale = 1f;
+        countdownText.gameObject.SetActive(false);
+        pauseGameUI.SetActive(false);
         playerDeathUI.SetActive(false);
-        NewRound();
+        victoryUI.SetActive(false);
         CountEnemies();
+        StartCoroutine(NewRound());
     }
 
-    private void NewRound()
+    public IEnumerator NewRound()
     {
-        RoomStartEvent?.Invoke(enemies);
+        RoomStartEvent?.Invoke();
+        
+        round++;
+        roundCounter.text = $"Round: {round}";
+        
+        yield return StartCoroutine(NewRoundAnimation());
+        Debug.Log("New round");
+        
+        SpawnEnemiesEvent?.Invoke(enemyWaves[round - 1]);
+        CountEnemies();
     }
     public void OnEnemyDied(EnemyDieEventData enemyDieEventData)
     {
         enemyCount--;
-        enemyCountText.text = $"{enemyCount}";
+        enemyCounter.text = $"{enemyCount}";
         
         if (enemyCount == 0)
         {
             Debug.Log("All enemies have been Killed");
-            RoomClearedEvent?.Invoke();
+            if (round < enemyWaves.Count)
+                RoomClearedEvent?.Invoke();
+            else
+            {
+                victoryUI.SetActive(true);
+                Time.timeScale = 0f;
+            }
         }
     }
 
     public void OnEnemySpawned(EnemySpawnEventData enemySpawnEventData)
     {
         enemyCount++;
-        enemyCountText.text = $"{enemyCount}";
+        enemyCounter.text = $"{enemyCount}";
     }
 
     public void OnPlayerDied(PlayerDieEventData playerDieEventData)
     {
         playerDeathUI.SetActive(true);
+        Time.timeScale = 0f;
     }
     
     private void CountEnemies()
     {
         enemyCount = enemyParent.GetComponentsInChildren<HpController>().Length;
-        enemyCountText.text = $"{enemyCount}";
+        enemyCounter.text = $"{enemyCount}";
     }
 
+    #region PauseGame
+    public void TogglePause()
+    {
+        if (!pauseGameUI.activeInHierarchy)
+        {
+            pauseGameUI.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else 
+        {
+            pauseGameUI.SetActive(false);
+            Time.timeScale = 1f;
+        }
+    }
+    public void PauseGame(InputAction.CallbackContext context)
+    {
+        if (context.performed && !playerDeathUI.activeInHierarchy)
+            TogglePause();
+    }
+    public void PauseFromButton()
+    {
+        TogglePause();
+    }
+    #endregion
+    
     #region Scene Management
     public void ReloadScene()
     {
@@ -89,7 +155,28 @@ public class GameManager : MonoBehaviour
     }
     public void MainMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
+    #endregion
+    
+    #region GameState Animations
+
+    private IEnumerator NewRoundAnimation()
+    {
+        countdownText.gameObject.SetActive(true);
+        int i = waitTime;
+        while (i > 0)
+        {
+            countdownText.text = $"{i}";
+            yield return new WaitForSeconds(1f);
+            i--;
+        }
+        yield return new WaitForEndOfFrame();
+        countdownText.text = $"GO!";
+        yield return new WaitForSeconds(1f);
+        countdownText.gameObject.SetActive(false);
+    }
+    
     #endregion
 }
