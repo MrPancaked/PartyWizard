@@ -10106,6 +10106,14 @@ PrefabInstance:
       propertyPath: projectileParent
       value: 
       objectReference: {fileID: 604630432}
+    - target: {fileID: 6740564774060325350, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
+      propertyPath: orthographic size
+      value: 8.4375
+      objectReference: {fileID: 0}
+    - target: {fileID: 8858981020453878362, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8858981020453878362, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10144,6 +10152,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8858981020453878362, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8858981020453878362, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

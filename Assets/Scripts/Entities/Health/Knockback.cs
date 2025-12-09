@@ -9,7 +9,8 @@ public class Knockback : MonoBehaviour
     private Rigidbody2D rb;
     private void OnEnable()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = gameObject.GetComponent<Rigidbody2D>();
+        hpController =  gameObject.GetComponent<HpController>();
         hpController.TakeDamageEvent += TakeKnockBack;
     }
 

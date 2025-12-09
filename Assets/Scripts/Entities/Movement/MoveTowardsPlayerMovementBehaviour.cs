@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Enemies
 {
-    public class FloatingMoveBehaviour : EnemyMoveBehaviour
+    public class MoveTowardsPlayerMovementBehaviour : EnemyMoveBehaviour
     {
         [SerializeField] private PlayerController playerController;
         private SpriteRenderer spriteRenderer;
