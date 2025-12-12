@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 4223670104831844656}
   - component: {fileID: 5972910012140075705}
   - component: {fileID: 5797246959294344248}
+  - component: {fileID: 3122304099229466007}
   - component: {fileID: 8609090005905523191}
   - component: {fileID: 647936275689629522}
   - component: {fileID: 5177133677964221417}
@@ -182,7 +183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.HpController
   hpData: {fileID: 11400000, guid: c06186db0c7993649894820226a6bf3a, type: 2}
-  deathEvent: {fileID: 11400000, guid: 08a45343c2c3fea4cbe6600be849c29e, type: 2}
 --- !u!114 &1945399989797448915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,6 +243,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Knockback
   hpController: {fileID: 3793100482367538258}
+--- !u!114 &3122304099229466007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725479168565907076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00376762b9d99ee489c354fb8b52e6f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
 --- !u!50 &8609090005905523191
 Rigidbody2D:
   serializedVersion: 5

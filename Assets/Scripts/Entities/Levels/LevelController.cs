@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-
+[RequireComponent(typeof(ItemPickup))]
 public class LevelController : MonoBehaviour
 {
     public XpData xpData;
@@ -9,20 +9,21 @@ public class LevelController : MonoBehaviour
     
     public Action LevelUpEvent;
     public Action<int> XPEvent;
-
+    
     private void Start()
     {
         if (xpData.xpCount > xpData.xpForLevel) xpData.xpCount = xpData.xpForLevel;
         xpCount =  xpData.xpCount;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void OnEnable()
     {
-        GameObject triggerObj = collision.gameObject;
-        if (triggerObj.CompareTag("XP"))
-        {
-            GainXp();
-            Destroy(triggerObj.gameObject);
-        }
+        ItemPickup.xpPickupEvent += GainXp;
+    }
+
+    private void OnDisable()
+    {
+        ItemPickup.xpPickupEvent -= GainXp;
     }
 
     public void GainXp() //public for button

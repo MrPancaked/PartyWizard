@@ -29,7 +29,7 @@ namespace Player
         
                 InputManager.Instance.AttackAction.performed += Attack;
             }
-            else Debug.Log($"OnEnable {name} did not find InputManager.Instance");
+            else Debug.LogWarning($"OnEnable {name} did not find InputManager.Instance");
         }
         private void OnDisable()
         {
@@ -40,7 +40,7 @@ namespace Player
         
                 InputManager.Instance.AttackAction.performed -= Attack;
             }
-            else Debug.Log($"Ondisable: {name} did not find InputManager.Instance");
+            else Debug.LogWarning($"Ondisable: {name} did not find InputManager.Instance");
         }
 
         private void Start()
