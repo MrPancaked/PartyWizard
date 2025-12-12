@@ -9,6 +9,7 @@ namespace Player
     public class HpController : MonoBehaviour
     {
         public event Action<TakeDamageData> TakeDamageEvent;
+        public event Action<int> HealEvent;
         public event Action DeathEvent;
         
         public int hp {get; private set;}
@@ -105,6 +106,18 @@ namespace Player
                 }
             }
         }
+
+        public void Heal(int healAmount)
+        {
+            if (hp + healAmount > hpData.maxHp)
+            {
+                int maxHeal = hpData.maxHp - hp;
+                healAmount = maxHeal;
+            }
+            hp += healAmount;
+            Debug.Log($"{gameObject.name} has healed {healAmount}");
+            HealEvent?.Invoke(healAmount);
+        }
         private void Die()
         {
             DeathEvent?.Invoke();
@@ -114,7 +127,6 @@ namespace Player
                 EventBus<EnemyDieEventData>.Publish(new EnemyDieEventData(gameObject)); //deathEvent.Publish(new EnemyDieEventData(gameObject), this.gameObject);
                 Destroy(gameObject);
             }
-            
         }
     }
 

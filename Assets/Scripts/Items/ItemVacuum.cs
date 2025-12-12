@@ -10,11 +10,13 @@ public class ItemVacuum : MonoBehaviour
 
     private void FixedUpdate()
     {
-        SuckXp();
+        SuckItems();
     }
-    private void SuckXp()
+    private void SuckItems()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, range, LayerMask.GetMask("Item"));
+        LayerMask layerMask = LayerMask.GetMask("Xp");
+        if (Inventory.Instance.Items.Length < Inventory.Instance.maxItems) layerMask |= LayerMask.GetMask("Item");
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, range, layerMask);
         foreach (Collider2D hit in colliders)
         {
             Rigidbody2D hitRb = hit.GetComponent<Rigidbody2D>();

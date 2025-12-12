@@ -30,11 +30,13 @@ public class HealthBar : MonoBehaviour
     }
     private void OnEnable()
     {
-        hpController.TakeDamageEvent += UpdateHealthBar;
+        hpController.TakeDamageEvent += DamageHealthBar;
+        hpController.HealEvent += HealHealthBar;
     }
     private void OnDisable()
     {
-        hpController.TakeDamageEvent -= UpdateHealthBar;
+        hpController.TakeDamageEvent -= DamageHealthBar;
+        hpController.HealEvent -= HealHealthBar;
     }
 
     private void InitiateHealthBar()
@@ -81,7 +83,7 @@ public class HealthBar : MonoBehaviour
             i++;
         }
     }
-    private void UpdateHealthBar(TakeDamageData damageData)
+    private void DamageHealthBar(TakeDamageData damageData)
     {
         for (int i = internalHpCounter; i > internalHpCounter - damageData.damage; i--)
         {
@@ -96,6 +98,27 @@ public class HealthBar : MonoBehaviour
             else 
             {
                 hpPointList[i-1].sprite = middleEmpty;
+            }
+            if (i == 0) break;
+        }
+        internalHpCounter = hpController.hp;
+    }
+
+    private void HealHealthBar(int healAmount)
+    {
+        for (int i = internalHpCounter + 1; i <= internalHpCounter + healAmount; i++)
+        {
+            if (i == 0)
+            {
+                hpPointList[i].sprite = startFull;
+            }
+            else if (i == internalMaxHp)
+            {
+                hpPointList[i-1].sprite = endFull;
+            }
+            else 
+            {
+                hpPointList[i-1].sprite = middleFull;
             }
             if (i == 0) break;
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,9 @@ namespace Player
         public MovementController movementController;
         
         public AttackController attackController;
+        public HpController hpController;
+        
+        public static Action healEvent;
 
         private void Awake()
         {
@@ -26,6 +30,7 @@ namespace Player
             {
                 InputManager.Instance.MoveAction.performed += Move;
                 InputManager.Instance.MoveAction.canceled += Move;
+                InputManager.Instance.HealAction.performed += Heal;
         
                 InputManager.Instance.AttackAction.performed += Attack;
             }
@@ -37,6 +42,7 @@ namespace Player
             {
                 InputManager.Instance.MoveAction.performed -= Move;
                 InputManager.Instance.MoveAction.canceled -= Move;
+                InputManager.Instance.HealAction.performed -= Heal;
         
                 InputManager.Instance.AttackAction.performed -= Attack;
             }
@@ -47,6 +53,7 @@ namespace Player
         {
             attackController = gameObject.GetComponent<AttackController>();
             movementController = gameObject.GetComponent<MovementController>();
+            hpController = gameObject.GetComponent<HpController>();
         }
 
         public void Move(InputAction.CallbackContext context)
@@ -66,6 +73,23 @@ namespace Player
                 attackController.Attack();
             }
             else Debug.LogWarning($"AttackController is null {context}");
+        }
+
+        public void Heal(InputAction.CallbackContext context)
+        {
+            if (hpController != null)
+            {
+                foreach (Item item in Inventory.Instance.Items)
+                {
+                    if (item.ItemName == $"Health Potion" && hpController.hp < hpController.hpData.maxHp)
+                    {
+                        hpController.Heal(5);
+                        Inventory.Instance.RemoveItem(item);
+                        break;
+                    }
+                }
+            }
+            else Debug.LogWarning($"HpController is null {context}");
         }
 
         //public void UpdateControllerData()

@@ -8,7 +8,7 @@ public class ItemPickup : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject triggerObj = collision.gameObject;
-        if (triggerObj.CompareTag("XP"))
+        if (triggerObj.CompareTag("Xp"))
         {
             xpPickupEvent?.Invoke();
             Destroy(triggerObj.gameObject);
@@ -16,8 +16,11 @@ public class ItemPickup : MonoBehaviour
         else if (triggerObj.CompareTag("Item"))
         {
             Item item = triggerObj.GetComponent<ItemHolder>().GiveItem();
-            itemPickupEvent?.Invoke(item);
-            Destroy(triggerObj.gameObject);
+            if (Inventory.Instance.Items.Length < Inventory.Instance.maxItems)
+            {
+                itemPickupEvent?.Invoke(item);
+                Destroy(triggerObj.gameObject);
+            }
         }
     }
 }

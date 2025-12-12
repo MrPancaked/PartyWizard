@@ -84,7 +84,6 @@ public class XpBar : MonoBehaviour
             {
                 anim.Play("XpBarEnd");
                 AnimatorClipInfo[] clipInfo = xpPointList[internalMaxXp-1].GetComponent<Animator>().GetCurrentAnimatorClipInfo(0);
-                Debug.Log($"this should be XpBarEnd: {clipInfo[0].clip.name}");
             }
             anim.Update(0f);
         }
@@ -117,11 +116,10 @@ public class XpBar : MonoBehaviour
             }
             else if (i == internalMaxXp)
             {
-                anim.Play("XpEndEmpty"); // idk this doesnt work for some mysterious reason
+                anim.Play("XpEndEmpty");
                 AnimatorClipInfo[] clipInfo = xpPointList[internalMaxXp-1].GetComponent<Animator>().GetCurrentAnimatorClipInfo(0);
-                Debug.Log($"this should be XpEndEmpty: {clipInfo[0].clip.name}");
             }
-            anim.Update(0f);
+            anim.Update(0f); //needed to force update the animation for if animation gets switched twice
         }
         internalXpCounter = levelController.xpCount;
     }

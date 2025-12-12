@@ -35,14 +35,14 @@ namespace Player
                 for (int i = 0; i < amount; i++)
                 {
                     Vector2 castDirection = RotateVector(direction, angleInterval * i);
-                    var projectileInstance = Instantiate(projectile, transform.position, transform.rotation, projectileParent);
+                    var projectileInstance = Instantiate(projectile, (Vector2)transform.position + 0.5f * castDirection, transform.rotation, projectileParent);
                     var projectileController = projectileInstance.GetComponent<Projectiles.ProjectileController>();
                     projectileController.Initiate(castDirection);
                 }
             }
             else if (amount == 1)
             {
-                var projectileInstance = Instantiate(projectile, transform.position, transform.rotation, projectileParent);
+                var projectileInstance = Instantiate(projectile, (Vector2)transform.position + 0.5f * direction, transform.rotation, projectileParent);
                 var projectileController = projectileInstance.GetComponent<Projectiles.ProjectileController>();
                 projectileController.Initiate(direction);
             }

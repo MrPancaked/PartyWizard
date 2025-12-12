@@ -6,8 +6,8 @@ TagManager:
   tags:
   - Enemy
   - Projectile
-  - XP
   - Item
+  - Xp
   layers:
   - Default
   - TransparentFX
@@ -19,7 +19,7 @@ TagManager:
   - Enemy
   - Projectile
   - Item
-  - 
+  - Xp
   - 
   - 
   - 

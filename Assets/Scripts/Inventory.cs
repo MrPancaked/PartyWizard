@@ -5,17 +5,20 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
     {
         public static Inventory Instance { get; private set; }
+
+        public int maxItems;
         // List of item data assets used to generate actual items at runtime.
         [SerializeField]
         private List<ItemData> itemDatas;
 
         // List of instantiated items currently in the inventory.
+        [SerializeReference]
         private List<Item> items;
 
         // Public read-only property to access a copy of the items list.
         public Item[] Items => items.ToArray();
         
-        public static Action itemAddEvent;
+        public static Action presentInventoryEvent;
 
         private void Awake()
         {
@@ -49,7 +52,7 @@ public class Inventory : MonoBehaviour
         public void AddItem(Item item)
         {
             items.Add(item);
-            itemAddEvent?.Invoke();
+            presentInventoryEvent?.Invoke();
             Debug.Log($"{item.ItemName} added to inventory");
         }
 
@@ -57,5 +60,6 @@ public class Inventory : MonoBehaviour
         public void RemoveItem(Item item)
         {
             items.Remove(item);
+            presentInventoryEvent?.Invoke();
         }
     }
