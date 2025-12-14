@@ -26,17 +26,14 @@ public class GameEffectsManager : MonoBehaviour
     }
     private IEnumerator LevelClearEffect()
     {
-        LensDistortion lensDistortion = volume.profile.TryGet(out LensDistortion lens) ? lens : null;
         ChromaticAberration chromatic = volume.profile.TryGet(out ChromaticAberration chrom) ? chrom : null;
         
-        if (lensDistortion != null && chromatic != null)
+        if (chromatic != null)
         {
-            float lensDistortionIntensity = (float)lensDistortion.intensity;
             float chromaticIntensity = (float)chromatic.intensity;
             float i = 0;
             while (i < effectDuration)
             {
-                //lensDistortion.intensity.Override( lensDistortionIntensity + effectCurve.Evaluate(i / effectDuration));
                 chromatic.intensity.Override( chromaticIntensity + effectCurve.Evaluate(i / effectDuration));
                 yield return new WaitForEndOfFrame();
                 i += Time.deltaTime;

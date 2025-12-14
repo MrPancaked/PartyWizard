@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdcfa152d47446b4189e7bf66db1518d, type: 3}
+  m_Name: MagicMissle
+  m_EditorClassIdentifier: Assembly-CSharp::SpellData
+  aoeEffect: 0
+  aoeDamage: 1
+  aoeRadius: 2
+  aoeKnockback: 10
+  startSpeed: 20
+  endSpeed: 0
+  maxTimeAlive: 1
+  speedScaling: 0
+  directionChange: 1
+  directionChangeStrength: 1
+  knockback: 10
+  damage: 1
+  hurtPlayer: 0
+  hurtEnemy: 1
+  hurtProjectile: 0

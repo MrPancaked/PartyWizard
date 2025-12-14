@@ -21,8 +21,17 @@ namespace Projectiles
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            AoeEffect();
-            Instantiate(destroyEffectObject, transform.position, transform.rotation);
+            if (spellData.aoeEffect)
+                AoeEffect();
+            if (destroyEffectObject != null) 
+                Instantiate(destroyEffectObject, transform.position, transform.rotation);
+            
+            ParticleSystem particleSystem = gameObject.GetComponentInChildren<ParticleSystem>();
+            if (gameObject.GetComponentInChildren<ParticleSystem>() != null)
+            {
+                particleSystem.Stop();
+                particleSystem.transform.parent = null;
+            }
             Destroy(gameObject);
         }
 
@@ -118,6 +127,7 @@ namespace Projectiles
                     break;
                 }
             }
+            gameObject.transform.up = direction;
         }
 
         private void SetRigidbodyValues()
