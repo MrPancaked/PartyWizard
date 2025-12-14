@@ -310,6 +310,7 @@ GameObject:
   - component: {fileID: -2238948844177917676}
   - component: {fileID: 6912889462232665748}
   - component: {fileID: 2821817305691107069}
+  - component: {fileID: -5461224502505663143}
   - component: {fileID: 6488919804680996256}
   - component: {fileID: 7985838292671515528}
   - component: {fileID: 5292867895010063321}
@@ -459,6 +460,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.HpController
   hpData: {fileID: 11400000, guid: d45b84cb9322a6646aef95335ee82a3c, type: 2}
+--- !u!114 &-5461224502505663143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9200540470247148309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04e4cc7275c1364fbaf9378d3a09943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitEffect
+  duration: 2
+  hpController: {fileID: 2821817305691107069}
+  spriteRenderer: {fileID: 1932475213316755675}
 --- !u!114 &6488919804680996256
 MonoBehaviour:
   m_ObjectHideFlags: 0

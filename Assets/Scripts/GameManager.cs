@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private int waitTime;
     
-    private int enemyCount;
+    public int enemyCount {get; private set;}
     private int round;
 
     public Action RoomClearedEvent;
@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator NewRound()
     {
+        ClearItems();
         RoomStartEvent?.Invoke();
         
         round++;
@@ -117,6 +118,17 @@ public class GameManager : MonoBehaviour
     {
         enemyCount = enemyParent.GetComponentsInChildren<HpController>().Length;
         enemyCounter.text = $"{enemyCount}";
+    }
+
+    private void ClearItems()
+    {
+        LayerMask layerMask = LayerMask.GetMask("Xp");
+        layerMask |= LayerMask.GetMask("Item");
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(new Vector2(0,0), new Vector2(14f, 14f), 0, layerMask);
+        foreach (Collider2D hit in colliders)
+        {
+            Destroy(hit.gameObject);
+        }
     }
 
     #region PauseGame

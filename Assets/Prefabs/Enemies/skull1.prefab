@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: -3431269045116782152}
   - component: {fileID: 7426757249236374293}
   - component: {fileID: -5902037317185273110}
+  - component: {fileID: -581732976148146887}
   - component: {fileID: 3888119952464389076}
   m_Layer: 7
   m_Name: skull1
@@ -264,6 +265,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.HpController
   hpData: {fileID: 11400000, guid: ff9a0588795954842a6922b6228b9f5d, type: 2}
+--- !u!114 &-581732976148146887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2569219723795775860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04e4cc7275c1364fbaf9378d3a09943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitEffect
+  duration: 2
+  hpController: {fileID: -5902037317185273110}
+  spriteRenderer: {fileID: 1662136402228553271}
 --- !u!61 &3888119952464389076
 BoxCollider2D:
   m_ObjectHideFlags: 0
