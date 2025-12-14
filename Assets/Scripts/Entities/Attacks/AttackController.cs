@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -55,6 +56,17 @@ namespace Player
             float newXDir = direction.x * Mathf.Cos(angle) - direction.y * Mathf.Sin(angle);
             float newYDir = direction.x * Mathf.Sin(angle) + direction.y * Mathf.Cos(angle);
             return new  Vector2(newXDir, newYDir);
+        }
+
+        public void SetAmount(string stringAmount)
+        {
+            Int32.TryParse(stringAmount, out amount);
+        }
+        public void SetAngle(string stringAngle)
+        {
+            int intAngle;
+            Int32.TryParse(stringAngle, out intAngle);
+            angle = intAngle;
         }
     }
 }
