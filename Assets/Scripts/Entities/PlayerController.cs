@@ -81,7 +81,7 @@ namespace Player
             {
                 foreach (Item item in Inventory.Instance.Items)
                 {
-                    if (item.ItemName == $"Health Potion" && hpController.hp < hpController.hpData.maxHp)
+                    if (item.ItemName == $"Health Potion")
                     {
                         hpController.Heal(5);
                         Inventory.Instance.RemoveItem(item);
