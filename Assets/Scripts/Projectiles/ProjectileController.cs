@@ -13,25 +13,17 @@ namespace Projectiles
         [HideInInspector] public float speed;
         [HideInInspector] public Vector2 direction;
         public ScriptableObjects.Player.SpellData spellData;
-        [SerializeField] private GameObject destroyEffectObject;
+        [SerializeField] private ParticleSystem destroyEffectObject;
         
         private float timeAlive;
         private float linearSpeedChange;
         private Vector2 randomCurveDirection;
-
+        
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (spellData.aoeEffect)
                 AoeEffect();
-            if (destroyEffectObject != null) 
-                Instantiate(destroyEffectObject, transform.position, transform.rotation);
-            
-            ParticleSystem particleSystem = gameObject.GetComponentInChildren<ParticleSystem>();
-            if (gameObject.GetComponentInChildren<ParticleSystem>() != null)
-            {
-                particleSystem.Stop();
-                particleSystem.transform.parent = null;
-            }
+            DoParticles();
             Destroy(gameObject);
         }
 
@@ -65,6 +57,7 @@ namespace Projectiles
         }
         public void Initiate(Vector2 castDirection)
         {
+            transform.position = new Vector3(transform.position.x, transform.position.y, -0.1f);
             rb.linearDamping = 0f;
             rb.gravityScale = 0f;
             speed = spellData.startSpeed;
@@ -88,7 +81,7 @@ namespace Projectiles
             if (timeAlive >= spellData.maxTimeAlive)
             {
                 AoeEffect();
-                Instantiate(destroyEffectObject, transform.position, transform.rotation);
+                DoParticles();
                 Destroy(gameObject);
             }
         }
@@ -145,6 +138,18 @@ namespace Projectiles
                 if (!spellData.hurtPlayer) mask |= LayerMask.GetMask("Player");
                 if (!spellData.hurtProjectile) mask |= LayerMask.GetMask("Projectile");
                 collider.excludeLayers = mask;
+            }
+        }
+
+        private void DoParticles()
+        {
+            if (destroyEffectObject != null) 
+                Instantiate(destroyEffectObject, transform.position, transform.rotation);
+            ParticleSystem particleSystem = gameObject.GetComponentInChildren<ParticleSystem>();
+            if (particleSystem != null)
+            {
+                particleSystem.Stop();
+                particleSystem.transform.parent = null;
             }
         }
     }

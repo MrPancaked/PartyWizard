@@ -11,6 +11,7 @@ namespace ScriptableObjects.Player
         public int contactDamage;
         public float contactKnockback;
         public bool takeDamage;
+        public ParticleSystem destroyEffectObject;
     }
 }
 

@@ -8,7 +8,6 @@ namespace Player
     public class PlayerController : MonoBehaviour
     {
         public static PlayerController Instance;
-        private InputManager inputManager;
 
         public ScriptableObjects.Player.MovementData movementData;
         public MovementController movementController;
@@ -26,15 +25,7 @@ namespace Player
 
         private void OnEnable()
         {
-            if (InputManager.Instance != null)
-            {
-                InputManager.Instance.MoveAction.performed += Move;
-                InputManager.Instance.MoveAction.canceled += Move;
-                InputManager.Instance.HealAction.performed += Heal;
-        
-                InputManager.Instance.AttackAction.performed += Attack;
-            }
-            else Debug.LogWarning($"OnEnable {name} did not find InputManager.Instance");
+            
         }
         private void OnDisable()
         {
@@ -51,6 +42,16 @@ namespace Player
 
         private void Start()
         {
+            if (InputManager.Instance != null)
+            {
+                InputManager.Instance.MoveAction.performed += Move;
+                InputManager.Instance.MoveAction.canceled += Move;
+                InputManager.Instance.HealAction.performed += Heal;
+        
+                InputManager.Instance.AttackAction.performed += Attack;
+            }
+            else Debug.LogWarning($"OnEnable {name} did not find InputManager.Instance");
+            
             attackController = gameObject.GetComponent<AttackController>();
             movementController = gameObject.GetComponent<MovementController>();
             hpController = gameObject.GetComponent<HpController>();
@@ -77,7 +78,7 @@ namespace Player
 
         public void Heal(InputAction.CallbackContext context)
         {
-            if (hpController != null)
+            if (hpController != null && Inventory.Instance != null)
             {
                 foreach (Item item in Inventory.Instance.Items)
                 {
@@ -89,7 +90,7 @@ namespace Player
                     }
                 }
             }
-            else Debug.LogWarning($"HpController is null {context}");
+            else Debug.LogWarning($"HpController or Inventory is null {context}");
         }
 
         //public void UpdateControllerData()

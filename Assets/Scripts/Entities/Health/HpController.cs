@@ -125,6 +125,17 @@ namespace Player
             else if (gameObject.CompareTag("Enemy")) 
             {
                 EventBus<EnemyDieEventData>.Publish(new EnemyDieEventData(gameObject)); //deathEvent.Publish(new EnemyDieEventData(gameObject), this.gameObject);
+                
+                if (hpData.destroyEffectObject != null) 
+                    Instantiate(hpData.destroyEffectObject, transform.position, transform.rotation);
+                
+                Destroy(gameObject);
+            }
+            else
+            {
+                if (hpData.destroyEffectObject != null) 
+                    Instantiate(hpData.destroyEffectObject, transform.position, transform.rotation);
+                
                 Destroy(gameObject);
             }
         }

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour
 {
-    public static InputManager Instance;
+    public static InputManager Instance { get; private set; }
     
     [SerializeField] InputActionAsset inputActionAsset;
     //Actions
