@@ -4,6 +4,8 @@ public class ListViewInventoryPresenter : InventoryPresenter
 {
     // Prefab used to display each item in the inventory list.
     [SerializeField] private ItemPresenter itemPresenterPrefab;
+    [SerializeField] private Item noItem;
+    [SerializeField] private Item notAvailableItemSlot;
 
     // Parent transform under which item UI elements will be instantiated.
     public Transform listParent;
@@ -19,14 +21,35 @@ public class ListViewInventoryPresenter : InventoryPresenter
         Item[] items = Inventory.Instance.Items;
 
         // Instantiate and present each item in the UI.
-        for (int i = 0; i < items.Length; i++)
+        for (int i = 0; i < 4; i++)
         {
-            ItemPresenter itemPresenter = Instantiate<ItemPresenter>(itemPresenterPrefab);
-            itemPresenter.PresentItem(items[i]);
+            if (i < items.Length)
+            {
+                ItemPresenter itemPresenter = Instantiate<ItemPresenter>(itemPresenterPrefab);
+                itemPresenter.PresentItem(items[i]);
 
-            // Set the parent and scale for proper UI layout.
-            itemPresenter.transform.SetParent(listParent);
-            itemPresenter.transform.localScale = Vector3.one;
+                // Set the parent and scale for proper UI layout.
+                itemPresenter.transform.SetParent(listParent);
+                itemPresenter.transform.localScale = Vector3.one;
+            }
+            else if (i < Inventory.Instance.maxItems)
+            {
+                ItemPresenter itemPresenter = Instantiate<ItemPresenter>(itemPresenterPrefab);
+                itemPresenter.PresentItem(noItem);
+
+                // Set the parent and scale for proper UI layout.
+                itemPresenter.transform.SetParent(listParent);
+                itemPresenter.transform.localScale = Vector3.one;
+            }
+            else if (i >= Inventory.Instance.maxItems)
+            {
+                ItemPresenter itemPresenter = Instantiate<ItemPresenter>(itemPresenterPrefab);
+                itemPresenter.PresentItem(notAvailableItemSlot);
+
+                // Set the parent and scale for proper UI layout.
+                itemPresenter.transform.SetParent(listParent);
+                itemPresenter.transform.localScale = Vector3.one;
+            }
         }
     }
     // Clears all child item UI elements from the list except the parent itself.

@@ -22,11 +22,7 @@ namespace Player
             if (Instance != null && Instance != this) { Destroy(gameObject); return;} // Singleton
             Instance = this;
         }
-
-        private void OnEnable()
-        {
-            
-        }
+        
         private void OnDisable()
         {
             if (InputManager.Instance != null)
@@ -36,6 +32,7 @@ namespace Player
                 InputManager.Instance.HealAction.performed -= Heal;
         
                 InputManager.Instance.AttackAction.performed -= Attack;
+                //InputManager.Instance.AttackAction.canceled -= Attack;
             }
             else Debug.LogWarning($"Ondisable: {name} did not find InputManager.Instance");
         }
@@ -49,6 +46,7 @@ namespace Player
                 InputManager.Instance.HealAction.performed += Heal;
         
                 InputManager.Instance.AttackAction.performed += Attack;
+                //InputManager.Instance.AttackAction.canceled += Attack;
             }
             else Debug.LogWarning($"OnEnable {name} did not find InputManager.Instance");
             
@@ -71,7 +69,7 @@ namespace Player
         {
             if (attackController != null)
             {
-                attackController.Attack();
+                attackController.StartAttacking();
             }
             else Debug.LogWarning($"AttackController is null {context}");
         }

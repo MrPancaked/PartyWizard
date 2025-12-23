@@ -11,5 +11,11 @@ public abstract class InventoryPresenter : MonoBehaviour
     {
         Inventory.presentInventoryEvent -= PresentInventory;
     }
+
+    private void Start()
+    {
+        PresentInventory();
+    }
+
     public abstract void PresentInventory();
 }

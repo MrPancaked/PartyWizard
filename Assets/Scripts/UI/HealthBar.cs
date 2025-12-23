@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Player;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,13 +31,21 @@ public class HealthBar : MonoBehaviour
     }
     private void OnEnable()
     {
-        hpController.TakeDamageEvent += DamageHealthBar;
-        hpController.HealEvent += HealHealthBar;
+        hpController.TakeDamageEvent += UpdateHealthBar;
+        hpController.HealEvent += UpdateHealthBar;
+        if (hpController.isPlayer)
+        {
+            EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished += InitiateHealthBar;
+        }
     }
     private void OnDisable()
     {
-        hpController.TakeDamageEvent -= DamageHealthBar;
-        hpController.HealEvent -= HealHealthBar;
+        hpController.TakeDamageEvent -= UpdateHealthBar;
+        hpController.HealEvent -= UpdateHealthBar;
+        if (hpController.isPlayer)
+        {
+            EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished -= InitiateHealthBar;
+        }
     }
 
     private void InitiateHealthBar()
@@ -44,7 +53,7 @@ public class HealthBar : MonoBehaviour
         ClearHorizontalLayout();
         hpPointList = new List<Image>();
         internalHpCounter = hpController.hp;
-        internalMaxHp = hpController.hpData.maxHp;
+        internalMaxHp = hpController.maxHp;
 
         for (int i = 0; i < internalMaxHp; i++)
         {
@@ -83,50 +92,28 @@ public class HealthBar : MonoBehaviour
             i++;
         }
     }
-    private void DamageHealthBar(TakeDamageData damageData)
+
+    private void UpdateHealthBar(TakeDamageData damageData)
     {
-        for (int i = internalHpCounter; i > internalHpCounter - damageData.damage; i--)
+        internalHpCounter = hpController.hp;
+        internalMaxHp = hpController.maxHp;
+        for (int i = 0; i < internalMaxHp; i++)
         {
             if (i == 0)
             {
-                hpPointList[i].sprite = startEmpty;
+                if (internalHpCounter == 0) hpPointList[i].sprite = startEmpty;
+                else hpPointList[i].sprite = startFull;
             }
-            else if (i == internalMaxHp)
+            else if (i < internalMaxHp - 1)
             {
-                hpPointList[i-1].sprite = endEmpty;
+                if  (i < internalHpCounter) hpPointList[i].sprite = middleFull;
+                else hpPointList[i].sprite = middleEmpty;
             }
-            else 
+            else if (i == internalMaxHp - 1)
             {
-                hpPointList[i-1].sprite = middleEmpty;
+                if (internalHpCounter == internalMaxHp) hpPointList[i].sprite = endFull;
+                else hpPointList[i].sprite = endEmpty;
             }
-            if (i == 0) break;
         }
-        internalHpCounter = hpController.hp;
-    }
-
-    private void HealHealthBar(int healAmount)
-    {
-        for (int i = internalHpCounter + 1; i <= internalHpCounter + healAmount; i++)
-        {
-            if (i == 0)
-            {
-                hpPointList[i].sprite = startFull;
-            }
-            else if (i == internalMaxHp)
-            {
-                hpPointList[i-1].sprite = endFull;
-            }
-            else 
-            {
-                hpPointList[i-1].sprite = middleFull;
-            }
-            if (i == 0) break;
-        }
-        internalHpCounter = hpController.hp;
-    }
-
-    private void AnimateHealthPoint()
-    {
-        
     }
 }

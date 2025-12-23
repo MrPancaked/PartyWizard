@@ -89,9 +89,15 @@ public abstract class EventData
 public class EventBus<T> where T : EventData
 {
     public static event Action<T> OnEventPublished;
+    public static event Action OnNoParamEventPublished;
 
     public static void Publish(T eventData)
     {
         OnEventPublished?.Invoke(eventData);
+    }
+
+    public static void PublishNoParam()
+    {
+        OnNoParamEventPublished?.Invoke();
     }
 }

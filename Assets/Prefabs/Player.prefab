@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 484c3644443a5c842aec54600aafea92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
-  maxItems: 4
+  maxItems: 2
   itemDatas: []
   items: []
   references:
@@ -172,7 +172,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelController
   xpData: {fileID: 11400000, guid: 1bd175943eadbc443bb536526d0e0a66, type: 2}
+  startingStats: {fileID: 11400000, guid: 174f4d1e5629c7c4b8453dc15b4d80ab, type: 2}
   levelCounter: {fileID: 0}
+  upgradeUI: {fileID: 0}
+  upgradesList:
+  - {fileID: 0}
+  upgradesPerLevel: 0
+  extraHp: 0
+  flatDamage: 0
+  damageMultiplier: 0
+  flatKnockback: 0
+  knockbackMultiplier: 0
+  speed: 0
+  xpMultiplier: 0
+  inventorySlots: 0
+  spellCastDelay: 0
+  spellCastAmount: 0
+  pickUpRange: 0
+  movementSpeed: 0
 --- !u!114 &9192271738658110124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,11 +246,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5101ba7ff0fbf342b77480ff95879c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackController
-  amount: 5
+  amount: 1
   angle: 45
-  delayBetweenSpells: 0
-  projectile: {fileID: 3371931195115675852, guid: ee73e45fee820ff43ada9958fae9d794, type: 3}
+  delayBetweenSpells: 1
+  spellPrefabs:
+  - {fileID: 3371931195115675852, guid: ee73e45fee820ff43ada9958fae9d794, type: 3}
+  - {fileID: 3371931195115675852, guid: a3f106f321d55f04dac6aa3dd6795290, type: 3}
+  startSpell: {fileID: 3371931195115675852, guid: ee73e45fee820ff43ada9958fae9d794, type: 3}
   projectileParent: {fileID: 0}
+  attacking: 0
 --- !u!114 &4223670104831844656
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [SerializeField] private GameObject cheatUI;
     [SerializeField] private GameObject victoryUI;
     [SerializeField] private GameObject pauseGameUI;
     [SerializeField] private GameObject playerDeathUI;
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
         if (InputManager.Instance != null)
         {
             InputManager.Instance.PauseGameAction.performed += PauseGame;
+            InputManager.Instance.CheatAction.performed += ToggleCheatMenu;
         }
     }
 
@@ -56,6 +58,7 @@ public class GameManager : MonoBehaviour
         if (InputManager.Instance != null)
         {
             InputManager.Instance.PauseGameAction.performed -= PauseGame; // somettimes this gets called after 
+            InputManager.Instance.CheatAction.performed -= ToggleCheatMenu;
         }
     }
 
@@ -128,6 +131,17 @@ public class GameManager : MonoBehaviour
         foreach (Collider2D hit in colliders)
         {
             Destroy(hit.gameObject);
+        }
+    }
+    public void ToggleCheatMenu(InputAction.CallbackContext context)
+    {
+        if (!cheatUI.activeInHierarchy)
+        {
+            cheatUI.SetActive(true);
+        }
+        else 
+        {
+            cheatUI.SetActive(false);
         }
     }
 

@@ -1,11 +1,17 @@
 using System;
 using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
+using UnityEditor;
+using Random = UnityEngine.Random;
+
 [RequireComponent(typeof(ItemPickup))]
 public class LevelController : MonoBehaviour
 {
     public XpData xpData;
     [SerializeField] private TextMeshProUGUI levelCounter;
+    
+    
     public int xpCount{ get; private set; }
     public int level { get; private set; }
     
@@ -41,8 +47,8 @@ public class LevelController : MonoBehaviour
     }
     public void LevelUp() // public for button
     {
-        LevelUpEvent?.Invoke();
         level++;
         levelCounter.text = $"{level}";
+        LevelUpEvent?.Invoke();
     }
 }

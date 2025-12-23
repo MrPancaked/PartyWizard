@@ -9,9 +9,10 @@ namespace Player
     public class HpController : MonoBehaviour
     {
         public event Action<TakeDamageData> TakeDamageEvent;
-        public event Action<int> HealEvent;
+        public event Action<TakeDamageData> HealEvent;
         public event Action DeathEvent;
         
+        public int maxHp {get; private set;}
         public int hp {get; private set;}
         public int shield {get; private set;}
         public int contactDamage {get; private set;}
@@ -19,15 +20,34 @@ namespace Player
         public bool takeDamage {get; private set;}
         public ScriptableObjects.Player.HpData hpData; //public so playercontroller can update the controller data classes
         private bool dead = false;
-    
+        public bool isPlayer { get; private set; }
+
         private void Awake()
         {
             Initialize();
         }
 
+        private void OnEnable()
+        {
+            if (isPlayer)
+            {
+                EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished += UpdateHp;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (isPlayer)
+            {
+                EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished -= UpdateHp;
+            }
+        }
+
         public void Initialize()
         {
-            if (hpData.startHp > hpData.maxHp) hpData.startHp = hpData.maxHp;
+            isPlayer = gameObject.CompareTag("Player");
+            maxHp = hpData.maxHp;
+            if (hpData.startHp > maxHp) hpData.startHp = maxHp;
             hp = hpData.startHp;
             shield = hpData.startShield;
             contactDamage = hpData.contactDamage;
@@ -86,6 +106,12 @@ namespace Player
         public void TakeDamage(TakeDamageData takeDamageData)
         {
             int damage = takeDamageData.damage;
+            if (!isPlayer)
+            {
+                PlayerStatController playerStatController = PlayerStatController.Instance;
+                damage += playerStatController.flatDamage;
+                damage *= playerStatController.damageMultiplier;
+            }
             if (takeDamage)
             {
                 shield -= damage;
@@ -109,14 +135,14 @@ namespace Player
 
         public void Heal(int healAmount)
         {
-            if (hp + healAmount > hpData.maxHp)
+            if (hp + healAmount > maxHp)
             {
-                int maxHeal = hpData.maxHp - hp;
+                int maxHeal = maxHp - hp;
                 healAmount = maxHeal;
             }
             hp += healAmount;
             Debug.Log($"{gameObject.name} has healed {healAmount}");
-            HealEvent?.Invoke(healAmount);
+            HealEvent?.Invoke(new TakeDamageData(-healAmount));
         }
         private void Die()
         {
@@ -138,6 +164,11 @@ namespace Player
                 
                 Destroy(gameObject);
             }
+        }
+
+        private void UpdateHp()
+        {
+            maxHp += PlayerStatController.Instance.extraHpUpgrade;
         }
     }
 

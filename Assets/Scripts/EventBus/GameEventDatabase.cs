@@ -71,3 +71,39 @@ public class EnemySpawnEventData : EventData
         }
     }
 }
+
+public class PlayerUpgradeEventData : EventData
+{
+    public Upgrade upgrade;
+    public PlayerUpgradeEventData()
+    {
+        name = "PlayerUpgradeEvent";
+    }
+}
+
+public class ExtraHpUpgradeEventData : PlayerUpgradeEventData
+{
+    public ExtraHpUpgradeEventData(ExtraHpUpgrade pUpgrade)
+    {
+        upgrade = pUpgrade;
+        name = "ExtraHpUpgradeEvent";
+    }
+}
+
+public class FlatDamageUpgradeEventData : PlayerUpgradeEventData
+{
+    public FlatDamageUpgradeEventData(FlatDamageUpgrade pUpgrade)
+    {
+        upgrade = pUpgrade;
+        name = "FlatDamageUpgradeEvent";
+    }
+}
+
+public class DamageMultiplierUpgradeEventData : PlayerUpgradeEventData
+{
+    public DamageMultiplierUpgradeEventData(DamageMultiplierUpgrade pUpgrade)
+    {
+        upgrade = pUpgrade;
+        name = "DamageMultiplierUpgradeEvent";
+    }
+}

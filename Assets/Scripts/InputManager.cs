@@ -17,6 +17,8 @@ public class InputManager : MonoBehaviour
     public InputAction PauseGameAction => pauseGameAction;
     private InputAction healAction;
     public InputAction HealAction => healAction;
+    private InputAction cheatAction;
+    public InputAction CheatAction => cheatAction;
 
     
     private void Awake()
@@ -29,6 +31,7 @@ public class InputManager : MonoBehaviour
         attackAction = inputActionAsset.FindAction("Attack");
         pauseGameAction = inputActionAsset.FindAction("PauseGame");
         healAction = inputActionAsset.FindAction("Heal");
+        cheatAction = inputActionAsset.FindAction("Cheat");
     }
     private void OnEnable()
     {

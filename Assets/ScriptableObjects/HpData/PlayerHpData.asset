@@ -18,3 +18,4 @@ MonoBehaviour:
   contactDamage: 1
   contactKnockback: 10
   takeDamage: 1
+  destroyEffectObject: {fileID: 0}

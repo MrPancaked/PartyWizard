@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,40 +15,60 @@ namespace Player
         public float angle;
         public float delayBetweenSpells;
     
-        [SerializeField] private GameObject projectile;
+        [SerializeField] private GameObject[] spellPrefabs;
+        [SerializeField] private GameObject startSpell;
         [SerializeField] private Transform projectileParent;
+
+        [HideInInspector] public bool attacking;
     
         private void Start()
         {
+            attacking = false;
             playerController = GetComponent<PlayerController>();
             if (amount < 1) amount = 1;
         }
-        public void Attack()
+
+        public void StartAttacking()
         {
-            Vector2 playerPosition = playerController.transform.position;
-            Vector2 mousePosition = Vector2.zero;
-            if (Camera.main != null) mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            else Debug.LogWarning("Main Camera not found!");
-            Vector2 direction = (mousePosition - playerPosition).normalized;
-            if (amount > 1)
+            if (!attacking)
             {
-                if (angle != 0) direction = RotateVector(direction, -angle / 2f);
-                float angleInterval = angle / (amount - 1); //division by 0 is not a problem because amount is never 1 due to the check earlier
-                for (int i = 0; i < amount; i++)
+                attacking = true;
+                StartCoroutine(Attack());
+            }
+            //else attacking = true; //this happens if the coroutine has started, then player stops attacking, but starts attacking again before the spellcast delay took effect
+        }
+        private IEnumerator Attack()
+        {
+            while (attacking)
+            {
+                Vector2 playerPosition = playerController.transform.position;
+                Vector2 mousePosition = Vector2.zero;
+                if (Camera.main != null) mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+                else Debug.LogWarning("Main Camera not found!");
+                Vector2 direction = (mousePosition - playerPosition).normalized;
+                if (amount > 1)
                 {
-                    Vector2 castDirection = RotateVector(direction, angleInterval * i);
-                    var projectileInstance = Instantiate(projectile, (Vector2)transform.position + 0.5f * castDirection, transform.rotation, projectileParent);
-                    var projectileController = projectileInstance.GetComponent<Projectiles.ProjectileController>();
-                    projectileController.Initiate(castDirection);
+                    if (angle != 0) direction = RotateVector(direction, -angle / 2f);
+                    float angleInterval = angle / (amount - 1); //division by 0 is not a problem because amount is never 1 due to the check earlier
+                    for (int i = 0; i < amount; i++)
+                    {
+                        Vector2 castDirection = RotateVector(direction, angleInterval * i);
+                        var projectileInstance = Instantiate(startSpell, (Vector2)transform.position + 0.5f * castDirection, transform.rotation, projectileParent);
+                        var projectileController = projectileInstance.GetComponent<Projectiles.ProjectileController>();
+                        projectileController.Initiate(castDirection);
+                    }
                 }
+                else if (amount == 1)
+                {
+                    var projectileInstance = Instantiate(startSpell, (Vector2)transform.position + 0.5f * direction, transform.rotation, projectileParent);
+                    var projectileController = projectileInstance.GetComponent<Projectiles.ProjectileController>();
+                    projectileController.Initiate(direction);
+                }
+                else Debug.LogError($"somehow trying to cast invalid amount of spells:{amount}");
+                
+                yield return new WaitForSeconds(delayBetweenSpells);
+                if (!InputManager.Instance.AttackAction.IsPressed()) attacking = false;
             }
-            else if (amount == 1)
-            {
-                var projectileInstance = Instantiate(projectile, (Vector2)transform.position + 0.5f * direction, transform.rotation, projectileParent);
-                var projectileController = projectileInstance.GetComponent<Projectiles.ProjectileController>();
-                projectileController.Initiate(direction);
-            }
-            else Debug.LogError("somehow trying to cast invalid amount of spells");
         }
 
         private Vector2 RotateVector(Vector2 direction, float angle)
@@ -67,6 +88,11 @@ namespace Player
             int intAngle;
             Int32.TryParse(stringAngle, out intAngle);
             angle = intAngle;
+        }
+
+        public void SetCooldown(string stringCooldown)
+        {
+            float.TryParse(stringCooldown, out delayBetweenSpells);
         }
     }
 }

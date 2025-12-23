@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f089210597b9be44da302c736c764517, type: 3}
   m_Name: PlayerMovementData
   m_EditorClassIdentifier: Assembly-CSharp::MovementData
-  speed: 150
+  speed: 100
   friction: 20
