@@ -4,8 +4,9 @@ public class FlatDamageUpgrade : Upgrade
 {
     private void Start()
     {
-        upgradeName = "Flat Damage Upgrade";
+        upgradeName = "Flat Damage";
         description = $"Adds +{playerStatController.flatDamageUpgrade} damage to your attacks and spells";
+        UpdateUpgradeText();
     }
     public override void DoUpgrade()
     {

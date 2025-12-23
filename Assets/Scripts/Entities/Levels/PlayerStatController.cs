@@ -111,11 +111,13 @@ public class PlayerStatController : MonoBehaviour
         for (int i = 0; i < upgradesPerLevel; i++)
         {
             int randomIndex = Random.Range(0, upgradesList.Count);
-            while (alreadyPickedList.Contains(randomIndex))
+            if (alreadyPickedList.Count < upgradesList.Count) //to prevent it going in an infitite loop
             {
-                randomIndex = Random.Range(0, upgradesList.Count);
+                while (alreadyPickedList.Contains(randomIndex))
+                {
+                    randomIndex = Random.Range(0, upgradesList.Count);
+                }
             }
-            
             alreadyPickedList.Add(randomIndex);
             Instantiate(upgradesList[randomIndex], upgradeUI.transform);
         }

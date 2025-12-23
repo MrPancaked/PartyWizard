@@ -4,8 +4,9 @@ public class DamageMultiplierUpgrade : Upgrade
 {
     private void Start()
     {
-        upgradeName = "Damage Multiplier Upgrade";
+        upgradeName = "Damage Multiplier";
         description = $"Adds +{playerStatController.damageMultiplierUpgrade} to your damage multiplier";
+        UpdateUpgradeText();
     }
     public override void DoUpgrade()
     {

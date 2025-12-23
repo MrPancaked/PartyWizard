@@ -5,8 +5,9 @@ public class ExtraHpUpgrade : Upgrade
 
     private void Start()
     {
-        upgradeName = "Extra Hp Upgrade";
+        upgradeName = "Extra Hp";
         description = $"Adds +{playerStatController.extraHpUpgrade} hp to your max hp";
+        UpdateUpgradeText();
     }
     public override void DoUpgrade()
     {
