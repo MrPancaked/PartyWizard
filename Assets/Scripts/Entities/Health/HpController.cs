@@ -149,6 +149,7 @@ namespace Player
                 else
                 {
                     BreakMagicShield();
+                    Debug.Log("broke Magic Shield");
                 }
             }
         }

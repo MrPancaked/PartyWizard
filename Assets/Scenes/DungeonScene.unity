@@ -16226,8 +16226,9 @@ MonoBehaviour:
   roundCounter: {fileID: 330060438}
   enemyWaves:
   - {fileID: 11400000, guid: 31c0f4c95f93dfd418d1b0b085a7e722, type: 2}
-  - {fileID: 11400000, guid: 31c0f4c95f93dfd418d1b0b085a7e722, type: 2}
-  - {fileID: 11400000, guid: 31c0f4c95f93dfd418d1b0b085a7e722, type: 2}
+  - {fileID: 11400000, guid: 0790e31d392bee04d80bbffe6293de9c, type: 2}
+  - {fileID: 11400000, guid: e0813963c74b08141bc79be23feceaec, type: 2}
+  - {fileID: 11400000, guid: 10fd36c5d150bd141b075d8b40e31b31, type: 2}
   countdownText: {fileID: 1661724010}
   waitTime: 3
 --- !u!4 &1462664240
@@ -23604,9 +23605,17 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1945399989797448915, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
+      propertyPath: angle
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945399989797448915, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
       propertyPath: projectileParent
       value: 
       objectReference: {fileID: 604630432}
+    - target: {fileID: 1945399989797448915, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
+      propertyPath: delayBetweenSpells
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 2020143771874615910, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
       propertyPath: levelCounter
       value: 
