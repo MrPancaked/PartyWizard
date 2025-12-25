@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 897669bca2f357447aeae0f8f3023831, type: 3}
-  m_Name: Wave1
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyWaveData
-  enemyWave:
-  - {fileID: 725479168565907076, guid: 4429450e9c578a34db8b057944d286b4, type: 3}
+  m_Script: {fileID: 11500000, guid: f089210597b9be44da302c736c764517, type: 3}
+  m_Name: BossMovementData
+  m_EditorClassIdentifier: Assembly-CSharp::MovementData
+  speed: 100
+  friction: 20

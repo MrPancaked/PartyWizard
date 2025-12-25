@@ -64,7 +64,7 @@ namespace Player
                     var projectileController = projectileInstance.GetComponent<Projectiles.ProjectileController>();
                     projectileController.Initiate(direction);
                 }
-                else Debug.LogError($"somehow trying to cast invalid amount of spells:{amount}");
+                else Debug.LogWarning($"somehow trying to cast invalid amount of spells:{amount}");
                 
                 yield return new WaitForSeconds(delayBetweenSpells);
                 if (!InputManager.Instance.AttackAction.IsPressed()) attacking = false;

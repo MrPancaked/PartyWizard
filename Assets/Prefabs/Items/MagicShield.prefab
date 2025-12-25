@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3210276094232061653}
   - component: {fileID: 3629368448094712023}
-  - component: {fileID: 1653619591319756164}
   - component: {fileID: 9203945937665621647}
   - component: {fileID: 4805567127737685787}
-  m_Layer: 10
-  m_Name: XP
-  m_TagString: Xp
+  - component: {fileID: 3710307152111473867}
+  m_Layer: 9
+  m_Name: MagicShield
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7653998179898489512, guid: 9752e355f1f22274d85268cbee9ce1ae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c698ede97231cbd44816b508d88f8f9b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -93,28 +93,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &1653619591319756164
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8616179483865393267}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1173bddd770f31a48a08a304d39d950f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &9203945937665621647
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -153,13 +131,13 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.25, y: 0.25}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.25, y: 0.25}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.125, y: 0.125}
+  m_Size: {x: 0.625, y: 0.625}
   m_EdgeRadius: 0
 --- !u!50 &4805567127737685787
 Rigidbody2D:
@@ -188,3 +166,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &3710307152111473867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8616179483865393267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078c029d5d475ca44b1c18e9a9be3af6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemHolder
+  itemData: {fileID: 11400000, guid: 17d40a1a74717d24d898471d7a5f3339, type: 2}

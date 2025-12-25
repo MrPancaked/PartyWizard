@@ -23,4 +23,8 @@ public class ItemPickup : MonoBehaviour
             }
         }
     }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        OnTriggerEnter2D(other);
+    }
 }

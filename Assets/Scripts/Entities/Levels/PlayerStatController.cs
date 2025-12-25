@@ -73,7 +73,7 @@ public class PlayerStatController : MonoBehaviour
     {
         InitializeStats();
         Time.timeScale = 1f;
-        upgradeUI.SetActive(false);
+        if (upgradeUI != null) upgradeUI.SetActive(false);
     }
 
     private void InitializeStats()
@@ -134,15 +134,18 @@ public class PlayerStatController : MonoBehaviour
 
     private void UpdatePlayerStats()
     {
-        playerStatsText.text = $"+{extraHp}\n \n" +
-                               $"+{flatDamage}\n" +
-                               $"x{damageMultiplier}\n \n" +
-                               $"+{flatKnockback}\n" +
-                               $"x{knockbackMultiplier}\n \n" +
-                               $"+{movementSpeed}\n \n" +
-                               $"x{xpMultiplier}\n" +
-                               $"+{pickUpRange}\n \n" +
-                               $"+{spellCastAmount}\n" +
-                               $"{spellCastDelay}";
+        if (playerStatsText != null)
+        {
+            playerStatsText.text = $"+{extraHp}\n \n" +
+                                   $"+{flatDamage}\n" +
+                                   $"x{damageMultiplier}\n \n" +
+                                   $"+{flatKnockback}\n" +
+                                   $"x{knockbackMultiplier}\n \n" +
+                                   $"+{movementSpeed}\n \n" +
+                                   $"x{xpMultiplier}\n" +
+                                   $"+{pickUpRange}\n \n" +
+                                   $"+{spellCastAmount}\n" +
+                                   $"{spellCastDelay}";
+        }
     }
 }

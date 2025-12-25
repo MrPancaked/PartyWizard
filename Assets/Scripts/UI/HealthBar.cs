@@ -27,24 +27,36 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
-        InitiateHealthBar();
+        ClearHorizontalLayout();
+        if (hpController != null) InitiateHealthBar();
     }
     private void OnEnable()
     {
-        hpController.TakeDamageEvent += UpdateHealthBar;
-        hpController.HealEvent += UpdateHealthBar;
-        if (hpController.isPlayer)
+        if (gameObject.CompareTag("BossHealthBar"))
         {
-            EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished += InitiateHealthBar;
+            HpController.InitiateBossHealthBar += InitiateBossHealthBar;
         }
+        else
+        {
+            hpController.TakeDamageEvent += UpdateHealthBar;
+            hpController.HealEvent += UpdateHealthBar;
+            hpController.DeathEvent += ClearHorizontalLayout;
+            hpController.UpdatedMaxHealth += InitiateHealthBar;
+        }
+        
     }
     private void OnDisable()
     {
-        hpController.TakeDamageEvent -= UpdateHealthBar;
-        hpController.HealEvent -= UpdateHealthBar;
-        if (hpController.isPlayer)
+        if (gameObject.CompareTag("BossHealthBar"))
         {
-            EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished -= InitiateHealthBar;
+            HpController.InitiateBossHealthBar -= InitiateBossHealthBar;
+        }
+        else
+        {
+            hpController.TakeDamageEvent -= UpdateHealthBar;
+            hpController.HealEvent -= UpdateHealthBar;
+            hpController.DeathEvent -= ClearHorizontalLayout;
+            hpController.UpdatedMaxHealth -= InitiateHealthBar;
         }
     }
 
@@ -114,6 +126,20 @@ public class HealthBar : MonoBehaviour
                 if (internalHpCounter == internalMaxHp) hpPointList[i].sprite = endFull;
                 else hpPointList[i].sprite = endEmpty;
             }
+        }
+    }
+
+    private void InitiateBossHealthBar()
+    {
+        hpController = GameObject.FindGameObjectWithTag("Boss").GetComponent<HpController>();
+        if (hpController != null)
+        {
+            hpController.TakeDamageEvent += UpdateHealthBar;
+            hpController.HealEvent += UpdateHealthBar;
+            hpController.DeathEvent += ClearHorizontalLayout;
+            hpController.UpdatedMaxHealth += InitiateHealthBar;
+            
+            InitiateHealthBar();
         }
     }
 }

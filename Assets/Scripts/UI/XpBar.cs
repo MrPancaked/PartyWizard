@@ -22,14 +22,14 @@ public class XpBar : MonoBehaviour
     }
     private void OnEnable()
     {
-        levelController.XPEvent += UpdateXpBar;
-        levelController.LevelUpEvent += ClearXpBar;
+        levelController.XpEvent += UpdateXpBar;
+        levelController.LevelUpEvent += UpdateXpBar;
     }
 
     private void OnDisable()
     {
-        levelController.XPEvent -= UpdateXpBar;
-        levelController.LevelUpEvent -= ClearXpBar;
+        levelController.XpEvent -= UpdateXpBar;
+        levelController.LevelUpEvent -= UpdateXpBar;
     }
     private void InitiateXpBar()
     {
@@ -65,30 +65,6 @@ public class XpBar : MonoBehaviour
             else Debug.Log($"no single XP sprite found");
         }
     }
-    private void UpdateXpBar(int xpGain)
-    {
-        for (int i = internalXpCounter; i <= internalXpCounter + xpGain; i++)
-        {
-            Animator anim;
-            if (i == 0) anim = xpPointList[i].GetComponent<Animator>();
-            else anim =  xpPointList[i-1].GetComponent<Animator>();
-            if (i == 1)
-            {
-                anim.Play("XpBarStart");
-            }
-            else if (i > 1 && i < internalMaxXp)
-            {
-                anim.Play("XpBarMiddle");
-            }
-            else if (i == internalMaxXp)
-            {
-                anim.Play("XpBarEnd");
-                AnimatorClipInfo[] clipInfo = xpPointList[internalMaxXp-1].GetComponent<Animator>().GetCurrentAnimatorClipInfo(0);
-            }
-            anim.Update(0f);
-        }
-        internalXpCounter = levelController.xpCount;
-    }
     private void ClearHorizontalLayout()
     {
         List<Image> sceneXpPointList = horizontalLayoutGroup.GetComponentsInChildren<Image>().ToList(); //if I do gameobject type instead of image it gives error
@@ -100,27 +76,29 @@ public class XpBar : MonoBehaviour
             i++;
         }
     }
-
-    private void ClearXpBar()
+    private void UpdateXpBar()
     {
-        for (int i = 1; i <= internalMaxXp; i++)
-        {
-            Animator anim = xpPointList[i - 1].GetComponent<Animator>();
-            if (i == 1)
-            {
-                anim.Play("XpStartEmpty");
-            }
-            else if (i < internalMaxXp)
-            {
-                anim.Play("XpMiddleEmpty");
-            }
-            else if (i == internalMaxXp)
-            {
-                anim.Play("XpEndEmpty");
-                AnimatorClipInfo[] clipInfo = xpPointList[internalMaxXp-1].GetComponent<Animator>().GetCurrentAnimatorClipInfo(0);
-            }
-            anim.Update(0f); //needed to force update the animation for if animation gets switched twice
-        }
         internalXpCounter = levelController.xpCount;
+        internalMaxXp = levelController.xpData.xpForLevel;
+        for (int i = 0; i < internalMaxXp; i++)
+        {
+            Animator anim = xpPointList[i].GetComponent<Animator>();
+            if (i == 0)
+            {
+                if (internalXpCounter == 0) anim.Play("XpStartEmpty");
+                else anim.Play("XpBarStart");
+            }
+            else if (i < internalMaxXp - 1)
+            {
+                if  (i < internalXpCounter) anim.Play("XpBarMiddle");
+                else anim.Play("XpMiddleEmpty");
+            }
+            else if (i == internalMaxXp - 1)
+            {
+                if (internalXpCounter == internalMaxXp) anim.Play("XpBarEnd");
+                else anim.Play("XpEndEmpty");
+            }
+            anim.Update(0f);
+        }
     }
 }

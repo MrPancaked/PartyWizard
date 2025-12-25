@@ -7,6 +7,7 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
+        public Action ActivateShieldEvent;
         public static PlayerController Instance;
 
         public ScriptableObjects.Player.MovementData movementData;
@@ -14,8 +15,6 @@ namespace Player
         
         public AttackController attackController;
         public HpController hpController;
-        
-        public static Action healEvent;
 
         private void Awake()
         {
@@ -30,6 +29,7 @@ namespace Player
                 InputManager.Instance.MoveAction.performed -= Move;
                 InputManager.Instance.MoveAction.canceled -= Move;
                 InputManager.Instance.HealAction.performed -= Heal;
+                InputManager.Instance.HealAction.canceled -= Shield;
         
                 InputManager.Instance.AttackAction.performed -= Attack;
                 //InputManager.Instance.AttackAction.canceled -= Attack;
@@ -44,6 +44,7 @@ namespace Player
                 InputManager.Instance.MoveAction.performed += Move;
                 InputManager.Instance.MoveAction.canceled += Move;
                 InputManager.Instance.HealAction.performed += Heal;
+                InputManager.Instance.ShieldAction.performed += Shield;
         
                 InputManager.Instance.AttackAction.performed += Attack;
                 //InputManager.Instance.AttackAction.canceled += Attack;
@@ -89,6 +90,22 @@ namespace Player
                 }
             }
             else Debug.LogWarning($"HpController or Inventory is null {context}");
+        }
+
+        public void Shield(InputAction.CallbackContext context)
+        {
+            if (Inventory.Instance != null)
+            {
+                foreach (Item item in Inventory.Instance.Items)
+                {
+                    if (item.ItemName == $"Magic Shield Bubble")
+                    {
+                        ActivateShieldEvent?.Invoke();
+                        Inventory.Instance.RemoveItem(item);
+                        break;
+                    }
+                }
+            } 
         }
 
         //public void UpdateControllerData()

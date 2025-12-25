@@ -8,8 +8,10 @@ namespace Player
 {
     public class HpController : MonoBehaviour
     {
+        public static Action InitiateBossHealthBar;
         public event Action<TakeDamageData> TakeDamageEvent;
         public event Action<TakeDamageData> HealEvent;
+        public event Action UpdatedMaxHealth;
         public event Action DeathEvent;
         
         public int maxHp {get; private set;}
@@ -18,20 +20,29 @@ namespace Player
         public int contactDamage {get; private set;}
         public float contactKnockback {get; private set;}
         public bool takeDamage {get; private set;}
-        public ScriptableObjects.Player.HpData hpData; //public so playercontroller can update the controller data classes
+        public HpData hpData;
         private bool dead = false;
         public bool isPlayer { get; private set; }
+        public bool isBoss { get; private set; }
+        
+        public GameObject magicShieldBubble;
+        private bool shieldActive = false;
 
         private void Awake()
         {
             Initialize();
         }
 
-        private void OnEnable()
+        private void Start()
         {
             if (isPlayer)
             {
                 EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished += UpdateHp;
+                if (magicShieldBubble != null) PlayerController.Instance.ActivateShieldEvent += ActivateMagicShield;
+            }
+            else if (isBoss)
+            {
+                InitiateBossHealthBar?.Invoke();
             }
         }
 
@@ -40,12 +51,15 @@ namespace Player
             if (isPlayer)
             {
                 EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished -= UpdateHp;
+                if (magicShieldBubble != null) PlayerController.Instance.ActivateShieldEvent -= ActivateMagicShield;
             }
         }
 
         public void Initialize()
         {
+            if (magicShieldBubble != null) BreakMagicShield();
             isPlayer = gameObject.CompareTag("Player");
+            isBoss = gameObject.CompareTag("Boss");
             maxHp = hpData.maxHp;
             if (hpData.startHp > maxHp) hpData.startHp = maxHp;
             hp = hpData.startHp;
@@ -58,9 +72,9 @@ namespace Player
         private void OnCollisionEnter2D(Collision2D collision)
         {
             GameObject collidedObj = collision.gameObject;
-            if (gameObject.CompareTag("Player"))
+            if (gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                if (collidedObj.CompareTag("Enemy"))
+                if (collidedObj.layer == LayerMask.NameToLayer("Enemy"))
                 {
                     HpController otherHpController = collidedObj.GetComponent<HpController>();
                     int receivedDamage = otherHpController.contactDamage;
@@ -69,7 +83,7 @@ namespace Player
                     TakeDamage(takeDamageData);
                     
                 }
-                else if (collidedObj.CompareTag("Projectile"))
+                else if (collidedObj.layer == LayerMask.NameToLayer("Projectile"))
                 {
                     SpellData spellData = collidedObj.GetComponent<ProjectileController>().spellData;
                     if (spellData.hurtPlayer)
@@ -80,9 +94,9 @@ namespace Player
                     }
                 }
             }
-            else if (gameObject.CompareTag("Enemy"))
+            else if (gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
-                if (collidedObj.CompareTag("Player"))
+                if (collidedObj.layer == LayerMask.NameToLayer("Player"))
                 {
                     HpController otherHpController = collidedObj.GetComponent<HpController>();
                     int receivedDamage = otherHpController.contactDamage;
@@ -90,7 +104,7 @@ namespace Player
                     TakeDamageData takeDamageData = new TakeDamageData(receivedDamage, collidedObj.transform.position, otherHpController.contactKnockback);
                     TakeDamage(takeDamageData);
                 }
-                else if (collidedObj.CompareTag("Projectile"))
+                else if (collidedObj.layer == LayerMask.NameToLayer("Projectile"))
                 {
                     SpellData spellData = collidedObj.GetComponent<ProjectileController>().spellData;
                     if (spellData.hurtEnemy)
@@ -114,21 +128,27 @@ namespace Player
             }
             if (takeDamage)
             {
-                shield -= damage;
-                if (shield < 0)
+                if (!shieldActive)
                 {
-                    hp -= -shield;
-                    shield = 0;
-                    if (hp < 0) hp = 0;
+                    shield -= damage;
+                    if (shield < 0)
+                    {
+                        hp -= -shield;
+                        shield = 0;
+                        if (hp < 0) hp = 0;
+                    }
+                    Debug.Log($"{gameObject.name} has taken damage: {damage}, current hp: {hp}");
+                
+                    TakeDamageEvent?.Invoke(takeDamageData);
+                    if (hp == 0)
+                    {
+                        if (!dead) Die();
+                        dead = true;
+                    }
                 }
-                Debug.Log($"{gameObject.name} has taken damage: {damage}, current hp: {hp}");
-                
-                TakeDamageEvent?.Invoke(takeDamageData);
-                
-                if (hp == 0)
+                else
                 {
-                    if (!dead) Die();
-                    dead = true;
+                    BreakMagicShield();
                 }
             }
         }
@@ -144,11 +164,23 @@ namespace Player
             Debug.Log($"{gameObject.name} has healed {healAmount}");
             HealEvent?.Invoke(new TakeDamageData(-healAmount));
         }
+
+        private void ActivateMagicShield()
+        {
+            magicShieldBubble.SetActive(true);
+            shieldActive = true;
+        }
+
+        private void BreakMagicShield()
+        {
+            magicShieldBubble.SetActive(false);
+            shieldActive = false;
+        }
         private void Die()
         {
             DeathEvent?.Invoke();
-            if (gameObject.CompareTag("Player")) EventBus<PlayerDieEventData>.Publish(new PlayerDieEventData(gameObject)); //deathEvent.Publish(new PlayerDieEventData(gameObject), this.gameObject);
-            else if (gameObject.CompareTag("Enemy")) 
+            if (gameObject.layer == LayerMask.NameToLayer("Player")) EventBus<PlayerDieEventData>.Publish(new PlayerDieEventData(gameObject)); //deathEvent.Publish(new PlayerDieEventData(gameObject), this.gameObject);
+            else if (gameObject.layer == LayerMask.NameToLayer("Enemy")) 
             {
                 EventBus<EnemyDieEventData>.Publish(new EnemyDieEventData(gameObject)); //deathEvent.Publish(new EnemyDieEventData(gameObject), this.gameObject);
                 
@@ -169,6 +201,7 @@ namespace Player
         private void UpdateHp()
         {
             maxHp += PlayerStatController.Instance.extraHpUpgrade;
+            UpdatedMaxHealth?.Invoke();
         }
     }
 

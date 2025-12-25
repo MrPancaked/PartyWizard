@@ -11,12 +11,11 @@ public class LevelController : MonoBehaviour
     public XpData xpData;
     [SerializeField] private TextMeshProUGUI levelCounter;
     
-    
     public int xpCount{ get; private set; }
     public int level { get; private set; }
     
     public Action LevelUpEvent;
-    public Action<int> XPEvent;
+    public Action XpEvent;
     
     private void Start()
     {
@@ -38,17 +37,17 @@ public class LevelController : MonoBehaviour
     {
         int xpGain = xpData.xpMultiplier;
         xpCount += xpGain;
-        XPEvent?.Invoke(xpGain);
+        XpEvent?.Invoke();
         if (xpCount >= xpData.xpForLevel)
         {
-            xpCount = 0;
             LevelUp();
         }
     }
     public void LevelUp() // public for button
     {
         level++;
-        levelCounter.text = $"{level}";
+        if (levelCounter != null) levelCounter.text = $"{level}";
+        xpCount = 0;
         LevelUpEvent?.Invoke();
     }
 }
