@@ -31,6 +31,7 @@ namespace Projectiles
         {
             if (spellData.aoeEffect)
             {
+                AudioManager.Instance.PlayOneShot(FMODEvents.Instance.explosionSound, gameObject.transform.position);
                 LayerMask layerMask = 0;
                 if (spellData.hurtEnemy) layerMask |= LayerMask.GetMask("Enemy");
                 if (spellData.hurtPlayer) layerMask |=  LayerMask.GetMask("Player");

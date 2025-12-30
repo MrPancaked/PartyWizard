@@ -138,7 +138,10 @@ namespace Player
                         if (hp < 0) hp = 0;
                     }
                     Debug.Log($"{gameObject.name} has taken damage: {damage}, current hp: {hp}");
-                
+                    
+                    if (isPlayer) AudioManager.Instance.PlayOneShot(FMODEvents.Instance.playerHurtSound, gameObject.transform.position);
+                    else AudioManager.Instance.PlayOneShot(FMODEvents.Instance.skullHurtSound, gameObject.transform.position);
+                    
                     TakeDamageEvent?.Invoke(takeDamageData);
                     if (hp == 0)
                     {
@@ -180,10 +183,14 @@ namespace Player
         private void Die()
         {
             DeathEvent?.Invoke();
-            if (gameObject.layer == LayerMask.NameToLayer("Player")) EventBus<PlayerDieEventData>.Publish(new PlayerDieEventData(gameObject)); //deathEvent.Publish(new PlayerDieEventData(gameObject), this.gameObject);
+            if (gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                EventBus<PlayerDieEventData>.Publish(new PlayerDieEventData(gameObject));
+                AudioManager.Instance.PlayOneShot(FMODEvents.Instance.deathSound, transform.position);
+            }
             else if (gameObject.layer == LayerMask.NameToLayer("Enemy")) 
             {
-                EventBus<EnemyDieEventData>.Publish(new EnemyDieEventData(gameObject)); //deathEvent.Publish(new EnemyDieEventData(gameObject), this.gameObject);
+                EventBus<EnemyDieEventData>.Publish(new EnemyDieEventData(gameObject));
                 
                 if (hpData.destroyEffectObject != null) 
                     Instantiate(hpData.destroyEffectObject, transform.position, transform.rotation);

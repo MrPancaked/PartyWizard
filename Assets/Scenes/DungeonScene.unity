@@ -8119,7 +8119,7 @@ Transform:
   m_GameObject: {fileID: 826132568}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.73026, y: 5.15097, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10705,6 +10705,119 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe428de8b0327e64caf6238620e13311, type: 3}
+--- !u!1 &993051862
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 993051865}
+  - component: {fileID: 993051864}
+  - component: {fileID: 993051863}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &993051863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993051862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af2b98b09e9ce214b9958565b902fad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FMODEvents
+  <deathSound>k__BackingField:
+    Guid:
+      Data1: 408026845
+      Data2: 1129144719
+      Data3: 456581562
+      Data4: 1429737325
+    Path: event:/death
+  <winSound>k__BackingField:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  <playerHurtSound>k__BackingField:
+    Guid:
+      Data1: -213608271
+      Data2: 1169014562
+      Data3: 1021900474
+      Data4: 2019255322
+    Path: event:/PlayerHurt
+  <skullHurtSound>k__BackingField:
+    Guid:
+      Data1: 1353411915
+      Data2: 1286974394
+      Data3: -1722487386
+      Data4: -1317049075
+    Path: event:/SkullHurt
+  <knightHurtSound>k__BackingField:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  <bossHurtSound>k__BackingField:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  <castSound>k__BackingField:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  <explosionSound>k__BackingField:
+    Guid:
+      Data1: 465715929
+      Data2: 1249963894
+      Data3: -1143236169
+      Data4: 1567097350
+    Path: event:/Explosion
+--- !u!114 &993051864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993051862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075ef1ae188bd3144bf8f2ee3c23ba17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+--- !u!4 &993051865
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993051862}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.73026, y: 5.15097, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &995656646 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2616471771056929339, guid: fe428de8b0327e64caf6238620e13311, type: 3}
@@ -15558,10 +15671,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1410753226}
   - component: {fileID: 1410753231}
-  - component: {fileID: 1410753230}
   - component: {fileID: 1410753229}
   - component: {fileID: 1410753228}
   - component: {fileID: 1410753227}
+  - component: {fileID: 1410753232}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -15669,14 +15782,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1410753230
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1410753225}
-  m_Enabled: 1
 --- !u!20 &1410753231
 Camera:
   m_ObjectHideFlags: 0
@@ -15728,6 +15833,20 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1410753232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410753225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1001 &1411940881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18168,6 +18287,7 @@ GameObject:
   - component: {fileID: 1613717426}
   - component: {fileID: 1613717428}
   - component: {fileID: 1613717427}
+  - component: {fileID: 1613717429}
   m_Layer: 5
   m_Name: PlayerDeathUI
   m_TagString: Untagged
@@ -18233,6 +18353,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1613717425}
   m_CullTransparentMesh: 1
+--- !u!114 &1613717429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613717425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 408026845
+      Data2: 1129144719
+      Data3: 456581562
+      Data4: 1429737325
+    Path: event:/death
+  Event: 
+  EventPlayTrigger: 11
+  EventStopTrigger: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!224 &1616729800 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2616471771056929339, guid: fe428de8b0327e64caf6238620e13311, type: 3}
@@ -23609,6 +23760,10 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1945399989797448915, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
+      propertyPath: startSpell
+      value: 
+      objectReference: {fileID: 3371931195115675852, guid: a3f106f321d55f04dac6aa3dd6795290, type: 3}
+    - target: {fileID: 1945399989797448915, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
       propertyPath: projectileParent
       value: 
       objectReference: {fileID: 604630432}
@@ -23814,6 +23969,7 @@ SceneRoots:
   - {fileID: 917777928}
   - {fileID: 2009735678}
   - {fileID: 435556032}
+  - {fileID: 993051865}
   - {fileID: 826132570}
   - {fileID: 1462664240}
   - {fileID: 236938869}
