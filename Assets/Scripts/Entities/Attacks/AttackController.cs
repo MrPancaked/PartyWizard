@@ -3,13 +3,12 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 namespace Player
 {
     public class AttackController : MonoBehaviour
     {
-        private PlayerController playerController;
-        
         [Header("Spell amount Settings")]
         public int amount;
         public float angle;
@@ -19,33 +18,42 @@ namespace Player
         [SerializeField] private GameObject startSpell;
         [SerializeField] private Transform projectileParent;
 
-        [HideInInspector] public bool attacking;
+        private bool attacking;
+        [HideInInspector] public bool wantsToAttack;
+        [SerializeReference] private bool isPlayer;
+        [SerializeReference] private bool isEnemy;
     
         private void Start()
         {
             attacking = false;
-            playerController = GetComponent<PlayerController>();
             if (amount < 1) amount = 1;
+            isPlayer = gameObject.CompareTag("Player");
+            isEnemy = gameObject.layer == LayerMask.NameToLayer("Enemy");
         }
 
-        public void StartAttacking()
+        private void Update()
         {
-            if (!attacking)
+            if (!attacking && wantsToAttack)
             {
                 attacking = true;
                 StartCoroutine(Attack());
             }
-            //else attacking = true; //this happens if the coroutine has started, then player stops attacking, but starts attacking again before the spellcast delay took effect
         }
         private IEnumerator Attack()
         {
             while (attacking)
             {
-                Vector2 playerPosition = playerController.transform.position;
-                Vector2 mousePosition = Vector2.zero;
-                if (Camera.main != null) mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-                else Debug.LogWarning("Main Camera not found!");
-                Vector2 direction = (mousePosition - playerPosition).normalized;
+                Vector2 castPosition = gameObject.transform.position;
+                Vector2 targetPosition = Vector2.zero;
+                if (isPlayer) 
+                {
+                    if (Camera.main != null) targetPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+                    else Debug.LogWarning("Main Camera not found!");
+                }
+                else targetPosition = PlayerController.Instance.transform.position;
+                
+                Vector2 direction = (targetPosition - castPosition).normalized;
+                
                 if (amount > 1)
                 {
                     if (angle != 0) direction = RotateVector(direction, -angle / 2f);
@@ -55,19 +63,21 @@ namespace Player
                         Vector2 castDirection = RotateVector(direction, angleInterval * i);
                         var projectileInstance = Instantiate(startSpell, (Vector2)transform.position + 0.5f * castDirection, transform.rotation, projectileParent);
                         var projectileController = projectileInstance.GetComponent<Projectiles.ProjectileController>();
-                        projectileController.Initiate(castDirection);
+                        projectileController.Initiate(castDirection, isPlayer, isEnemy);
                     }
                 }
                 else if (amount == 1)
                 {
                     var projectileInstance = Instantiate(startSpell, (Vector2)transform.position + 0.5f * direction, transform.rotation, projectileParent);
                     var projectileController = projectileInstance.GetComponent<Projectiles.ProjectileController>();
-                    projectileController.Initiate(direction);
+                    projectileController.Initiate(direction, isPlayer, isEnemy);
                 }
                 else Debug.LogWarning($"somehow trying to cast invalid amount of spells:{amount}");
                 
+                AudioManager.Instance.PlayOneShot(FMODEvents.Instance.castSound, transform.position);
+                
                 yield return new WaitForSeconds(delayBetweenSpells);
-                if (!InputManager.Instance.AttackAction.IsPressed()) attacking = false;
+                if (!wantsToAttack) attacking = false;
             }
         }
 

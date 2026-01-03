@@ -42,6 +42,7 @@ public class DoorController : MonoBehaviour // probably just throw this out lol 
             StartCoroutine(gameManager.NewRound());
             other.transform.position = otherDoorTransform.position - otherDoorTransform.up;
             Debug.Log($"player entered {other.name} at position {other.transform.position}");
+            AudioManager.Instance.PlayOneShot(FMODEvents.Instance.doorCloseSounds, Vector2.zero);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FMOD.Studio;
 using Player;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [SerializeField] private GameObject settingsUI;
     [SerializeField] private GameObject cheatUI;
     [SerializeField] private GameObject victoryUI;
     [SerializeField] private GameObject pauseGameUI;
@@ -29,6 +31,8 @@ public class GameManager : MonoBehaviour
 
     public Action RoomClearedEvent;
     public Action RoomStartEvent;
+    public Action PauseEvent;
+    public Action UnPauseEvent;
     public Action<EnemyWaveData> SpawnEnemiesEvent;
 
     private void Awake()
@@ -65,11 +69,18 @@ public class GameManager : MonoBehaviour
     private void Start()// ONLY TO COUNT ENEMIES FOR TESTING RN, CHANGE LATER WHEN SPAWNERS ARE ADDED
     {
         Time.timeScale = 1f;
+        
         countdownText.gameObject.SetActive(false);
         pauseGameUI.SetActive(false);
         playerDeathUI.SetActive(false);
         victoryUI.SetActive(false);
+        settingsUI.SetActive(false);
+        
         CountEnemies();
+        
+        EventInstance musicInstace = AudioManager.Instance.CreateInstance(FMODEvents.Instance.music);
+        musicInstace.start();
+        
         StartCoroutine(NewRound());
     }
 
@@ -96,9 +107,14 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("All enemies have been Killed");
             if (round < enemyWaves.Count)
+            {
                 RoomClearedEvent?.Invoke();
+                AudioManager.Instance.PlayOneShot(FMODEvents.Instance.doorOpenSounds, Vector2.zero);
+            }
             else
             {
+                PauseEvent?.Invoke();
+                AudioManager.Instance.PlayOneShot(FMODEvents.Instance.winSound, Vector2.zero);
                 victoryUI.SetActive(true);
                 Time.timeScale = 0f;
             }
@@ -114,6 +130,7 @@ public class GameManager : MonoBehaviour
     public void OnPlayerDied(PlayerDieEventData playerDieEventData)
     {
         playerDeathUI.SetActive(true);
+        PauseEvent?.Invoke();
         Time.timeScale = 0f;
     }
     
@@ -145,6 +162,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void OpenSettings()
+    {
+        settingsUI.SetActive(true);
+    }
+        
     #region PauseGame
     public void TogglePause()
     {
@@ -152,12 +174,15 @@ public class GameManager : MonoBehaviour
         {
             pauseGameUI.SetActive(true);
             Time.timeScale = 0f;
+            PauseEvent?.Invoke();
         }
-        else 
+        else if (!settingsUI.activeInHierarchy)
         {
             pauseGameUI.SetActive(false);
             Time.timeScale = 1f;
+            UnPauseEvent?.Invoke();
         }
+        else settingsUI.SetActive(false);
     }
     public void PauseGame(InputAction.CallbackContext context)
     {

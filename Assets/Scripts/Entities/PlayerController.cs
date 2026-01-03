@@ -32,7 +32,7 @@ namespace Player
                 InputManager.Instance.HealAction.canceled -= Shield;
         
                 InputManager.Instance.AttackAction.performed -= Attack;
-                //InputManager.Instance.AttackAction.canceled -= Attack;
+                InputManager.Instance.AttackAction.canceled -= StopAttack;
             }
             else Debug.LogWarning($"Ondisable: {name} did not find InputManager.Instance");
         }
@@ -47,7 +47,7 @@ namespace Player
                 InputManager.Instance.ShieldAction.performed += Shield;
         
                 InputManager.Instance.AttackAction.performed += Attack;
-                //InputManager.Instance.AttackAction.canceled += Attack;
+                InputManager.Instance.AttackAction.canceled += StopAttack;
             }
             else Debug.LogWarning($"OnEnable {name} did not find InputManager.Instance");
             
@@ -70,7 +70,16 @@ namespace Player
         {
             if (attackController != null)
             {
-                attackController.StartAttacking();
+                attackController.wantsToAttack = true;
+            }
+            else Debug.LogWarning($"AttackController is null {context}");
+        }
+
+        public void StopAttack(InputAction.CallbackContext context)
+        {
+            if (attackController != null)
+            {
+                attackController.wantsToAttack = false;
             }
             else Debug.LogWarning($"AttackController is null {context}");
         }

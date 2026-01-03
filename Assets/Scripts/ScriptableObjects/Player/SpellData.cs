@@ -20,8 +20,6 @@ namespace ScriptableObjects.Player
         [Header("damage Settings")]
         public float knockback;
         public int damage;
-        public bool hurtPlayer;
-        public bool hurtEnemy;
         public bool hurtProjectile;
         public enum SpeedScaling
         {

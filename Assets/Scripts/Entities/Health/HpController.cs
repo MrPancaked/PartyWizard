@@ -1,6 +1,7 @@
 
 using UnityEngine;
 using System;
+using FMOD.Studio;
 using Projectiles;
 using ScriptableObjects.Player;
 
@@ -23,6 +24,7 @@ namespace Player
         public HpData hpData;
         private bool dead = false;
         public bool isPlayer { get; private set; }
+        public bool isEnemy { get; private set; }
         public bool isBoss { get; private set; }
         
         public GameObject magicShieldBubble;
@@ -57,9 +59,10 @@ namespace Player
 
         public void Initialize()
         {
-            if (magicShieldBubble != null) BreakMagicShield();
+            if (shieldActive) BreakMagicShield();
             isPlayer = gameObject.CompareTag("Player");
             isBoss = gameObject.CompareTag("Boss");
+            isEnemy = gameObject.layer == LayerMask.NameToLayer("Enemy");
             maxHp = hpData.maxHp;
             if (hpData.startHp > maxHp) hpData.startHp = maxHp;
             hp = hpData.startHp;
@@ -72,7 +75,7 @@ namespace Player
         private void OnCollisionEnter2D(Collision2D collision)
         {
             GameObject collidedObj = collision.gameObject;
-            if (gameObject.layer == LayerMask.NameToLayer("Player"))
+            if (isPlayer)
             {
                 if (collidedObj.layer == LayerMask.NameToLayer("Enemy"))
                 {
@@ -85,8 +88,9 @@ namespace Player
                 }
                 else if (collidedObj.layer == LayerMask.NameToLayer("Projectile"))
                 {
-                    SpellData spellData = collidedObj.GetComponent<ProjectileController>().spellData;
-                    if (spellData.hurtPlayer)
+                    ProjectileController projectileController = collidedObj.GetComponent<ProjectileController>();
+                    SpellData spellData = projectileController.spellData;
+                    if (projectileController.hurtPlayer)
                     {
                         int receivedDamage = spellData.damage;
                         TakeDamageData takeDamageData = new TakeDamageData(receivedDamage, collidedObj.transform.position, spellData.knockback);
@@ -94,7 +98,7 @@ namespace Player
                     }
                 }
             }
-            else if (gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            else if (isEnemy)
             {
                 if (collidedObj.layer == LayerMask.NameToLayer("Player"))
                 {
@@ -106,8 +110,9 @@ namespace Player
                 }
                 else if (collidedObj.layer == LayerMask.NameToLayer("Projectile"))
                 {
-                    SpellData spellData = collidedObj.GetComponent<ProjectileController>().spellData;
-                    if (spellData.hurtEnemy)
+                    ProjectileController projectileController = collidedObj.GetComponent<ProjectileController>();
+                    SpellData spellData = projectileController.spellData;
+                    if (projectileController.hurtEnemy)
                     {
                         int receivedDamage = spellData.damage;
                         TakeDamageData takeDamageData = new TakeDamageData(receivedDamage, collidedObj.transform.position, spellData.knockback);
@@ -139,8 +144,8 @@ namespace Player
                     }
                     Debug.Log($"{gameObject.name} has taken damage: {damage}, current hp: {hp}");
                     
-                    if (isPlayer) AudioManager.Instance.PlayOneShot(FMODEvents.Instance.playerHurtSound, gameObject.transform.position);
-                    else AudioManager.Instance.PlayOneShot(FMODEvents.Instance.skullHurtSound, gameObject.transform.position);
+                    if (isPlayer && damage > 0) AudioManager.Instance.PlayOneShot(FMODEvents.Instance.playerHurtSound, gameObject.transform.position);
+                    else if (damage > 0) AudioManager.Instance.PlayOneShot(FMODEvents.Instance.enemyHurtSound, gameObject.transform.position);
                     
                     TakeDamageEvent?.Invoke(takeDamageData);
                     if (hp == 0)
@@ -165,6 +170,7 @@ namespace Player
                 healAmount = maxHeal;
             }
             hp += healAmount;
+            AudioManager.Instance.PlayOneShot(FMODEvents.Instance.healSound, gameObject.transform.position);
             Debug.Log($"{gameObject.name} has healed {healAmount}");
             HealEvent?.Invoke(new TakeDamageData(-healAmount));
         }
@@ -173,22 +179,24 @@ namespace Player
         {
             magicShieldBubble.SetActive(true);
             shieldActive = true;
+            AudioManager.Instance.PlayOneShot(FMODEvents.Instance.shieldCastSound, gameObject.transform.position);
         }
 
         private void BreakMagicShield()
         {
             magicShieldBubble.SetActive(false);
             shieldActive = false;
+            AudioManager.Instance.PlayOneShot(FMODEvents.Instance.shieldBreakSound, gameObject.transform.position);
         }
         private void Die()
         {
             DeathEvent?.Invoke();
-            if (gameObject.layer == LayerMask.NameToLayer("Player"))
+            if (isPlayer)
             {
                 EventBus<PlayerDieEventData>.Publish(new PlayerDieEventData(gameObject));
-                AudioManager.Instance.PlayOneShot(FMODEvents.Instance.deathSound, transform.position);
+                AudioManager.Instance.PlayOneShot(FMODEvents.Instance.deathSound, gameObject.transform.position);
             }
-            else if (gameObject.layer == LayerMask.NameToLayer("Enemy")) 
+            else if (isEnemy) 
             {
                 EventBus<EnemyDieEventData>.Publish(new EnemyDieEventData(gameObject));
                 

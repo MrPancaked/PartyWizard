@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{61654e98-c24c-4e5c-a0b3-76dbd20c6273}">
+		<property name="assetPath">
+			<value>Music/forest.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>108.51936507936507</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{5a37455e-cf0c-42c6-b099-4e49b11f5b7c}</destination>
+		</relationship>
+	</object>
+</objects>

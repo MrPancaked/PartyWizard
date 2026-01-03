@@ -18,6 +18,9 @@ namespace Projectiles
         private float timeAlive;
         private float linearSpeedChange;
         private Vector2 randomCurveDirection;
+
+        [HideInInspector] public bool hurtPlayer;
+        [HideInInspector] public bool hurtEnemy;
         
         private void OnCollisionEnter2D(Collision2D other)
         {
@@ -33,8 +36,8 @@ namespace Projectiles
             {
                 AudioManager.Instance.PlayOneShot(FMODEvents.Instance.explosionSound, gameObject.transform.position);
                 LayerMask layerMask = 0;
-                if (spellData.hurtEnemy) layerMask |= LayerMask.GetMask("Enemy");
-                if (spellData.hurtPlayer) layerMask |=  LayerMask.GetMask("Player");
+                if (hurtEnemy) layerMask |= LayerMask.GetMask("Enemy");
+                if (hurtPlayer) layerMask |=  LayerMask.GetMask("Player");
                 if (spellData.hurtProjectile) layerMask |= LayerMask.GetMask("Projectile");
                 
                 Vector2 explosionPos = transform.position;
@@ -56,8 +59,10 @@ namespace Projectiles
                 }
             }
         }
-        public void Initiate(Vector2 castDirection)
+        public void Initiate(Vector2 castDirection, bool isPlayer, bool isEnemy)
         {
+            hurtPlayer = isEnemy;
+            hurtEnemy = isPlayer;
             transform.position = new Vector3(transform.position.x, transform.position.y, -0.1f);
             rb.linearDamping = 0f;
             rb.gravityScale = 0f;
@@ -135,8 +140,8 @@ namespace Projectiles
             if (collider != null)
             {
                 int mask = 0;
-                if (!spellData.hurtEnemy) mask |= LayerMask.GetMask("Enemy");
-                if (!spellData.hurtPlayer) mask |= LayerMask.GetMask("Player");
+                if (!hurtEnemy) mask |= LayerMask.GetMask("Enemy");
+                if (!hurtPlayer) mask |= LayerMask.GetMask("Player");
                 if (!spellData.hurtProjectile) mask |= LayerMask.GetMask("Projectile");
                 collider.excludeLayers = mask;
             }

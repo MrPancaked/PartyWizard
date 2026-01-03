@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1191764464543582842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4953965645935656262}
+  - component: {fileID: 2618446369529776115}
+  - component: {fileID: 6022214958276948513}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4953965645935656262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191764464543582842}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.73026, y: 5.15097, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2618446369529776115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191764464543582842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075ef1ae188bd3144bf8f2ee3c23ba17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  masterVolume: 1
+  musicVolume: 1
+  sfxVolume: 1
+  ambienceVolume: 1
+--- !u!114 &6022214958276948513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191764464543582842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af2b98b09e9ce214b9958565b902fad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FMODEvents
+  <indoorWalkSound>k__BackingField:
+    Guid:
+      Data1: 790542746
+      Data2: 1073786315
+      Data3: -926776674
+      Data4: -21909550
+    Path: event:/walking
+  <outdoorWalkSound>k__BackingField:
+    Guid:
+      Data1: -1882346273
+      Data2: 1240334164
+      Data3: -1016582249
+      Data4: -1807356726
+    Path: event:/walkingOutside
+  <doorOpenSounds>k__BackingField:
+    Guid:
+      Data1: -887600680
+      Data2: 1306907797
+      Data3: 30122627
+      Data4: -531107747
+    Path: event:/DoorOpen
+  <doorCloseSounds>k__BackingField:
+    Guid:
+      Data1: 1392026647
+      Data2: 1195853902
+      Data3: 292848789
+      Data4: 1946536547
+    Path: event:/DoorClose
+  <healSound>k__BackingField:
+    Guid:
+      Data1: -529966054
+      Data2: 1208497174
+      Data3: 778015391
+      Data4: -1127774512
+    Path: event:/Heal
+  <shieldCastSound>k__BackingField:
+    Guid:
+      Data1: 80800794
+      Data2: 1319127425
+      Data3: -918549102
+      Data4: 1533673389
+    Path: event:/ShieldCast
+  <shieldBreakSound>k__BackingField:
+    Guid:
+      Data1: -1734335652
+      Data2: 1282812098
+      Data3: 1606237832
+      Data4: 1773822033
+    Path: event:/ShieldBreak
+  <deathSound>k__BackingField:
+    Guid:
+      Data1: -1636780613
+      Data2: 1304967237
+      Data3: 1229389712
+      Data4: 905446067
+    Path: event:/PlayerDeath
+  <winSound>k__BackingField:
+    Guid:
+      Data1: 1279620036
+      Data2: 1294764865
+      Data3: 870921092
+      Data4: 1711032541
+    Path: event:/Victory
+  <playerHurtSound>k__BackingField:
+    Guid:
+      Data1: -213608271
+      Data2: 1169014562
+      Data3: 1021900474
+      Data4: 2019255322
+    Path: event:/PlayerHurt
+  <enemyHurtSound>k__BackingField:
+    Guid:
+      Data1: 1353411915
+      Data2: 1286974394
+      Data3: -1722487386
+      Data4: -1317049075
+    Path: event:/SkullHurt
+  <castSound>k__BackingField:
+    Guid:
+      Data1: -170342138
+      Data2: 1326956462
+      Data3: -1936508250
+      Data4: -1226957473
+    Path: event:/SpellCast
+  <explosionSound>k__BackingField:
+    Guid:
+      Data1: 465715929
+      Data2: 1249963894
+      Data3: -1143236169
+      Data4: 1567097350
+    Path: event:/Explosion
+  <music>k__BackingField:
+    Guid:
+      Data1: -1466329951
+      Data2: 1213275609
+      Data3: -1267618920
+      Data4: 668302840
+    Path: event:/dungeon
+  <ambience>k__BackingField:
+    Guid:
+      Data1: 1505535479
+      Data2: 1229377737
+      Data3: 1705720992
+      Data4: 1912104151
+    Path: event:/forest

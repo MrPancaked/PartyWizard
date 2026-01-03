@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float playerRange;
     [SerializeField] private GameObject skullEnemy;
     [SerializeField] private GameObject knightEnemy;
+    [SerializeField] private GameObject bossEnemy;
     [SerializeField] private Transform enemyParent;
     [SerializeField] private Rect spawnArea;
 
@@ -36,6 +37,11 @@ public class EnemySpawner : MonoBehaviour
     {
         StartCoroutine(SpawnKnights());
     }
+
+    public void SpawnBossMethod()
+    {
+        StartCoroutine(SpawnBosses());
+    }
     private IEnumerator SpawnSkulls()
     {
         for (int i = 0; i < spawnAmount; i++)
@@ -59,6 +65,20 @@ public class EnemySpawner : MonoBehaviour
             }
             GameObject knight = Instantiate(knightEnemy, spawnPosition, Quaternion.identity, enemyParent);
             EventBus<EnemySpawnEventData>.Publish(new EnemySpawnEventData(knight));
+            yield return null;
+        }
+    }
+
+    private IEnumerator SpawnBosses()
+    {
+        for (int i = 0; i < spawnAmount; i++)
+        {
+            Vector2 spawnPosition = new Vector2(Random.Range(spawnArea.xMin, spawnArea.xMax),  Random.Range(spawnArea.yMin, spawnArea.yMax));
+            while ((spawnPosition - (Vector2)playerController.transform.position).magnitude < playerRange) {
+                spawnPosition = new Vector2(Random.Range(spawnArea.xMin, spawnArea.xMax),  Random.Range(spawnArea.yMin, spawnArea.yMax));
+            }
+            GameObject boss = Instantiate(bossEnemy, spawnPosition, Quaternion.identity, enemyParent);
+            EventBus<EnemySpawnEventData>.Publish(new EnemySpawnEventData(boss));
             yield return null;
         }
     }

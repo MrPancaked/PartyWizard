@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{c59f8b03-9502-4d55-a3e4-b12c4fd4700d}">
+		<property name="assetPath">
+			<value>Sounds/ShieldBreak.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.52260770975056692</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{5a37455e-cf0c-42c6-b099-4e49b11f5b7c}</destination>
+		</relationship>
+	</object>
+</objects>

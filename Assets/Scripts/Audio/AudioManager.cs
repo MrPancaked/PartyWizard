@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FMOD.Studio;
 using FMODUnity;
+using UnityEngine.SceneManagement;
 using Random = System.Random;
 
 public class AudioManager : MonoBehaviour
@@ -11,26 +12,70 @@ public class AudioManager : MonoBehaviour
 
     private List<EventInstance> eventInstances;
     private List<StudioEventEmitter> eventEmitters;
+    
+    private EventInstance musicInstance;
+    
+    [Range(0,1)] public float masterVolume = 1;
+    [Range(0,1)] public float musicVolume = 1;
+    [Range(0,1)] public float sfxVolume = 1;
+    [Range(0,1)] public float ambienceVolume = 1;
+    
+    private Bus masterBus;
+    private Bus musicBus;
+    private Bus sfxBus;
+    private Bus ambienceBus;
+    
 
     private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return;} // Singleton
         Instance = this;
+        DontDestroyOnLoad(gameObject);
         
         eventInstances = new List<EventInstance>();
         eventEmitters = new List<StudioEventEmitter>();
+        
+        masterBus = RuntimeManager.GetBus("bus:/");
+        musicBus = RuntimeManager.GetBus("bus:/Music");
+        sfxBus = RuntimeManager.GetBus("bus:/SFX");
+        ambienceBus = RuntimeManager.GetBus("bus:/Ambience");
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneUnloaded += OnSceneUnLoaded;
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
+
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        GameManager.Instance.PauseEvent += PauseSounds;
+        GameManager.Instance.UnPauseEvent += UnPauseSounds;
+    }
+    private void OnSceneUnLoaded(Scene scene)
+    {
+        CleanUp();
+        GameManager.Instance.PauseEvent -= PauseSounds;
+        GameManager.Instance.UnPauseEvent -= UnPauseSounds;
+    }
+
+    private void Update()
+    {
+        masterBus.setVolume(masterVolume);
+        musicBus.setVolume(musicVolume);
+        sfxBus.setVolume(sfxVolume);
+        ambienceBus.setVolume(ambienceVolume);
     }
 
     public void PlayOneShot(EventReference sound, Vector2 position)
     {
         RuntimeManager.PlayOneShot(sound, position);
+        //eventInstance.getPitch(out float pitch);
+        //eventInstance.setPitch(pitch + UnityEngine.Random.Range(-1.0f, 1.0f));
     }
-
     public EventInstance CreateInstance(EventReference eventReference)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
-        eventInstance.getPitch(out float pitch);
-        eventInstance.setPitch(pitch + UnityEngine.Random.Range(-1.0f, 1.0f));
         eventInstances.Add(eventInstance);
         return eventInstance;
     }
@@ -48,17 +93,30 @@ public class AudioManager : MonoBehaviour
         foreach (EventInstance eventInstance in eventInstances)
         {
             eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            Debug.Log($"{eventInstance} eventinstance stopped and released");
             eventInstance.release();
         }
 
         foreach (StudioEventEmitter emitter in eventEmitters)
         {
             emitter.Stop();
+            Debug.Log($"{emitter} emitter stopped and released");
         }
     }
 
-    private void OnDestroy()
+    private void PauseSounds()
     {
-        CleanUp();
+        foreach (EventInstance eventInstance in eventInstances)
+        {
+            eventInstance.setPaused(true);
+            Debug.Log($"{eventInstance} eventInstance Paused");
+        }
+    }
+    private void UnPauseSounds()
+    {
+        foreach (EventInstance eventInstance in eventInstances)
+        {
+            eventInstance.setPaused(false);
+        }
     }
 }

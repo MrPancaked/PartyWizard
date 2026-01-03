@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using FMOD.Studio;
 
 public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenuUI;
     [SerializeField] private GameObject controlsUI;
+
+    private EventInstance ambienceInstance;
     
     private void Start()
     {
@@ -13,6 +16,9 @@ public class MainMenuManager : MonoBehaviour
         {
             InputManager.Instance.PauseGameAction.performed += ToggleMenu;
         }
+        
+        ambienceInstance = AudioManager.Instance.CreateInstance(FMODEvents.Instance.ambience);
+        ambienceInstance.start();
         OpenMenu();
     }
 

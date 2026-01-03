@@ -37,6 +37,7 @@ public class LevelController : MonoBehaviour
     {
         int xpGain = xpData.xpMultiplier;
         xpCount += xpGain;
+        AudioManager.Instance.PlayOneShot(FMODEvents.Instance.pickupSound, gameObject.transform.position);
         XpEvent?.Invoke();
         if (xpCount >= xpData.xpForLevel)
         {
@@ -48,6 +49,7 @@ public class LevelController : MonoBehaviour
         level++;
         if (levelCounter != null) levelCounter.text = $"{level}";
         xpCount = 0;
+        AudioManager.Instance.PlayOneShot(FMODEvents.Instance.levelUpSound, gameObject.transform.position);
         LevelUpEvent?.Invoke();
     }
 }

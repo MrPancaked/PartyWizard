@@ -1,4 +1,5 @@
 using System;
+using FMODUnity;
 using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
@@ -10,6 +11,7 @@ public class ItemPickup : MonoBehaviour
         GameObject triggerObj = collision.gameObject;
         if (triggerObj.CompareTag("Xp"))
         {
+            AudioManager.Instance.PlayOneShot(FMODEvents.Instance.pickupSound, gameObject.transform.position);
             xpPickupEvent?.Invoke();
             Destroy(triggerObj.gameObject);
         }

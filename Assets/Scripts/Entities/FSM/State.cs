@@ -47,6 +47,6 @@ public abstract class State
     // Can be overridden by derived states to implement custom behavior.
     public virtual void Step()
     {
-
+        
     }
 }
