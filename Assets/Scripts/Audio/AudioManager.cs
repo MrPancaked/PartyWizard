@@ -49,14 +49,21 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        GameManager.Instance.PauseEvent += PauseSounds;
-        GameManager.Instance.UnPauseEvent += UnPauseSounds;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.PauseEvent += PauseSounds;
+            GameManager.Instance.UnPauseEvent += UnPauseSounds;
+        }
+           
     }
     private void OnSceneUnLoaded(Scene scene)
     {
         CleanUp();
-        GameManager.Instance.PauseEvent -= PauseSounds;
-        GameManager.Instance.UnPauseEvent -= UnPauseSounds;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.PauseEvent -= PauseSounds;
+            GameManager.Instance.UnPauseEvent -= UnPauseSounds;
+        }
     }
 
     private void Update()

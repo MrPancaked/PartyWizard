@@ -7,26 +7,28 @@ using Vector2 = UnityEngine.Vector2;
 
 namespace Player
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class MovementController : MonoBehaviour
     {
-        [SerializeField] private Rigidbody2D rb;
-        private PlayerController playerController;
-        [HideInInspector] public ScriptableObjects.Player.MovementData movementData; //public so playercontroller can update the controller data classes
+        private Rigidbody2D rb;
+        public ScriptableObjects.Player.MovementData movementData; //public so playercontroller can update the controller data classes
     
-        [SerializeField] private Animator animator;
-        [SerializeField] private SpriteRenderer spriteRenderer;
+        private Animator animator;
+        private SpriteRenderer spriteRenderer;
         private EventInstance walkingSounds;
     
         [HideInInspector] public Vector2 moveDirection;
 
         private void Start()
         {
-            playerController = GetComponent<PlayerController>();
-            movementData = playerController.movementData;
+            rb = GetComponent<Rigidbody2D>();
+            animator = GetComponent<Animator>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
             if (SceneManager.GetActiveScene().Equals(SceneManager.GetSceneByName("MainMenu"))) 
                 walkingSounds = AudioManager.Instance.CreateInstance(FMODEvents.Instance.outdoorWalkSound);
             else
-                walkingSounds = AudioManager.Instance.CreateInstance(FMODEvents.Instance.indoorWalkSound);
+                walkingSounds = AudioManager.Instance.CreateInstance(FMODEvents.Instance.indoorWalkSound );
+            rb.linearDamping = movementData.friction;
         }
         private void FixedUpdate()
         {
@@ -35,7 +37,6 @@ namespace Player
         }
         public void Move()
         {
-            rb.linearDamping = movementData.friction;
             rb.AddForce(moveDirection * movementData.speed, ForceMode2D.Force);
         }
     

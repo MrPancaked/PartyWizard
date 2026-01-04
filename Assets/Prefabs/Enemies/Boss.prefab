@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 7249549058232980618}
   - component: {fileID: 4392410663543860272}
   - component: {fileID: 7385215769172161256}
+  - component: {fileID: 1759885814140635052}
   m_Layer: 7
   m_Name: Boss
   m_TagString: Boss
@@ -282,8 +283,6 @@ MonoBehaviour:
   startSpell: {fileID: 3371931195115675852, guid: a3f106f321d55f04dac6aa3dd6795290, type: 3}
   projectileParent: {fileID: 0}
   wantsToAttack: 0
-  isPlayer: 0
-  isEnemy: 0
 --- !u!114 &7385215769172161256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,6 +295,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d23e9de2b1fb8346a40f8a1fef6158a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossFSM
+  moveDuration: 2
+  movementController: {fileID: 1759885814140635052}
   attackController: {fileID: 4392410663543860272}
   amount: 5
   angle: 288
@@ -309,6 +310,20 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+--- !u!114 &1759885814140635052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725479168565907076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59e16ddd7208a2a41a7d62b2c3d745a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.MovementController
+  movementData: {fileID: 11400000, guid: 1e7fda8440f0e0142906c36fc0300338, type: 2}
+  moveDirection: {x: 0, y: 0}
 --- !u!1 &1872579874432684599
 GameObject:
   m_ObjectHideFlags: 0

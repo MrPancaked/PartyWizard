@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 5292867895010063321}
   m_Layer: 7
   m_Name: Knight
-  m_TagString: Enemy
+  m_TagString: Knight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -461,6 +461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.HpController
   hpData: {fileID: 11400000, guid: d45b84cb9322a6646aef95335ee82a3c, type: 2}
+  magicShieldBubble: {fileID: 0}
 --- !u!114 &-5461224502505663143
 MonoBehaviour:
   m_ObjectHideFlags: 0

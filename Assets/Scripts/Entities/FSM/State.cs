@@ -12,6 +12,8 @@ public abstract class State
     public Action onEnter;
     public Action onExit;
     
+    protected float startTime;
+    
     [SerializeReference]
     public List<Transition> transitions = new List<Transition>();
 
@@ -19,6 +21,7 @@ public abstract class State
     // Can be overridden by derived states to perform setup logic.
     public virtual void Enter()
     {
+        startTime = Time.time;
         onEnter?.Invoke();
     }
 

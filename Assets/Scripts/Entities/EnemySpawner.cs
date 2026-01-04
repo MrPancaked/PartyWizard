@@ -77,8 +77,12 @@ public class EnemySpawner : MonoBehaviour
             while ((spawnPosition - (Vector2)playerController.transform.position).magnitude < playerRange) {
                 spawnPosition = new Vector2(Random.Range(spawnArea.xMin, spawnArea.xMax),  Random.Range(spawnArea.yMin, spawnArea.yMax));
             }
-            GameObject boss = Instantiate(bossEnemy, spawnPosition, Quaternion.identity, enemyParent);
-            EventBus<EnemySpawnEventData>.Publish(new EnemySpawnEventData(boss));
+            
+            if (GameObject.FindWithTag("Boss") == null) // only spawn if no other bosses exist
+            {
+                GameObject boss = Instantiate(bossEnemy, spawnPosition, Quaternion.identity, enemyParent);
+                EventBus<EnemySpawnEventData>.Publish(new EnemySpawnEventData(boss));
+            }
             yield return null;
         }
     }
@@ -91,8 +95,21 @@ public class EnemySpawner : MonoBehaviour
             while ((spawnPosition - (Vector2)playerController.transform.position).magnitude < playerRange) {
                 spawnPosition = new Vector2(Random.Range(spawnArea.xMin, spawnArea.xMax),  Random.Range(spawnArea.yMin, spawnArea.yMax));
             }
-            GameObject instantiatedEnemy = Instantiate(enemy, spawnPosition, Quaternion.identity, enemyParent);
-            EventBus<EnemySpawnEventData>.Publish(new EnemySpawnEventData(instantiatedEnemy));
+
+            if (enemy.CompareTag("Boss"))
+            {
+                if (GameObject.FindWithTag("Boss") == null) // only spawn if no other bosses exist
+                {
+                    GameObject instantiatedEnemy = Instantiate(enemy, spawnPosition, Quaternion.identity, enemyParent);
+                    EventBus<EnemySpawnEventData>.Publish(new EnemySpawnEventData(instantiatedEnemy));
+                }
+            }
+            else
+            {
+                GameObject instantiatedEnemy = Instantiate(enemy, spawnPosition, Quaternion.identity, enemyParent);
+                EventBus<EnemySpawnEventData>.Publish(new EnemySpawnEventData(instantiatedEnemy));
+            }
+            
         }
     }
 

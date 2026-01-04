@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 3888119952464389076}
   m_Layer: 7
   m_Name: skull1
-  m_TagString: Enemy
+  m_TagString: Skull
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -265,6 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.HpController
   hpData: {fileID: 11400000, guid: ff9a0588795954842a6922b6228b9f5d, type: 2}
+  magicShieldBubble: {fileID: 0}
 --- !u!114 &-581732976148146887
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,6 +10,8 @@ TagManager:
   - Xp
   - Boss
   - BossHealthBar
+  - Skull
+  - Knight
   layers:
   - Default
   - TransparentFX

@@ -4613,6 +4613,10 @@ PrefabInstance:
       propertyPath: magicShieldBubble
       value: 
       objectReference: {fileID: 359487034}
+    - target: {fileID: 4223670104831844656, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
+      propertyPath: movementData
+      value: 
+      objectReference: {fileID: 11400000, guid: 1e7fda8440f0e0142906c36fc0300338, type: 2}
     - target: {fileID: 6512780214147194516, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
       propertyPath: m_IsActive
       value: 0
