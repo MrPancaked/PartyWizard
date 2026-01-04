@@ -40,7 +40,12 @@ namespace Player
             if (isPlayer)
             {
                 EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished += UpdateHp;
-                if (magicShieldBubble != null) PlayerController.Instance.ActivateShieldEvent += ActivateMagicShield;
+                if (magicShieldBubble != null)
+                {
+                    PlayerController.Instance.ActivateShieldEvent += ActivateMagicShield;
+                    Debug.Log($"Subscribed HpController on {PlayerController.Instance}");
+                }
+                else Debug.LogWarning($"{magicShieldBubble} is null");
             }
             else if (isBoss)
             {
@@ -177,6 +182,7 @@ namespace Player
 
         private void ActivateMagicShield()
         {
+            Debug.Log("Activating magic shield");
             magicShieldBubble.SetActive(true);
             shieldActive = true;
             AudioManager.Instance.PlayOneShot(FMODEvents.Instance.shieldCastSound, gameObject.transform.position);

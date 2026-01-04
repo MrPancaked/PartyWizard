@@ -230,7 +230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4877e7694d0cbe4fb1d318bad706ca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  magicShieldBubble: {fileID: 6512780214147194516}
   movementData: {fileID: 11400000, guid: a43cc9c9ad6d9a040908c836640f9431, type: 2}
   movementController: {fileID: 4223670104831844656}
   attackController: {fileID: 1945399989797448915}
@@ -263,6 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.HpController
   hpData: {fileID: 11400000, guid: c06186db0c7993649894820226a6bf3a, type: 2}
+  magicShieldBubble: {fileID: 6512780214147194516}
 --- !u!114 &1945399989797448915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,14 +276,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackController
   amount: 1
-  angle: 45
-  delayBetweenSpells: 1
+  angle: 30
+  delayBetweenSpells: 0.25
   spellPrefabs:
   - {fileID: 3371931195115675852, guid: ee73e45fee820ff43ada9958fae9d794, type: 3}
   - {fileID: 3371931195115675852, guid: a3f106f321d55f04dac6aa3dd6795290, type: 3}
-  startSpell: {fileID: 3371931195115675852, guid: ee73e45fee820ff43ada9958fae9d794, type: 3}
+  startSpell: {fileID: 3371931195115675852, guid: a3f106f321d55f04dac6aa3dd6795290, type: 3}
   projectileParent: {fileID: 0}
-  attacking: 0
+  wantsToAttack: 0
+  isPlayer: 0
+  isEnemy: 0
 --- !u!114 &4223670104831844656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,14 +458,13 @@ GameObject:
   - component: {fileID: 6600972762323030429}
   - component: {fileID: 3799902901827032243}
   - component: {fileID: 8472522840509600372}
-  - component: {fileID: 4042499651405530751}
   m_Layer: 6
   m_Name: ShieldBubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6600972762323030429
 Transform:
   m_ObjectHideFlags: 0
@@ -553,7 +554,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1601
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -573,33 +574,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.7
---- !u!50 &4042499651405530751
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6512780214147194516}
-  m_BodyType: 0
-  m_Simulated: 0
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &6952825776843849355
 GameObject:
   m_ObjectHideFlags: 0

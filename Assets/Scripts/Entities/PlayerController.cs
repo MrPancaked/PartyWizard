@@ -15,6 +15,8 @@ namespace Player
         
         public AttackController attackController;
         public HpController hpController;
+        
+        InputManager inputManager;
 
         private void Awake()
         {
@@ -24,30 +26,27 @@ namespace Player
         
         private void OnDisable()
         {
-            if (InputManager.Instance != null)
-            {
-                InputManager.Instance.MoveAction.performed -= Move;
-                InputManager.Instance.MoveAction.canceled -= Move;
-                InputManager.Instance.HealAction.performed -= Heal;
-                InputManager.Instance.HealAction.canceled -= Shield;
-        
-                InputManager.Instance.AttackAction.performed -= Attack;
-                InputManager.Instance.AttackAction.canceled -= StopAttack;
-            }
-            else Debug.LogWarning($"Ondisable: {name} did not find InputManager.Instance");
+            inputManager.MoveAction.performed -= Move;
+            inputManager.MoveAction.canceled -= Move;
+            inputManager.HealAction.performed -= Heal;
+            inputManager.ShieldAction.performed -= Shield;
+    
+            inputManager.AttackAction.performed -= Attack;
+            inputManager.AttackAction.canceled -= StopAttack;
         }
 
         private void Start()
         {
             if (InputManager.Instance != null)
             {
-                InputManager.Instance.MoveAction.performed += Move;
-                InputManager.Instance.MoveAction.canceled += Move;
-                InputManager.Instance.HealAction.performed += Heal;
-                InputManager.Instance.ShieldAction.performed += Shield;
+                inputManager = InputManager.Instance;
+                inputManager.MoveAction.performed += Move;
+                inputManager.MoveAction.canceled += Move;
+                inputManager.HealAction.performed += Heal;
+                inputManager.ShieldAction.performed += Shield;
         
-                InputManager.Instance.AttackAction.performed += Attack;
-                InputManager.Instance.AttackAction.canceled += StopAttack;
+                inputManager.AttackAction.performed += Attack;
+                inputManager.AttackAction.canceled += StopAttack;
             }
             else Debug.LogWarning($"OnEnable {name} did not find InputManager.Instance");
             
@@ -110,6 +109,7 @@ namespace Player
                     if (item.ItemName == $"Magic Shield Bubble")
                     {
                         ActivateShieldEvent?.Invoke();
+                        Debug.Log($"Invoking ActivateShieldEvent on {this}");
                         Inventory.Instance.RemoveItem(item);
                         break;
                     }

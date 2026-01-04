@@ -20,8 +20,8 @@ namespace Player
 
         private bool attacking;
         [HideInInspector] public bool wantsToAttack;
-        [SerializeReference] private bool isPlayer;
-        [SerializeReference] private bool isEnemy;
+        private bool isPlayer;
+        private bool isEnemy;
     
         private void Start()
         {

@@ -152,6 +152,20 @@ MonoBehaviour:
       Data3: -1143236169
       Data4: 1567097350
     Path: event:/Explosion
+  <pickupSound>k__BackingField:
+    Guid:
+      Data1: 329786118
+      Data2: 1136444105
+      Data3: -1165418348
+      Data4: -1305185915
+    Path: event:/XpPickup
+  <levelUpSound>k__BackingField:
+    Guid:
+      Data1: -199515759
+      Data2: 1253456278
+      Data3: -521609832
+      Data4: 666571252
+    Path: event:/LevelUp
   <music>k__BackingField:
     Guid:
       Data1: -1466329951

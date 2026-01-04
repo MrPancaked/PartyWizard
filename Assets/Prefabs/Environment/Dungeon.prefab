@@ -1080,6 +1080,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2132778433859868549}
     m_Modifications:
+    - target: {fileID: -1607830059998907370, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
+      propertyPath: otherDoorTransform
+      value: 
+      objectReference: {fileID: 3739624198070642201}
     - target: {fileID: 3861875336894703294, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
       propertyPath: m_Name
       value: Door (3)
@@ -1270,6 +1274,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2132778433859868549}
     m_Modifications:
+    - target: {fileID: -1607830059998907370, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
+      propertyPath: otherDoorTransform
+      value: 
+      objectReference: {fileID: 3583741906130077703}
     - target: {fileID: 3861875336894703294, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
       propertyPath: m_Name
       value: Door
@@ -1332,13 +1340,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2132778433859868549}
     m_Modifications:
+    - target: {fileID: -1607830059998907370, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
+      propertyPath: otherDoorTransform
+      value: 
+      objectReference: {fileID: 114554073089267934}
     - target: {fileID: 3861875336894703294, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
       propertyPath: m_Name
       value: Door (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6717027310031155428, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
       propertyPath: m_LocalScale.y
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6717027310031155428, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1354,19 +1366,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6717027310031155428, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6717027310031155428, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6717027310031155428, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6717027310031155428, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6717027310031155428, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1378,7 +1390,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6717027310031155428, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1398,6 +1410,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2132778433859868549}
     m_Modifications:
+    - target: {fileID: -1607830059998907370, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
+      propertyPath: otherDoorTransform
+      value: 
+      objectReference: {fileID: 7677612529834080123}
     - target: {fileID: 3861875336894703294, guid: 035c699a63bc1cf47a83a2ac18312134, type: 3}
       propertyPath: m_Name
       value: Door (2)

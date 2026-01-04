@@ -93,14 +93,12 @@ public class AudioManager : MonoBehaviour
         foreach (EventInstance eventInstance in eventInstances)
         {
             eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-            Debug.Log($"{eventInstance} eventinstance stopped and released");
             eventInstance.release();
         }
 
         foreach (StudioEventEmitter emitter in eventEmitters)
         {
             emitter.Stop();
-            Debug.Log($"{emitter} emitter stopped and released");
         }
     }
 
@@ -109,7 +107,6 @@ public class AudioManager : MonoBehaviour
         foreach (EventInstance eventInstance in eventInstances)
         {
             eventInstance.setPaused(true);
-            Debug.Log($"{eventInstance} eventInstance Paused");
         }
     }
     private void UnPauseSounds()
