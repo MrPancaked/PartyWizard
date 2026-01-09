@@ -12,6 +12,8 @@ Party wizard is a game development project for my software architecture cource a
 The focus was mostly on making decoupled, scalable systems. 
 I very much enjoyed making this, and I love to see how easy implementing new features like enemies and spells is after putting some time into creating a proper system for them. 
 
+Everything in this project has been made by myself, including all the sprites, art and sound.
+
 Some Peaks into the development so far:
 ![Image Sequence_020_0000](https://github.com/user-attachments/assets/c4bf135b-5f4c-4f80-b576-f28b344319cf)
 ![Image Sequence_017_0000](https://github.com/user-attachments/assets/f5d7a0b3-d8e5-4387-a1d1-6d48b5ee72b5)
