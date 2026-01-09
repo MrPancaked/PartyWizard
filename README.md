@@ -13,6 +13,7 @@ The focus was mostly on making decoupled, scalable systems.
 I very much enjoyed making this, and I love to see how easy implementing new features like enemies and spells is after putting some time into creating a proper system for them. 
 
 Some Peaks into the development so far:
+![Image Sequence_019_0000](https://github.com/user-attachments/assets/f5ddf70e-9c0c-46d4-8f51-33bae7d7e7be)
+![Image Sequence_017_0000](https://github.com/user-attachments/assets/f5d7a0b3-d8e5-4387-a1d1-6d48b5ee72b5)
 ![Image Sequence_014_0000](https://github.com/user-attachments/assets/2858edd7-5129-4e3d-90b9-d1fd160de867)
 ![Image Sequence_009_0000](https://github.com/user-attachments/assets/cc92c088-8b4d-4c75-b444-65db7eb0ade9)
-![Image Sequence_002_0000](https://github.com/user-attachments/assets/27c60098-b2cd-479c-9bec-7ace1d78b34c)
