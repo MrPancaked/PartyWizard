@@ -225,6 +225,11 @@ namespace Player
             maxHp += PlayerStatController.Instance.extraHpUpgrade;
             UpdatedMaxHealth?.Invoke();
         }
+
+        public void SetInvincible(bool invincible)
+        {
+            takeDamage = !invincible;
+        }
     }
 
     public class TakeDamageData

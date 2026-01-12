@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Quests.Quests;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,55 +9,59 @@ namespace Quests
     public class QuestManager : MonoBehaviour
     {
         [SerializeField] private GameObject questUI;
-        [SerializeField] private List<QuestData> startQuestList;
-        private List<KillQuest> killQuestList;
-        private List<UseItemQuest> useItemQuestList;
-        private List<GatherItemQuest> gatherItemQuestList;
+        [SerializeField] private GameObject KillQuestPrefab;
+        [SerializeField] private GameObject UseItemQuestPrefab;
+        [SerializeField] private List<Quest> questList;
 
-        private void Awake()
+        private void OnEnable()
         {
             EventBus<EnemyDieEventData>.OnEventPublished += UpdateKillQuests;
+        }
 
-            foreach (QuestData questData in startQuestList)
+        private void OnDisable()
+        {
+            EventBus<EnemyDieEventData>.OnEventPublished -= UpdateKillQuests;
+        }
+
+        private void InitializeQuest()
+        {
+            
+        }
+
+        private void Start()
+        {
+            InitializeQuestUI();
+        }
+
+        private void InitializeQuestUI()
+        {
+            foreach (Quest quest in questList)
             {
-                switch (questData)
+                quest.questSlider.maxValue = quest.amount;
+                quest.questDescriptionText.text = quest.description;
+                switch (quest)
                 {
-                    case KillQuestData killQuestData:
+                    case KillQuest killQuest:
+                        killQuest.image.sprite = killQuest.toBeKilled.GetComponent<SpriteRenderer>().sprite;
                         break;
                 }
             }
         }
 
-        private void UpdateKillQuests(EnemyDieEventData enemyDieEventData)
+        private void UpdateKillQuests(EventData eventData)
         {
-            foreach (var quest in killQuestList)
+            foreach (Quest quest in questList)
             {
-                if (quest.GetType() == typeof(KillQuest))
+                switch (quest)
                 {
-                    
+                    case KillQuest killQuest:
+                        if (eventData is EnemyDieEventData enemyDieEventData)
+                        {
+                            killQuest.UpdateSlider(enemyDieEventData);
+                        }
+                        break;
                 }
             }
         }
-    }
-    public abstract class Quest
-    {
-        public string questName;
-        public string description;
-        public int amount;
-    }
-
-    public class KillQuest : Quest
-    {
-        public GameObject toBeKilled;
-    }
-
-    public class UseItemQuest : Quest
-    {
-        public Item item;
-    }
-
-    public class GatherItemQuest : Quest
-    {
-        public Item item;
     }
 }

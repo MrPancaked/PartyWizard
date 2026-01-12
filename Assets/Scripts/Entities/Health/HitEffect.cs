@@ -10,6 +10,14 @@ public class HitEffect : MonoBehaviour
     [SerializeField] private HpController hpController;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
+    private void Awake()
+    {
+        if (GetComponent<HpController>() == null)
+        {
+            Debug.LogError($"{gameObject.name}, {this.name}: no HpController attached");
+        }
+    }
+
     private void OnEnable()
     {
         hpController =  gameObject.GetComponent<HpController>();

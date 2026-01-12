@@ -148,4 +148,19 @@ public class PlayerStatController : MonoBehaviour
                                    $"{spellCastDelay}";
         }
     }
+
+    public void InstantKillUpgrade(bool on)
+    {
+        if (on)
+        {
+            flatDamage += 999;
+            damageMultiplier += 999;
+        }
+        else
+        {
+            flatDamage -= 999;
+            damageMultiplier -= 999;
+        }
+        UpdatePlayerStats();
+    }
 }

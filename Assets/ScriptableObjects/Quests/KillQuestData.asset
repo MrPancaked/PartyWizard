@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KillQuestData
   questName: Skull Kill Quest
   description: kill skulls
-  amount: 0
-  toBeKilled: {fileID: 0}
+  amount: 10
+  toBeKilled: {fileID: 2569219723795775860, guid: 2ac96b05f7317974fa1b9db46e498c7f, type: 3}

@@ -280,6 +280,7 @@ MonoBehaviour:
   delayBetweenSpells: 0
   spellPrefabs:
   - {fileID: 3371931195115675852, guid: a3f106f321d55f04dac6aa3dd6795290, type: 3}
+  - {fileID: 3371931195115675852, guid: ee73e45fee820ff43ada9958fae9d794, type: 3}
   startSpell: {fileID: 3371931195115675852, guid: a3f106f321d55f04dac6aa3dd6795290, type: 3}
   projectileParent: {fileID: 0}
   wantsToAttack: 0
@@ -302,7 +303,7 @@ MonoBehaviour:
   angle: 288
   delayBetweenSpells: 1
   attackDuration: 5
-  idleDuration: 3
+  idleDuration: 1.5
   currentState:
     rid: -2
   references:
