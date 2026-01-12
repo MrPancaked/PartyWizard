@@ -59,6 +59,9 @@ public class Inventory : MonoBehaviour
         // Removes an item from the inventory.
         public void RemoveItem(Item item)
         {
+            //Normally I would make a separate method that invokes this event when an item gets used
+            //but now the only gets called when and item gets used so I'm just calling it here.
+            EventBus<UseItemEvent>.Publish(new UseItemEvent(item));
             items.Remove(item);
             presentInventoryEvent?.Invoke();
         }

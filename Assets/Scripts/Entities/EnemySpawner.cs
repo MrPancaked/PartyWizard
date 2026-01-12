@@ -87,7 +87,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void SpawnEnemies(EnemyWaveData enemies)
+    private void SpawnEnemies(EnemyWaveData enemies) // make this a coroutine
     {
         foreach (GameObject enemy in enemies.enemyWave)
         {

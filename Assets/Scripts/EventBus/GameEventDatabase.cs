@@ -72,6 +72,15 @@ public class EnemySpawnEventData : EventData
     }
 }
 
+public class UseItemEvent : EventData
+{
+    public Item item;
+    public UseItemEvent(Item pItem)
+    {
+        name = "UseItemEvent";
+        item = pItem;
+    }
+}
 public class PlayerUpgradeEventData : EventData
 {
     public Upgrade upgrade;

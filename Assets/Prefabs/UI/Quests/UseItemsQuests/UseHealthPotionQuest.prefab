@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 80, y: 10}
+  m_SizeDelta: {x: 55, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2567713455527711674
 CanvasRenderer:
@@ -294,9 +294,9 @@ GameObject:
   - component: {fileID: 5206267318302831931}
   - component: {fileID: 4614740953948414178}
   - component: {fileID: 5838220967953081279}
-  - component: {fileID: 5417680023136923711}
+  - component: {fileID: 5627010475890329550}
   m_Layer: 5
-  m_Name: KillQuest
+  m_Name: UseHealthPotionQuest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -320,7 +320,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 0}
+  m_SizeDelta: {x: 75, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4614740953948414178
 CanvasRenderer:
@@ -360,7 +360,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5417680023136923711
+--- !u!114 &5627010475890329550
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -369,17 +369,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 3681207787516964969}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49a7abf21b5c4846a6e242e43b211aeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 6203e72dc3994e8f81bff2b31ebfa507, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Quests.Quests.KillQuest
+  m_EditorClassIdentifier: Assembly-CSharp::Quests.Quests.UseItemQuest
   image: {fileID: 8392750051673931990}
   questNameText: {fileID: 0}
   questDescriptionText: {fileID: 6585694786276329541}
-  questName: Kill Skulls
-  description: 'Kill skulls:'
-  amount: 10
+  questName: 
+  description: 
+  amount: 0
   questSlider: {fileID: 3781691262835346510}
-  toBeKilled: {fileID: 2569219723795775860, guid: 2ac96b05f7317974fa1b9db46e498c7f, type: 3}
+  toBeUsed:
+    id: 
+    itemName: 
+    attack: 0
+    defense: 0
+    itemIcon: {fileID: 0}
+    itemModel: {fileID: 0}
+  useItemQuestData: {fileID: 11400000, guid: 75882a6962cbd31489f7b8ef0f4eb36f, type: 2}
 --- !u!1 &5654799780439612806
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,7 +424,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 80, y: 10}
+  m_SizeDelta: {x: 55, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3781691262835346510
 MonoBehaviour:
@@ -643,7 +650,7 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 4
   m_Spacing: 5
-  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
@@ -790,7 +797,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3322266479791537964, guid: 9e962101c83734645aff5de3cba229b3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 48f82580913320d4da27653f439346a4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

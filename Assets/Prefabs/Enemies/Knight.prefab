@@ -307,11 +307,13 @@ GameObject:
   - component: {fileID: 3156648351951337470}
   - component: {fileID: 1932475213316755675}
   - component: {fileID: 2069865022707251563}
+  - component: {fileID: 3666943996156581602}
+  - component: {fileID: 8390750254304358256}
+  - component: {fileID: 1875866121450318993}
   - component: {fileID: -2238948844177917676}
   - component: {fileID: 6912889462232665748}
   - component: {fileID: 2821817305691107069}
   - component: {fileID: -5461224502505663143}
-  - component: {fileID: 6488919804680996256}
   - component: {fileID: 7985838292671515528}
   - component: {fileID: 5292867895010063321}
   m_Layer: 7
@@ -418,6 +420,65 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3666943996156581602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9200540470247148309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59e16ddd7208a2a41a7d62b2c3d745a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.MovementController
+  movementData: {fileID: 11400000, guid: 46ca7121d8edfa24c865d6a25f1e7983, type: 2}
+  moveDirection: {x: 0, y: 0}
+--- !u!114 &8390750254304358256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9200540470247148309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5101ba7ff0fbf342b77480ff95879c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.AttackController
+  amount: 1
+  angle: 0
+  delayBetweenSpells: 1
+  spellPrefabs: []
+  startSpell: {fileID: 0}
+  projectileParent: {fileID: 3156648351951337470}
+  currentSpell: {fileID: 0}
+  wantsToAttack: 0
+--- !u!114 &1875866121450318993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9200540470247148309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acfe1a542b634e9683cd1be103ca4e96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.FSM.KnightFSM
+  attackController: {fileID: 8390750254304358256}
+  movementController: {fileID: 3666943996156581602}
+  minRangeToPlayer: 2
+  swordObject: {fileID: 3371931195115675852, guid: 72235d92e98e97f48ae029bb1cd5a430, type: 3}
+  duration: 1
+  idleDuration: 1
+  currentState:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &-2238948844177917676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,20 +538,6 @@ MonoBehaviour:
   duration: 2
   hpController: {fileID: 2821817305691107069}
   spriteRenderer: {fileID: 1932475213316755675}
---- !u!114 &6488919804680996256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9200540470247148309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25fdf648f3a4de748a553187fe710e7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::KnightMovementBehaviour
-  movementData: {fileID: 11400000, guid: 46ca7121d8edfa24c865d6a25f1e7983, type: 2}
-  playerController: {fileID: 0}
 --- !u!61 &7985838292671515528
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -529,7 +576,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 1.5}
+    oldSize: {x: 1.5, y: 1.5}
     newSize: {x: 2, y: 1.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -44,15 +44,21 @@ namespace Player
         {
             if (moveDirection.magnitude > 0f)
             {
-                animator.Play("WalkAnimation");
-                PLAYBACK_STATE playbackState;
-                walkingSounds.getPlaybackState(out playbackState);
-                if (playbackState.Equals(PLAYBACK_STATE.STOPPED) || playbackState.Equals(PLAYBACK_STATE.STOPPING)) walkingSounds.start();
+                if (gameObject.CompareTag("Player") || gameObject.CompareTag("Boss"))
+                {
+                    animator.Play("WalkAnimation");
+                    PLAYBACK_STATE playbackState;
+                    walkingSounds.getPlaybackState(out playbackState);
+                    if (playbackState.Equals(PLAYBACK_STATE.STOPPED) || playbackState.Equals(PLAYBACK_STATE.STOPPING)) walkingSounds.start();
+                }
             }
             else
             {
-                animator.Play("IdleAnimation");
-                walkingSounds.stop(STOP_MODE.ALLOWFADEOUT);
+                if (gameObject.CompareTag("Player") || gameObject.CompareTag("Boss"))
+                {
+                    animator.Play("IdleAnimation");
+                    walkingSounds.stop(STOP_MODE.ALLOWFADEOUT);
+                }
             }
 
             if (moveDirection.x < -0.1f) spriteRenderer.flipX = true;

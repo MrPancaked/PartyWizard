@@ -9,20 +9,30 @@ using UnityEngine.EventSystems;
 
 public class BossFSM : MonoBehaviour
 {
+    [Header("Controllers")]
+    [SerializeField] private AttackController attackController;
+    [SerializeField] private MovementController movementController;
     [Header("Movement")]
     [SerializeField] private float moveDuration;
-    [SerializeField] private MovementController movementController;
-    [Header("attacks")] 
-    [SerializeField] private AttackController attackController;
-    [SerializeField] private int amount;
-    [SerializeField] private float angle;
-    [SerializeField] private float delayBetweenSpells;
-    [SerializeField] private float attackDuration;
+    [SerializeField] private float minRangeToPlayer;
+    [Header("Area Attacks")] 
+    [SerializeField] private GameObject areaSpell;
+    [SerializeField] private int areaAmount;
+    [SerializeField] private float areaAngle;
+    [SerializeField] private float areaDelayBetweenSpells;
+    [SerializeField] private float areaAttackDuration;
+    [Header("ranged attacks")] 
+    [SerializeField] private GameObject rangedSpell;
+    [SerializeField] private int rangedAmount;
+    [SerializeField] private float rangedAngle;
+    [SerializeField] private float rangedDelayBetweenSpells;
+    [SerializeField] private float rangedAttackDuration;
     [Header("idle")]
     [SerializeField] private float idleDuration;
 
     // FSM states
-    private AttackState attackState;
+    private AreaAttackState areaAttackState;
+    private RangedAttackState rangedAttackState;
     private IdleState idleState;
     private MoveState moveState;
 
@@ -37,20 +47,23 @@ public class BossFSM : MonoBehaviour
     private void Start()
     {
         //Create states
-        attackState = new AttackState(attackController ,amount,  angle, delayBetweenSpells, attackDuration);
+        areaAttackState = new AreaAttackState(attackController, areaAmount, areaAngle, areaDelayBetweenSpells, areaAttackDuration, areaSpell);
+        rangedAttackState = new RangedAttackState(attackController, rangedAmount, rangedAngle, rangedDelayBetweenSpells, rangedAttackDuration, rangedSpell);
         idleState = new IdleState(idleDuration);
-        moveState = new MoveState(moveDuration, movementController);
+        moveState = new MoveState(moveDuration, minRangeToPlayer, movementController);
 
         //Transitions setup
 
         //While Attacking:
-        attackState.transitions.Add(new Transition(attackState.AttackOver, moveState));
+        areaAttackState.transitions.Add(new Transition(areaAttackState.AttackOver, rangedAttackState));
+        rangedAttackState.transitions.Add(new Transition(rangedAttackState.AttackOver, moveState));
         
         //while idling:
-        idleState.transitions.Add(new Transition(idleState.IdleOver,  attackState));
+        idleState.transitions.Add(new Transition(idleState.IdleOver,  areaAttackState));
         
         //while moving:
         moveState.transitions.Add(new Transition(moveState.MoveOver, idleState));
+        moveState.transitions.Add(new Transition(moveState.PlayerInRange, idleState));
 
         //Default state is idleState.
         currentState = idleState;

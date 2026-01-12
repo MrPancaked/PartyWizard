@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91a15c2f2c2f22c458217475a1ddd10b, type: 3}
-  m_Name: KillQuestData
+  m_Name: KillKnightsQuest
   m_EditorClassIdentifier: Assembly-CSharp::KillQuestData
-  questName: Skull Kill Quest
-  description: kill skulls
-  amount: 10
-  toBeKilled: {fileID: 2569219723795775860, guid: 2ac96b05f7317974fa1b9db46e498c7f, type: 3}
+  questName: Knight Kill Quest
+  description: kill knights
+  amount: 5
+  toBeKilled: {fileID: 9200540470247148309, guid: 479d218fbc662ac4eb5b395144602a42, type: 3}

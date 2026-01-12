@@ -13,15 +13,4 @@ MonoBehaviour:
   m_Name: Wave4
   m_EditorClassIdentifier: Assembly-CSharp::EnemyWaveData
   enemyWave:
-  - {fileID: 2569219723795775860, guid: 2ac96b05f7317974fa1b9db46e498c7f, type: 3}
-  - {fileID: 2569219723795775860, guid: 2ac96b05f7317974fa1b9db46e498c7f, type: 3}
-  - {fileID: 2569219723795775860, guid: 2ac96b05f7317974fa1b9db46e498c7f, type: 3}
-  - {fileID: 2569219723795775860, guid: 2ac96b05f7317974fa1b9db46e498c7f, type: 3}
-  - {fileID: 2569219723795775860, guid: 2ac96b05f7317974fa1b9db46e498c7f, type: 3}
-  - {fileID: 2569219723795775860, guid: 2ac96b05f7317974fa1b9db46e498c7f, type: 3}
-  - {fileID: 2569219723795775860, guid: 2ac96b05f7317974fa1b9db46e498c7f, type: 3}
-  - {fileID: 9200540470247148309, guid: 479d218fbc662ac4eb5b395144602a42, type: 3}
-  - {fileID: 9200540470247148309, guid: 479d218fbc662ac4eb5b395144602a42, type: 3}
-  - {fileID: 2569219723795775860, guid: 2ac96b05f7317974fa1b9db46e498c7f, type: 3}
-  - {fileID: 2569219723795775860, guid: 2ac96b05f7317974fa1b9db46e498c7f, type: 3}
   - {fileID: 725479168565907076, guid: 4429450e9c578a34db8b057944d286b4, type: 3}

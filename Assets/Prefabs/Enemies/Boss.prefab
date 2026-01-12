@@ -283,6 +283,7 @@ MonoBehaviour:
   - {fileID: 3371931195115675852, guid: ee73e45fee820ff43ada9958fae9d794, type: 3}
   startSpell: {fileID: 3371931195115675852, guid: a3f106f321d55f04dac6aa3dd6795290, type: 3}
   projectileParent: {fileID: 0}
+  currentSpell: {fileID: 0}
   wantsToAttack: 0
 --- !u!114 &7385215769172161256
 MonoBehaviour:
@@ -296,14 +297,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d23e9de2b1fb8346a40f8a1fef6158a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossFSM
-  moveDuration: 2
-  movementController: {fileID: 1759885814140635052}
   attackController: {fileID: 4392410663543860272}
-  amount: 5
-  angle: 288
-  delayBetweenSpells: 1
-  attackDuration: 5
-  idleDuration: 1.5
+  movementController: {fileID: 1759885814140635052}
+  moveDuration: 2
+  minRangeToPlayer: 2
+  areaSpell: {fileID: 3371931195115675852, guid: a3f106f321d55f04dac6aa3dd6795290, type: 3}
+  areaAmount: 6
+  areaAngle: 300
+  areaDelayBetweenSpells: 0.5
+  areaAttackDuration: 3
+  rangedSpell: {fileID: 3371931195115675852, guid: ee73e45fee820ff43ada9958fae9d794, type: 3}
+  rangedAmount: 3
+  rangedAngle: 30
+  rangedDelayBetweenSpells: 0.25
+  rangedAttackDuration: 1
+  idleDuration: 1
   currentState:
     rid: -2
   references:

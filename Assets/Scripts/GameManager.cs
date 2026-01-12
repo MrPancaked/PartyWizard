@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
         yield return StartCoroutine(NewRoundAnimation());
         Debug.Log("New round");
         
-        SpawnEnemiesEvent?.Invoke(enemyWaves[round - 1]);
+        SpawnEnemiesEvent?.Invoke(enemyWaves[round - 1]); // I'm not sure I can guarantee if all subscribers excute before the next line, so far so good though.
         CountEnemies();
     }
     public void OnEnemyDied(EnemyDieEventData enemyDieEventData)

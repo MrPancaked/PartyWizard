@@ -22,7 +22,7 @@ namespace Quests.Quests
 
         protected void Start()
         {
-            image.sprite = toBeKilled.GetComponent<SpriteRenderer>().sprite;
+            //image.sprite = toBeKilled.GetComponent<SpriteRenderer>().sprite;
         }
 
         public override void UpdateSlider(EventData eventData)

@@ -8,10 +8,12 @@ public class MoveState : State
     private MovementController movementController;
     private MovementData movementData;
     private float moveDuration;
+    private float minRangeToPlayer;
     
-    public MoveState(float pDuration, MovementController pMvementController)
+    public MoveState(float pDuration, float pMinRangeToPlayer, MovementController pMvementController)
     {
         moveDuration = pDuration;
+        minRangeToPlayer = pMinRangeToPlayer;
         movementController = pMvementController;
     }
 
@@ -19,7 +21,6 @@ public class MoveState : State
     {
         base.Step();
         movementController.moveDirection = (PlayerController.Instance.transform.position - movementController.transform.position).normalized;
-        Debug.Log($"set boss movedirection to {movementController.moveDirection}");
     }
 
     public override void Exit()
@@ -32,4 +33,8 @@ public class MoveState : State
         return Time.time > startTime + moveDuration;
     }
 
+    public bool PlayerInRange()
+    {
+        return (PlayerController.Instance.transform.position - movementController.transform.position).magnitude <= minRangeToPlayer;
+    }
 }

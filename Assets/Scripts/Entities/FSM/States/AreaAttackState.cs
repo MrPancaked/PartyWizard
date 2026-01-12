@@ -1,7 +1,7 @@
 using Player;
 using UnityEngine;
 
-public class AttackState : State
+public class AreaAttackState : State
 {
     private AttackController attackController;
     
@@ -9,16 +9,18 @@ public class AttackState : State
     private float angle;
     private float delayBetweenSpells;
     private float attackDuration;
+    private GameObject spell;
     
     private float attackStartTime;
 
-    public AttackState(AttackController pAttackController, int pAmount, float pAngle, float pDelayBetweenSpells, float pAttackDuration)
+    public AreaAttackState(AttackController pAttackController, int pAmount, float pAngle, float pDelayBetweenSpells, float pAttackDuration, GameObject pSpell)
     {
         attackController = pAttackController;
         amount = pAmount;
         angle = pAngle;
         delayBetweenSpells = pDelayBetweenSpells;
         attackDuration = pAttackDuration;
+        spell = pSpell;
     }
     public override void Enter()
     {
@@ -31,6 +33,7 @@ public class AttackState : State
         attackController.amount = amount;
         attackController.angle = angle;
         attackController.delayBetweenSpells = delayBetweenSpells;
+        attackController.currentSpell = spell;
         attackController.wantsToAttack =  true;
     }
 
