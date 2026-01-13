@@ -5,6 +5,8 @@ namespace ScriptableObjects.Player
     [CreateAssetMenu(fileName = "SpellData", menuName = "Scriptable Objects/SpellData")]
     public class SpellData : ScriptableObject
     {
+        [Header("Melee settings")]
+        public bool melee;
         [Header("AOE settings")]
         public bool aoeEffect;
         public int aoeDamage;

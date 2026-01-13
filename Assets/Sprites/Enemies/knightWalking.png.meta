@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 9a48f787dc8377c42bc8a94ab4d8671b
+guid: 4bc00dd7a15f7904593c1b6b120467d1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7310501140982945409
-    second: SwordSlash_0
+      213: 5668577260481778385
+    second: knightWalking_0
+  - first:
+      213: 908150560953170063
+    second: knightWalking_1
+  - first:
+      213: -6775892948336891243
+    second: knightWalking_2
+  - first:
+      213: 3820003737717694506
+    second: knightWalking_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +55,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -98,10 +107,10 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: WebGL
-    maxTextureSize: 64
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,23 +122,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SwordSlash_0
+      name: knightWalking_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 6
-        width: 32
-        height: 20
+        x: 4
+        y: 0
+        width: 24
+        height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f79af99e1f1eb8a90800000000000000
-      internalID: -7310501140982945409
+      spriteID: 1d29fd82cf4daae40800000000000000
+      internalID: 5668577260481778385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: knightWalking_1
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f887f24af166a9c00800000000000000
+      internalID: 908150560953170063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: knightWalking_2
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59a2e42834137f1a0800000000000000
+      internalID: -6775892948336891243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: knightWalking_3
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a20e3530921630530800000000000000
+      internalID: 3820003737717694506
       vertices: []
       indices: 
       edges: []
@@ -138,7 +213,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: ffac3bdffb759e742b5c2b5ef4cccb67
     internalID: 0
     vertices: []
     indices: 
@@ -146,9 +221,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":24.0,"y":24.0},"gridSpriteOffset":{"x":4.0,"y":0.0},"gridSpritePadding":{"x":8.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      SwordSlash_0: -7310501140982945409
+      knightWalking_0: 5668577260481778385
+      knightWalking_1: 908150560953170063
+      knightWalking_2: -6775892948336891243
+      knightWalking_3: 3820003737717694506
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

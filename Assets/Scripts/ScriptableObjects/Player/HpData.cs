@@ -7,6 +7,7 @@ namespace ScriptableObjects.Player
     {
         public int startHp;
         public int maxHp;
+        public float immuneTime;
         public int startShield;
         public int contactDamage;
         public float contactKnockback;

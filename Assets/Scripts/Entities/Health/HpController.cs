@@ -1,6 +1,7 @@
 
 using UnityEngine;
 using System;
+using System.Collections;
 using FMOD.Studio;
 using Projectiles;
 using ScriptableObjects.Player;
@@ -17,6 +18,7 @@ namespace Player
         
         public int maxHp {get; private set;}
         public int hp {get; private set;}
+        public float immuneTime { get; private set; }
         public int shield {get; private set;}
         public int contactDamage {get; private set;}
         public float contactKnockback {get; private set;}
@@ -71,6 +73,7 @@ namespace Player
             maxHp = hpData.maxHp;
             if (hpData.startHp > maxHp) hpData.startHp = maxHp;
             hp = hpData.startHp;
+            immuneTime = hpData.immuneTime;
             shield = hpData.startShield;
             contactDamage = hpData.contactDamage;
             contactKnockback = hpData.contactKnockback;
@@ -147,7 +150,9 @@ namespace Player
                         shield = 0;
                         if (hp < 0) hp = 0;
                     }
+                    
                     Debug.Log($"{gameObject.name} has taken damage: {damage}, current hp: {hp}");
+                    Immunity();
                     
                     if (isPlayer && damage > 0) AudioManager.Instance.PlayOneShot(FMODEvents.Instance.playerHurtSound, gameObject.transform.position);
                     else if (damage > 0) AudioManager.Instance.PlayOneShot(FMODEvents.Instance.enemyHurtSound, gameObject.transform.position);
@@ -190,8 +195,9 @@ namespace Player
 
         private void BreakMagicShield()
         {
-            magicShieldBubble.SetActive(false);
             shieldActive = false;
+            magicShieldBubble.SetActive(false);
+            StartCoroutine(Immunity());
             AudioManager.Instance.PlayOneShot(FMODEvents.Instance.shieldBreakSound, gameObject.transform.position);
         }
         private void Die()
@@ -224,6 +230,13 @@ namespace Player
         {
             maxHp += PlayerStatController.Instance.extraHpUpgrade;
             UpdatedMaxHealth?.Invoke();
+        }
+
+        private IEnumerator Immunity()
+        {
+            SetInvincible(true);
+            yield return new WaitForSeconds(immuneTime);
+            SetInvincible(false);
         }
 
         public void SetInvincible(bool invincible)

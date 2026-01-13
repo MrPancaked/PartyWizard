@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using ScriptableObjects.Player;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -75,8 +76,6 @@ namespace Player
                     projectileController.Initiate(direction, isPlayer, isEnemy);
                 }
                 else Debug.LogWarning($"somehow trying to cast invalid amount of spells:{amount}");
-                
-                AudioManager.Instance.PlayOneShot(FMODEvents.Instance.castSound, transform.position);
                 
                 yield return new WaitForSeconds(delayBetweenSpells);
                 if (!wantsToAttack) attacking = false;

@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdcfa152d47446b4189e7bf66db1518d, type: 3}
   m_Name: SwordSlash
   m_EditorClassIdentifier: Assembly-CSharp::ScriptableObjects.Player.SpellData
+  melee: 1
   aoeEffect: 0
   aoeDamage: 0
   aoeRadius: 0
   aoeKnockback: 0
   startSpeed: 0
   endSpeed: 0
-  maxTimeAlive: 0.25
+  maxTimeAlive: 1
   speedScaling: 0
   directionChange: 0
   directionChangeStrength: 0

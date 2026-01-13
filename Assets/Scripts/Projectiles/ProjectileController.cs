@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -16,6 +17,7 @@ namespace Projectiles
         [SerializeField] private ParticleSystem destroyEffectObject;
         
         private float timeAlive;
+        private bool dying;
         private float linearSpeedChange;
         private Vector2 randomCurveDirection;
 
@@ -24,10 +26,20 @@ namespace Projectiles
         
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (spellData.aoeEffect)
-                AoeEffect();
-            DoParticles();
-            Destroy(gameObject);
+            OnParticleDeath();
+        }
+
+        private void OnParticleDeath()
+        {
+            if (!dying)
+            {
+                dying = true;
+                if (spellData.aoeEffect)
+                    AoeEffect();
+                DoParticles();
+                if (!spellData.melee) Destroy(gameObject);
+                else StartCoroutine(MeleeDestroyDelay());
+            }
         }
 
         private void AoeEffect() //do AOE stuff when destroyed could be put in separate method to be used multiple times among the spells path
@@ -73,6 +85,9 @@ namespace Projectiles
             linearSpeedChange = (spellData.endSpeed - spellData.startSpeed) / spellData.maxTimeAlive;
             randomCurveDirection = Random.insideUnitCircle.normalized;
             
+            if (spellData.melee) AudioManager.Instance.PlayOneShot(FMODEvents.Instance.swordSlash, transform.position);
+            else AudioManager.Instance.PlayOneShot(FMODEvents.Instance.castSound, transform.position);
+            
             SetRigidbodyValues();
             InitiateCollider();
         }
@@ -86,9 +101,7 @@ namespace Projectiles
             timeAlive += Time.fixedDeltaTime;
             if (timeAlive >= spellData.maxTimeAlive)
             {
-                AoeEffect();
-                DoParticles();
-                Destroy(gameObject);
+                OnParticleDeath();
             }
         }
 
@@ -126,12 +139,12 @@ namespace Projectiles
                     break;
                 }
             }
-            gameObject.transform.up = direction;
         }
 
         private void SetRigidbodyValues()
         {
             rb.linearVelocity = direction * speed;
+            gameObject.transform.up = direction;
         }
 
         private void InitiateCollider()
@@ -156,6 +169,21 @@ namespace Projectiles
             {
                 particleSystem.Stop();
                 particleSystem.transform.parent = null;
+            }
+        }
+
+        private IEnumerator MeleeDestroyDelay()
+        {
+            Collider2D collider = gameObject.GetComponent<Collider2D>();
+            collider.enabled = false; // dissable melee collider to avoid double hits
+            if (timeAlive < spellData.maxTimeAlive)
+            {
+                yield return new WaitForSeconds(spellData.maxTimeAlive - timeAlive);
+                Destroy(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
             }
         }
     }
