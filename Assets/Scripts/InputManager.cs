@@ -18,7 +18,7 @@ public class InputManager : MonoBehaviour
     private InputAction healAction;
     public InputAction HealAction => healAction;
     private InputAction cheatAction;
-    public InputAction CheatAction => cheatAction;
+    public InputAction CheatAction => cheatAction; // action to open the cheat menu / debug panel
     private InputAction shieldAction;
     public InputAction ShieldAction => shieldAction;
 
@@ -29,6 +29,7 @@ public class InputManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         
+        //assigning actions to the inputactions
         moveAction = inputActionAsset.FindAction("Move");
         attackAction = inputActionAsset.FindAction("Attack");
         pauseGameAction = inputActionAsset.FindAction("PauseGame");
@@ -41,6 +42,8 @@ public class InputManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
         inputActionAsset.Enable();
     }
+    
+    //enable and disable input actions on scene load and disable
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         inputActionAsset.Enable();

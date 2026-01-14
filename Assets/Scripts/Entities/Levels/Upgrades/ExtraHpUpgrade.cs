@@ -12,7 +12,7 @@ public class ExtraHpUpgrade : Upgrade
     public override void DoUpgrade()
     {
         PlayerStatController.Instance.extraHp += playerStatController.extraHpUpgrade;
-        base.DoUpgrade();
+        base.DoUpgrade(); //send event
         EventBus<ExtraHpUpgradeEventData>.PublishNoParam();
         Debug.Log($"{upgradeName}: Added +{playerStatController.extraHpUpgrade} hp to your max hp");
     }

@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Enemies
 {
+    /// <summary>
+    /// Used only by skull1, should get archived and switch to FSM later
+    /// applies a force in the direction of the player
+    /// </summary>
     public class MoveTowardsPlayerMovementBehaviour : EnemyMoveBehaviour
     {
         [SerializeField] private PlayerController playerController;

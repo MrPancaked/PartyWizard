@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Published by the dying enemy, it contains the enemy object
 /// and enemy data
+/// updates quests and enemy count in the gamemanager
 /// </summary>
 public class EnemyDieEventData : EventData
 {
@@ -28,7 +29,9 @@ public class EnemyDieEventData : EventData
         }
     }
 }
-
+/// <summary>
+/// updates game state in the game manager (death screen)
+/// </summary>
 public class PlayerDieEventData : EventData
 {
     public GameObject playerObject;
@@ -51,7 +54,9 @@ public class PlayerDieEventData : EventData
         }
     }
 }
-
+/// <summary>
+/// Updates enemy count in the game manager
+/// </summary>
 public class EnemySpawnEventData : EventData
 {
     public GameObject enemyObject;
@@ -72,7 +77,9 @@ public class EnemySpawnEventData : EventData
         }
     }
 }
-
+/// <summary>
+/// updates inventory and quests
+/// </summary>
 public class UseItemEvent : EventData
 {
     public Item item;
@@ -82,6 +89,9 @@ public class UseItemEvent : EventData
         item = pItem;
     }
 }
+/// <summary>
+/// closes upgrade menu and serves as a base game event class for specific upgrades
+/// </summary>
 public class PlayerUpgradeEventData : EventData
 {
     public Upgrade upgrade;
@@ -90,30 +100,14 @@ public class PlayerUpgradeEventData : EventData
         name = "PlayerUpgradeEvent";
     }
 }
-
+/// <summary>
+/// updates max hp in the players HpController
+/// </summary>
 public class ExtraHpUpgradeEventData : PlayerUpgradeEventData
 {
     public ExtraHpUpgradeEventData(ExtraHpUpgrade pUpgrade)
     {
         upgrade = pUpgrade;
         name = "ExtraHpUpgradeEvent";
-    }
-}
-
-public class FlatDamageUpgradeEventData : PlayerUpgradeEventData
-{
-    public FlatDamageUpgradeEventData(FlatDamageUpgrade pUpgrade)
-    {
-        upgrade = pUpgrade;
-        name = "FlatDamageUpgradeEvent";
-    }
-}
-
-public class DamageMultiplierUpgradeEventData : PlayerUpgradeEventData
-{
-    public DamageMultiplierUpgradeEventData(DamageMultiplierUpgrade pUpgrade)
-    {
-        upgrade = pUpgrade;
-        name = "DamageMultiplierUpgradeEvent";
     }
 }

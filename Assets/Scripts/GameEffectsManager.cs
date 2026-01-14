@@ -2,7 +2,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-
+/// <summary>
+/// Class to manage the game effects
+/// Right now only has a Chromatic aberration effect.
+/// </summary>
 public class GameEffectsManager : MonoBehaviour
 {
     [SerializeField] private Volume volume;

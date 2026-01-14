@@ -2,7 +2,11 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+/*
+ * Base class for all Upgrades.
+ * Makes sure that the object presenting the upgrade has the right text and image on it.
+ * Inheritors can do upgrades to playerStatController
+ */
 public abstract class Upgrade : MonoBehaviour
 {
     protected string upgradeName;

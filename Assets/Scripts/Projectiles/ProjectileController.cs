@@ -6,10 +6,10 @@ using Random = UnityEngine.Random;
 
 namespace Projectiles
 {
-    /*
-     * ProjectileController takes care of projectile behavior.
-     * It takes core projectile information from the SpellData scriptableObject
-     */
+    /// <summary>
+    ///ProjectileController takes care of projectile behavior.
+    ///It takes core projectile information from the SpellData scriptableObject
+    /// </summary>
     public class ProjectileController : MonoBehaviour 
     {
         [SerializeField] private Rigidbody2D rb;
@@ -105,6 +105,7 @@ namespace Projectiles
             }
         }
 
+        //Sets the projectiles speed based on the SpeedScaling setting
         private void SetSpeed()
         {
             switch (spellData.speedScaling)
@@ -121,6 +122,7 @@ namespace Projectiles
             }
         }
 
+        //Sets the projectile's direction based on DirectionChange setting
         private void SetDirection()
         {
             switch (spellData.directionChange)
@@ -140,7 +142,7 @@ namespace Projectiles
                 }
             }
         }
-
+        
         private void SetRigidbodyValues()
         {
             rb.linearVelocity = direction * speed;
@@ -175,6 +177,8 @@ namespace Projectiles
             }
         }
 
+        //Makes sure the melee attack doesn't destroy on a collision right away
+        //also sets collider.enabled to false to make sure the player won't get hit multiple times
         private IEnumerator MeleeDestroyDelay()
         {
             Collider2D collider = gameObject.GetComponent<Collider2D>();

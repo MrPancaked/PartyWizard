@@ -12,7 +12,6 @@ public class FlatDamageUpgrade : Upgrade
     {
         playerStatController.flatDamage += playerStatController.flatDamageUpgrade;
         base.DoUpgrade();
-        //EventBus<FlatDamageUpgradeEventData>.PublishNoParam();
         Debug.Log($"{upgradeName}: Added +{playerStatController.flatDamageUpgrade} damage to your attacks and spells");
     }
 }

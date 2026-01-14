@@ -6,6 +6,12 @@ using FMODUnity;
 using UnityEngine.SceneManagement;
 using Random = System.Random;
 
+/// <summary>
+/// This class manages all FMOD audio event instances, emitters and oneshots.
+/// Makes sure all audio is instantiated and cleaned up propperly
+/// also takes care of audio volume
+/// is a singleton so referencing from anywhere in the project is easy
+/// </summary>
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;

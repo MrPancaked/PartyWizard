@@ -1,6 +1,9 @@
 using FMODUnity;
 using UnityEngine;
-
+/// <summary>
+/// This class holds all FMOD eventreferences.
+/// Is a singleton so getting a reference is easy from anywhere in the project
+/// </summary>
 public class FMODEvents : MonoBehaviour
 {
     public static FMODEvents Instance;

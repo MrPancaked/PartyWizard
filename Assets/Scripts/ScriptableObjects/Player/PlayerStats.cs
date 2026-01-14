@@ -1,5 +1,8 @@
 using UnityEngine;
-
+/// <summary>
+/// Holds starting stats for the player that the PlayerStatController uses for its initialization
+/// Can be used to make the player more or less powerfull at the start of the game
+/// </summary>
 [CreateAssetMenu(fileName = "PlayerStats", menuName = "Scriptable Objects/PlayerStats")]
 public class PlayerStats : ScriptableObject
 {

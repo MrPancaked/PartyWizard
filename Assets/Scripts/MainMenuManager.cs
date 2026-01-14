@@ -3,12 +3,15 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using FMOD.Studio;
 
+/// <summary>
+/// This class manages the main menu UI and sends the player to the dungeon upon entering the big door
+/// </summary>
 public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenuUI;
     [SerializeField] private GameObject controlsUI;
 
-    private EventInstance ambienceInstance;
+    private EventInstance ambienceInstance; // ambience sounds
     
     private void Start()
     {
@@ -17,6 +20,7 @@ public class MainMenuManager : MonoBehaviour
             InputManager.Instance.PauseGameAction.performed += ToggleMenu;
         }
         
+        //play ambient sounds
         ambienceInstance = AudioManager.Instance.CreateInstance(FMODEvents.Instance.ambience);
         ambienceInstance.start();
         OpenMenu();

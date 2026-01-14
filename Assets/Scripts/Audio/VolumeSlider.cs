@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class to manage the volumesliders for the games audio
+/// </summary>
 public class VolumeSlider : MonoBehaviour
 {
     private Slider slider;

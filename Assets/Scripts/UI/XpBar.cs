@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// This class manages modular XpBars, by changing out the modular HpBar Sprites based on the attached LevelControllers xpCount variable.
+/// It can be used to generate various modular xpBars and in this project it is used to generate the xp bar for the player.
+/// Similar to the HealthBar class but this one switches out animations instead of sprites and is not required (yet) to change its amount of xp points after initialization
+/// It also doesn't require a separate method for the boss like the HealthBar Class has
+/// </summary>
 public class XpBar : MonoBehaviour
 {
     [SerializeField] private LevelController levelController;
@@ -33,17 +38,18 @@ public class XpBar : MonoBehaviour
     }
     private void InitiateXpBar()
     {
+        //make sure the Xp bar is cleared
         ClearHorizontalLayout();
         xpPointList = new List<GameObject>();
         internalXpCounter = levelController.xpCount;
         internalMaxXp = levelController.xpData.xpForLevel;
         
-        for (int i = 1; i <= internalMaxXp; i++)
+        for (int i = 1; i <= internalMaxXp; i++) //spawn the right modular xp point assets
         {
             GameObject xpObject;
             if (internalMaxXp == 1)
             {
-                xpObject = null;
+                xpObject = null; //I did not create a sprite / animation object for when the player has a singular xp point.
             }
             else if (i == 1)
             {
@@ -65,6 +71,7 @@ public class XpBar : MonoBehaviour
             else Debug.Log($"no single XP sprite found");
         }
     }
+    //clears the layout in which the xp points are spawned
     private void ClearHorizontalLayout()
     {
         List<Image> sceneXpPointList = horizontalLayoutGroup.GetComponentsInChildren<Image>().ToList(); //if I do gameobject type instead of image it gives error
@@ -76,6 +83,7 @@ public class XpBar : MonoBehaviour
             i++;
         }
     }
+    //Updates the Xp bar based on the LevelControllers current xp count
     private void UpdateXpBar()
     {
         internalXpCounter = levelController.xpCount;

@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace Quests
 {
+    /// <summary>
+    /// Class manages quests on the questUI object
+    /// Does not work properly if the PauseMenu is disabled in the dungeon scene since it requires the quest objects to be enabled on awake.
+    /// This is a flaw in its current design, but I didn't have the time to figure out a better solution.
+    /// </summary>
     public class QuestManager : MonoBehaviour
     {
         [SerializeField] private GameObject questUI;

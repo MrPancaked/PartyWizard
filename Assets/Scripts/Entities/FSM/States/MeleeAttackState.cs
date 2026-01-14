@@ -5,16 +5,16 @@ namespace Player.FSM.States
     public class MeleeAttackState : State
     {
         private AttackController attackController;
-        private GameObject sword;
+        private GameObject swordObject;
     
         private float attackStartTime;
         private float attackDuration;
 
-        public MeleeAttackState(AttackController pAttackController, float pDuration, GameObject pSword)
+        public MeleeAttackState(AttackController pAttackController, float pDuration, GameObject pSwordObject)
         {
             attackController = pAttackController;
             attackDuration = pDuration;
-            sword = pSword;
+            swordObject = pSwordObject;
         }
         public override void Enter()
         {
@@ -27,7 +27,7 @@ namespace Player.FSM.States
             attackController.amount = 1;
             attackController.delayBetweenSpells = 1;
             attackController.wantsToAttack = true;
-            attackController.currentSpell = sword;
+            attackController.currentSpell = swordObject;
         }
 
         public override void Exit()
@@ -35,7 +35,7 @@ namespace Player.FSM.States
             base.Exit();
             attackController.wantsToAttack = false;
         }
-
+        
         public bool AttackOver()
         {
             return Time.time > attackStartTime + attackDuration;

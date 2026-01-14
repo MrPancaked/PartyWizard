@@ -3,6 +3,10 @@ using Player;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+
+/*
+ * Gives knockback, in the direction of the hit, to an object when its HpController takes damage.
+ */
 public class Knockback : MonoBehaviour
 {
     [SerializeField] private HpController hpController;

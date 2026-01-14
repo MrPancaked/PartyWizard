@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Quests.Quests
 {
+    /// <summary>
+    /// Quest that tracks if a certain enemy has been killed based on the attached KillQuestData scriptableobject
+    /// </summary>
     public class KillQuest : Quest
     {
         [HideInInspector] public GameObject toBeKilled;
@@ -20,16 +23,11 @@ namespace Quests.Quests
             toBeKilled = pKillQuestData.toBeKilled;
         }
 
-        protected void Start()
-        {
-            //image.sprite = toBeKilled.GetComponent<SpriteRenderer>().sprite;
-        }
-
         public override void UpdateSlider(EventData eventData)
         {
             if (eventData is EnemyDieEventData enemyDieEventData)
             {
-                if (toBeKilled.CompareTag(enemyDieEventData.enemyObject.tag))
+                if (toBeKilled.CompareTag(enemyDieEventData.enemyObject.tag)) //add to slider value if the right enemy is killed
                 {
                     questSlider.value++;
                 }

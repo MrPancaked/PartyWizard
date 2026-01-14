@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Enemies
 {
+    /// <summary>
+    /// Class that was initially meant as enemy movement behaviors
+    /// switched to FSM so this only still used by the skull1 enemy which should also go on to use an FSM
+    /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
     public abstract class EnemyMoveBehaviour : MonoBehaviour
     {

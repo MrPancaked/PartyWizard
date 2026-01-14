@@ -17,10 +17,10 @@ namespace Player
     public class HpController : MonoBehaviour
     {
         public static Action InitiateBossHealthBar; //only one boss is allowed to exist, it isnt ideal but can be reworked later
-        public event Action<TakeDamageData> TakeDamageEvent;
-        public event Action<TakeDamageData> HealEvent;
-        public event Action UpdatedMaxHealth;
-        public event Action DeathEvent;
+        public event Action<TakeDamageData> TakeDamageEvent; // hit effect, knockback and health bar updates
+        public event Action<TakeDamageData> HealEvent; // health bar update
+        public event Action UpdatedMaxHealth; // health bar update
+        public event Action DeathEvent; // drop items
         
         public int maxHp {get; private set;}
         public int hp {get; private set;}

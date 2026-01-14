@@ -5,11 +5,11 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 
-/*
- * This class keeps track of the players upgraded stats and gets the upgrade values from the inspector
- * It also handles the upgrade menu on levelup.
- * Not all upgrades are implemented yet.
- */
+/// <summary>
+/// This class keeps track of the players upgraded stats and gets the upgrade values from the inspector
+/// It also handles the upgrade menu on levelup.
+/// Not all upgrades are implemented yet.
+/// </summary>
 public class PlayerStatController : MonoBehaviour
 {
     public static PlayerStatController Instance;

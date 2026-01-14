@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
+ * Class keeps track of what items the player picked up and used
+ */
 public class Inventory : MonoBehaviour
     {
         public static Inventory Instance { get; private set; }
@@ -18,7 +20,7 @@ public class Inventory : MonoBehaviour
         // Public read-only property to access a copy of the items list.
         public Item[] Items => items.ToArray();
         
-        public static Action presentInventoryEvent;
+        public static Action presentInventoryEvent; // presents inventory with an inventory presenter
 
         private void Awake()
         {

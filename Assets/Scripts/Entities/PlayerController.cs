@@ -5,6 +5,14 @@ using UnityEngine.InputSystem;
 
 namespace Player
 {
+    /// <summary>
+    /// Class to manage translating player inputs from the InputManager to player actions
+    /// manages inputs for:
+    /// - movement
+    /// - attacks
+    /// - healing
+    /// - magic shield
+    /// </summary>
     public class PlayerController : MonoBehaviour
     {
         public Action ActivateShieldEvent;
@@ -26,6 +34,7 @@ namespace Player
         
         private void OnDisable()
         {
+            // unsubscribing inputs
             if (inputManager != null)
             {
                 inputManager.MoveAction.performed -= Move;
@@ -40,6 +49,7 @@ namespace Player
 
         private void Start()
         {
+            //subscribe to inputs
             if (InputManager.Instance != null)
             {
                 inputManager = InputManager.Instance;
@@ -53,11 +63,13 @@ namespace Player
             }
             else Debug.LogWarning($"OnEnable {name} did not find InputManager.Instance");
             
+            // settings components
             attackController = gameObject.GetComponent<AttackController>();
             movementController = gameObject.GetComponent<MovementController>();
             hpController = gameObject.GetComponent<HpController>();
         }
 
+        // set movements controllers moveDirection in the direction of the inputs
         public void Move(InputAction.CallbackContext context)
         {
             if (movementController != null)
@@ -66,8 +78,8 @@ namespace Player
             }
             else Debug.LogWarning("MovementController is null");
         }
-    
-    
+        
+        // methods to start and stop attacking by setting wantsToAttack in the attackcontroller
         public void Attack(InputAction.CallbackContext context)
         {
             if (attackController != null)
@@ -76,7 +88,6 @@ namespace Player
             }
             else Debug.LogWarning($"AttackController is null {context}");
         }
-
         public void StopAttack(InputAction.CallbackContext context)
         {
             if (attackController != null)
@@ -86,6 +97,7 @@ namespace Player
             else Debug.LogWarning($"AttackController is null {context}");
         }
 
+        
         public void Heal(InputAction.CallbackContext context)
         {
             if (hpController != null && Inventory.Instance != null)
@@ -105,25 +117,18 @@ namespace Player
 
         public void Shield(InputAction.CallbackContext context)
         {
-            if (Inventory.Instance != null)
+            if (Inventory.Instance != null && Inventory.Instance != null)
             {
                 foreach (Item item in Inventory.Instance.Items)
                 {
                     if (item.ItemName == $"Magic Shield Bubble")
                     {
                         ActivateShieldEvent?.Invoke();
-                        Debug.Log($"Invoking ActivateShieldEvent on {this}");
                         Inventory.Instance.RemoveItem(item);
                         break;
                     }
                 }
             } 
         }
-
-        //public void UpdateControllerData()
-        //{
-        //    movementController.movementData = this.movementData;
-        //    attackController.spellData =  this.spellData;
-        //}
     }
 }

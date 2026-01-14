@@ -8,11 +8,11 @@ using Vector2 = UnityEngine.Vector2;
 
 namespace Player
 {
-    /*
-     * class for handling the movement of players and enemies.
-     * Simply applies a force to the object in the moveDirection.
-     * moveDirection can be set externally (in the playerController or an FSM)
-     */
+    /// <summary>
+    /// Class for handling the movement of players and enemies.
+    /// Simply applies a force to the object in the moveDirection.
+    /// moveDirection can be set externally (in the playerController or an FSM).
+    /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
     public class MovementController : MonoBehaviour
     {

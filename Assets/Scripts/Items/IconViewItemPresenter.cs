@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// Presents an Item icon in a UI image
+/// </summary>
 public class IconViewItemPresenter : ItemPresenter
 {
     [SerializeField] private Image icon;

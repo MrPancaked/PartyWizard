@@ -7,7 +7,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-
+/// <summary>
+/// Class to manage the state of the game in the dungeon scene.
+/// Changes game state based on enemy count, player state (dead or alive) and win condition (boss killed)
+/// Also manages the pause menu, death screen and victory screen, and accordingly pauses gameplay (Time.timeScale = 0f)
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -29,11 +33,11 @@ public class GameManager : MonoBehaviour
     public int enemyCount {get; private set;}
     private int round;
 
-    public Action RoomClearedEvent;
-    public Action RoomStartEvent;
-    public Action PauseEvent;
-    public Action UnPauseEvent;
-    public Action<EnemyWaveData> SpawnEnemiesEvent;
+    public Action RoomClearedEvent; // open doors, item vacuum and do effects
+    public Action RoomStartEvent; //close doors and stop vacuuming items
+    public Action PauseEvent; // pause audio
+    public Action UnPauseEvent; // un pause audio
+    public Action<EnemyWaveData> SpawnEnemiesEvent; // spawn new wave
 
     private void Awake()
     {
@@ -42,10 +46,12 @@ public class GameManager : MonoBehaviour
     }
     private void OnEnable()
     {
+        //subscribe to game events
         EventBus<EnemySpawnEventData>.OnEventPublished += OnEnemySpawned;
         EventBus<EnemyDieEventData>.OnEventPublished += OnEnemyDied;
         EventBus<PlayerDieEventData>.OnEventPublished += OnPlayerDied;
         
+        //subscribe to pause input
         if (InputManager.Instance != null)
         {
             InputManager.Instance.PauseGameAction.performed += PauseGame;
@@ -55,10 +61,12 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
+        //unsubscribe to game events
         EventBus<EnemySpawnEventData>.OnEventPublished -= OnEnemySpawned;
         EventBus<EnemyDieEventData>.OnEventPublished -= OnEnemyDied;
         EventBus<PlayerDieEventData>.OnEventPublished -= OnPlayerDied;
 
+        //unsubscribe to pause inputs
         if (InputManager.Instance != null)
         {
             InputManager.Instance.PauseGameAction.performed -= PauseGame; // somettimes this gets called after 
@@ -66,10 +74,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()// ONLY TO COUNT ENEMIES FOR TESTING RN, CHANGE LATER WHEN SPAWNERS ARE ADDED
+    private void Start()
     {
         Time.timeScale = 1f;
         
+        //disable all overlay UIs
         countdownText.gameObject.SetActive(false);
         pauseGameUI.SetActive(false);
         playerDeathUI.SetActive(false);
@@ -78,26 +87,31 @@ public class GameManager : MonoBehaviour
         
         CountEnemies();
         
+        //start dungeon music
         EventInstance musicInstace = AudioManager.Instance.CreateInstance(FMODEvents.Instance.music);
         musicInstace.start();
         
+        //Start a new round
         StartCoroutine(NewRound());
     }
 
     public IEnumerator NewRound()
     {
+        
         ClearItems();
-        RoomStartEvent?.Invoke();
+        RoomStartEvent?.Invoke(); //closing door and stop sucking items
         
         round++;
         roundCounter.text = $"Round: {round}";
         
-        yield return StartCoroutine(NewRoundAnimation());
+        yield return StartCoroutine(NewRoundAnimation()); // start countdown
         Debug.Log("New round");
         
         SpawnEnemiesEvent?.Invoke(enemyWaves[round - 1]); // I'm not sure I can guarantee if all subscribers excute before the next line, so far so good though.
         CountEnemies();
     }
+    
+    // if all enemies are cleared then some events need to happen
     public void OnEnemyDied(EnemyDieEventData enemyDieEventData)
     {
         enemyCount--;
@@ -106,27 +120,29 @@ public class GameManager : MonoBehaviour
         if (enemyCount == 0)
         {
             Debug.Log("All enemies have been Killed");
-            if (round < enemyWaves.Count)
+            if (round < enemyWaves.Count) // if not yet last round
             {
                 RoomClearedEvent?.Invoke();
                 AudioManager.Instance.PlayOneShot(FMODEvents.Instance.doorOpenSounds, Vector2.zero);
             }
-            else
+            else // else victory!
             {
-                PauseEvent?.Invoke();
+                PauseEvent?.Invoke(); // pause audio
                 AudioManager.Instance.PlayOneShot(FMODEvents.Instance.winSound, Vector2.zero);
                 victoryUI.SetActive(true);
                 Time.timeScale = 0f;
             }
         }
     }
-
+    
+    //method to increase the enemy spawn counter
     public void OnEnemySpawned(EnemySpawnEventData enemySpawnEventData)
     {
         enemyCount++;
         enemyCounter.text = $"{enemyCount}";
     }
 
+    //method to initiate the death screen
     public void OnPlayerDied(PlayerDieEventData playerDieEventData)
     {
         playerDeathUI.SetActive(true);
@@ -134,12 +150,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
     }
     
+    //method to count all enemies
     private void CountEnemies()
     {
         enemyCount = enemyParent.GetComponentsInChildren<HpController>().Length;
         enemyCounter.text = $"{enemyCount}";
     }
-
+    //clears all items off the ground that didn't get picked up
     private void ClearItems()
     {
         LayerMask layerMask = LayerMask.GetMask("Xp");
@@ -150,6 +167,8 @@ public class GameManager : MonoBehaviour
             Destroy(hit.gameObject);
         }
     }
+    
+    //toggle the Debug / cheat panel to change gameplay settings
     public void ToggleCheatMenu(InputAction.CallbackContext context)
     {
         if (!cheatUI.activeInHierarchy)
@@ -184,6 +203,8 @@ public class GameManager : MonoBehaviour
         }
         else settingsUI.SetActive(false);
     }
+    
+    //input callback method for the pause action
     public void PauseGame(InputAction.CallbackContext context)
     {
         if (context.performed && !playerDeathUI.activeInHierarchy)
@@ -213,6 +234,7 @@ public class GameManager : MonoBehaviour
     
     #region GameState Animations
 
+    //Coroutine for the countdown timer when a new round starts
     private IEnumerator NewRoundAnimation()
     {
         countdownText.gameObject.SetActive(true);

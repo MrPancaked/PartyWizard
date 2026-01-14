@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Base class for different inventory presenters
+/// </summary>
 public abstract class InventoryPresenter : MonoBehaviour
 {
     protected virtual void OnEnable()

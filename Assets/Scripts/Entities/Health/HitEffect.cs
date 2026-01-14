@@ -4,6 +4,9 @@ using Player;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * Class that colors a sprite red for a duration when its HpController takes damage.
+ */
 public class HitEffect : MonoBehaviour
 {
     [SerializeField] private float duration;

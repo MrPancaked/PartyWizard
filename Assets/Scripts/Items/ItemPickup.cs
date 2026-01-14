@@ -9,8 +9,8 @@ public class ItemPickup : MonoBehaviour
 {
     //static events since this script is only present on the player.
     // This would have to get updated if I decide to add enemies that are able to steal items from the player.
-    public static Action<Item> itemPickupEvent;
-    public static Action xpPickupEvent;
+    public static Action<Item> itemPickupEvent; // updates inventory
+    public static Action xpPickupEvent; // updates player xp count
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject triggerObj = collision.gameObject;

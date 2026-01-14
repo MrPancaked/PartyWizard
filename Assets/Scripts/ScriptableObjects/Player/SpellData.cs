@@ -2,6 +2,11 @@ using UnityEngine;
 
 namespace ScriptableObjects.Player
 {
+    /// <summary>
+    /// Holds values that are used by ProjectileController for its initialization
+    /// can be used to generate various amounts of spell / projectile / hurtobject behavior
+    /// is even used for the Knights sword attack, where the start and end speed are set to 0
+    /// </summary>
     [CreateAssetMenu(fileName = "SpellData", menuName = "Scriptable Objects/SpellData")]
     public class SpellData : ScriptableObject
     {

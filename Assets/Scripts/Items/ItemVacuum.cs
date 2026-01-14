@@ -4,6 +4,9 @@ using Player;
 using UnityEditor;
 using UnityEngine;
 
+/*
+ * Makes Items in the Scene gravitate towards the player in a certain range with a certain acceleration and range.
+ */
 public class ItemVacuum : MonoBehaviour
 {
     [SerializeField] float range;
@@ -41,7 +44,8 @@ public class ItemVacuum : MonoBehaviour
     private void SuckItems()
     {
         LayerMask layerMask = LayerMask.GetMask("Xp");
-        if (Inventory.Instance.Items.Length < Inventory.Instance.maxItems) layerMask |= LayerMask.GetMask("Item");
+        if (Inventory.Instance.Items.Length < Inventory.Instance.maxItems) // if inventory fits more items add item layer to the layermask
+            layerMask |= LayerMask.GetMask("Item"); 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, range, layerMask);
         foreach (Collider2D hit in colliders)
         {
@@ -56,11 +60,11 @@ public class ItemVacuum : MonoBehaviour
         }
     }
 
+    //three methods used to make all items in the room gravitate when the room is cleared
     private void SetClearItemsTrue()
     {
         clearItems = true;
     }
-
     private void SetClearItemsFalse()
     {
         clearItems = false;
@@ -68,8 +72,9 @@ public class ItemVacuum : MonoBehaviour
     private void ClearItems()
     {
         LayerMask layerMask = LayerMask.GetMask("Xp");
-        if (Inventory.Instance.Items.Length < Inventory.Instance.maxItems) layerMask |= LayerMask.GetMask("Item");
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(new Vector2(0,0), new Vector2(14f, 14f), 0, layerMask);
+        if (Inventory.Instance.Items.Length < Inventory.Instance.maxItems) // if inventory fits more items add item layer to the layermask
+            layerMask |= LayerMask.GetMask("Item");
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(new Vector2(0,0), new Vector2(14f, 14f), 0, layerMask);//OverlapBox the size of the room
         foreach (Collider2D hit in colliders)
         {
             Rigidbody2D hitRb = hit.GetComponent<Rigidbody2D>();
@@ -81,10 +86,14 @@ public class ItemVacuum : MonoBehaviour
             }
         }
     }
+    
+    //visualising the areas in which items gravitate towards the player
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, range);
-        Gizmos.DrawWireCube(Vector3.zero, new Vector3(14,14,14));
+        if (!clearItems)
+            Gizmos.DrawWireSphere(transform.position, range);
+        if (clearItems)
+            Gizmos.DrawWireCube(Vector3.zero, new Vector3(14,14,14));
     }
 }

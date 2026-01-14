@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// Presents the whole inventory, Items, but also non items (when an item slot is not available or when it is but no item occupies it)
+/// </summary>
 public class ListViewInventoryPresenter : InventoryPresenter
 {
     // Prefab used to display each item in the inventory list.

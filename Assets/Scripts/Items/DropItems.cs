@@ -1,6 +1,8 @@
 using Player;
 using UnityEngine;
-
+/// <summary>
+/// This class drops an array of items when its HpController dies
+/// </summary>
 public class DropItems : MonoBehaviour
 {
     [SerializeField] private HpController hpController;
@@ -30,10 +32,7 @@ public class DropItems : MonoBehaviour
             GameObject droppedItem = Instantiate(item, transform.position, Quaternion.identity);
             Debug.Log($"dropped item: {droppedItem.name}");
             Rigidbody2D itemRb = droppedItem.GetComponent<Rigidbody2D>();
-            if (rb != null) {
-                Vector2 dropDirection = rb.linearVelocity.normalized;
-            }
-            if (itemRb != null) itemRb.AddForce(Random.insideUnitCircle * 5f, ForceMode2D.Impulse);
+            if (itemRb != null) itemRb.AddForce(Random.insideUnitCircle * 5f, ForceMode2D.Impulse); // make item drop in a random direction
         }
     }
 }
