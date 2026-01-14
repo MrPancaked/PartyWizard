@@ -9,19 +9,29 @@ public class ItemVacuum : MonoBehaviour
     [SerializeField] float range;
     [SerializeField] float acceleration;
     private bool clearItems = false;
+    
+    private GameManager gameManager;
 
     private void Start()
     {
-        GameManager.Instance.RoomClearedEvent += SetClearItemsTrue;
-        GameManager.Instance.RoomStartEvent += SetClearItemsFalse;
+        if (GameManager.Instance != null)
+        {
+            gameManager = GameManager.Instance;
+            gameManager.RoomClearedEvent += SetClearItemsTrue;
+            gameManager.RoomStartEvent += SetClearItemsFalse;
+        }
+        
 
         clearItems = false;
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.RoomClearedEvent -= SetClearItemsTrue;
-        GameManager.Instance.RoomStartEvent -= SetClearItemsFalse;
+        if (gameManager != null)
+        {
+            gameManager.RoomClearedEvent -= SetClearItemsTrue;
+            gameManager.RoomStartEvent -= SetClearItemsFalse;
+        }
     }
     private void FixedUpdate()
     {
@@ -41,7 +51,7 @@ public class ItemVacuum : MonoBehaviour
                 Vector2 hitRbPos = hitRb.transform.position;
                 float distance = ((Vector2)transform.position - hitRbPos).magnitude;
                 Vector2 direction = ((Vector2)transform.position - hitRbPos).normalized;
-                hitRb.AddForce((1f - distance / range) * acceleration * direction, ForceMode2D.Impulse);
+                hitRb.AddForce((1f - distance / (range + 1)) * acceleration * direction, ForceMode2D.Impulse); //+1 to range to stop objects from moving away on edge cases where the hitbox of the objects is in range but the centre is still out of range
             }
         }
     }

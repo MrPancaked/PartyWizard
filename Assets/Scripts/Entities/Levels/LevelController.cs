@@ -6,6 +6,10 @@ using UnityEditor;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(ItemPickup))]
+/*
+ * LevelController class tracks the players xp count and level.
+ * Updates the xp count and level when an 
+ */
 public class LevelController : MonoBehaviour
 {
     public XpData xpData;

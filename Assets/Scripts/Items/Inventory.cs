@@ -65,4 +65,10 @@ public class Inventory : MonoBehaviour
             items.Remove(item);
             presentInventoryEvent?.Invoke();
         }
+
+        public void AddItemSlot()
+        {
+            if (maxItems < 4) maxItems++;
+            presentInventoryEvent?.Invoke();
+        }
     }

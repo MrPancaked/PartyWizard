@@ -21,9 +21,10 @@ namespace Quests
         {
             EventBus<EnemyDieEventData>.OnEventPublished -= UpdateQuests;
             EventBus<UseItemEvent>.OnEventPublished -= UpdateQuests;
+            GameManager.Instance.PauseEvent -= InitializeQuestUI;
         }
 
-        private void Start()
+        private void Awake()
         {
             questList = new List<Quest>();
             foreach (Quest quest in questUI.GetComponentsInChildren<Quest>())
@@ -31,6 +32,12 @@ namespace Quests
                 questList.Add(quest);
             }
             InitializeQuestUI();
+        }
+
+        private void Start()
+        {
+            
+            GameManager.Instance.PauseEvent += InitializeQuestUI;
         }
 
         private void InitializeQuestUI()
