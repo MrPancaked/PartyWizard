@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// As ScriptableObject that represents a game event, can be subscribed in Unity Inspector.
 /// </summary>
 [CreateAssetMenu(fileName = "GameEvent", menuName = "Scriptable Objects/GameEvent")]
-public class GameEvent : ScriptableObject
+public class GameEvent : ScriptableObject //this class is not used since I switched to a non unity inspector eventbus system
 {
     // List of all subscribers listening to this event
     [HideInInspector]

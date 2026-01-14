@@ -18,6 +18,7 @@ public class FMODEvents : MonoBehaviour
     [field: SerializeField] public EventReference playerHurtSound { get; private set; }
     [field: SerializeField] public EventReference enemyHurtSound { get; private set; }
     [field: SerializeField] public EventReference castSound { get; private set; }
+    [field: SerializeField] public EventReference swordSlash { get; private set; }
     [field: SerializeField] public EventReference explosionSound { get; private set; }
     [field: SerializeField] public EventReference pickupSound { get; private set; }
     [field: SerializeField] public EventReference levelUpSound { get; private set; }

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 075ef1ae188bd3144bf8f2ee3c23ba17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  masterVolume: 1
+  masterVolume: 0.53
   musicVolume: 1
   sfxVolume: 1
   ambienceVolume: 1
@@ -145,6 +145,13 @@ MonoBehaviour:
       Data3: -1936508250
       Data4: -1226957473
     Path: event:/SpellCast
+  <swordSlash>k__BackingField:
+    Guid:
+      Data1: 1010519439
+      Data2: 1277955934
+      Data3: -319132791
+      Data4: 723057736
+    Path: event:/SwordSlice
   <explosionSound>k__BackingField:
     Guid:
       Data1: 465715929

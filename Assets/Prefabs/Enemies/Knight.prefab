@@ -450,7 +450,7 @@ MonoBehaviour:
   angle: 0
   delayBetweenSpells: 1
   spellPrefabs: []
-  startSpell: {fileID: 0}
+  startSpell: {fileID: 3371931195115675852, guid: 72235d92e98e97f48ae029bb1cd5a430, type: 3}
   projectileParent: {fileID: 3156648351951337470}
   currentSpell: {fileID: 0}
   wantsToAttack: 0
@@ -468,7 +468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player.FSM.KnightFSM
   attackController: {fileID: 8390750254304358256}
   movementController: {fileID: 3666943996156581602}
-  minRangeToPlayer: 2
+  minRangeToPlayer: 2.5
   swordObject: {fileID: 3371931195115675852, guid: 72235d92e98e97f48ae029bb1cd5a430, type: 3}
   duration: 1
   idleDuration: 1

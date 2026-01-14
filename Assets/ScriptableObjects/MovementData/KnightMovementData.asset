@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f089210597b9be44da302c736c764517, type: 3}
   m_Name: KnightMovementData
   m_EditorClassIdentifier: Assembly-CSharp::ScriptableObjects.Player.MovementData
-  speed: 25
+  speed: 40
   friction: 20

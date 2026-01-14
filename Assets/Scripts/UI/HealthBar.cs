@@ -5,6 +5,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * This class manages modular HpBars, by changing out the modular HpBar Sprites based on the attached HpControllers hp variable.
+ * It can be used to generate various modular healthbars and in this project it is used to generate the healthbar for the player, boss and general enemies.
+ */
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private HpController hpController;
@@ -32,7 +36,7 @@ public class HealthBar : MonoBehaviour
     }
     private void OnEnable()
     {
-        if (gameObject.CompareTag("BossHealthBar"))
+        if (gameObject.CompareTag("BossHealthBar")) //there is a specific healthbar for the boss that needs to be instantiated while playing the game
         {
             HpController.InitiateBossHealthBar += InitiateBossHealthBar;
         }
@@ -62,16 +66,20 @@ public class HealthBar : MonoBehaviour
 
     private void InitiateHealthBar()
     {
+        //make sure the HpBar is empty
         ClearHorizontalLayout();
         hpPointList = new List<Image>();
         internalHpCounter = hpController.hp;
         internalMaxHp = hpController.maxHp;
 
+        //creating the list of hp bar images to be able to swap out the sprites later
         for (int i = 0; i < internalMaxHp; i++)
         {
             GameObject hpObject = Instantiate(healthPointObject, horizontalLayoutGroup.transform);
             hpPointList.Add(hpObject.GetComponent<Image>());
         }
+        
+        //assigning sprites to the images of the hpbar
         for (int i = 0; i < internalMaxHp; i++)
         {
             if (internalMaxHp == 1) hpPointList[i].sprite = singleFull;
@@ -93,6 +101,7 @@ public class HealthBar : MonoBehaviour
         }
     }
 
+    //the healthpoints are initialized inside a horizontal layout for automatic positioning, this layour needs to be cleared first
     private void ClearHorizontalLayout()
     {
         List<Image> sceneHpPointList = horizontalLayoutGroup.GetComponentsInChildren<Image>().ToList(); //if I do gameobject type instead of image it gives error
@@ -105,6 +114,7 @@ public class HealthBar : MonoBehaviour
         }
     }
 
+    //updating the healthbar when HpController takes damage (or heals)
     private void UpdateHealthBar(TakeDamageData damageData)
     {
         internalHpCounter = hpController.hp;
@@ -129,6 +139,7 @@ public class HealthBar : MonoBehaviour
         }
     }
 
+    //the Boss' healthbar needs to be initialized while playing
     private void InitiateBossHealthBar()
     {
         hpController = GameObject.FindGameObjectWithTag("Boss").GetComponent<HpController>();

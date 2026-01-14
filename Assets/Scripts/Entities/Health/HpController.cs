@@ -1,15 +1,22 @@
 
 using UnityEngine;
 using System;
+using System.Collections;
 using FMOD.Studio;
 using Projectiles;
 using ScriptableObjects.Player;
 
 namespace Player
 {
+    /*
+     *Class that controls everything that has to do with Hp of damageable objects
+     *Uses HpData scriptable object to assign its starting variables 
+     *Also controls taking damage with OnCollisionEnter2D
+     */
+    
     public class HpController : MonoBehaviour
     {
-        public static Action InitiateBossHealthBar;
+        public static Action InitiateBossHealthBar; //only one boss is allowed to exist, it isnt ideal but can be reworked later
         public event Action<TakeDamageData> TakeDamageEvent;
         public event Action<TakeDamageData> HealEvent;
         public event Action UpdatedMaxHealth;
@@ -17,7 +24,8 @@ namespace Player
         
         public int maxHp {get; private set;}
         public int hp {get; private set;}
-        public int shield {get; private set;}
+        public float immuneTime { get; private set; }
+        public int shield {get; private set;} //shield / armor is not used at this point.
         public int contactDamage {get; private set;}
         public float contactKnockback {get; private set;}
         public bool takeDamage {get; private set;}
@@ -27,8 +35,10 @@ namespace Player
         public bool isEnemy { get; private set; }
         public bool isBoss { get; private set; }
         
+        
+        //magic shield item that can be activated in an FSM or by using an item
         public GameObject magicShieldBubble;
-        private bool shieldActive = false;
+        private bool magicShieldActive = false;
 
         private void Awake()
         {
@@ -39,7 +49,7 @@ namespace Player
         {
             if (isPlayer)
             {
-                EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished += UpdateHp;
+                EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished += UpgradeHp;
                 if (magicShieldBubble != null)
                 {
                     PlayerController.Instance.ActivateShieldEvent += ActivateMagicShield;
@@ -57,20 +67,21 @@ namespace Player
         {
             if (isPlayer)
             {
-                EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished -= UpdateHp;
+                EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished -= UpgradeHp;
                 if (magicShieldBubble != null) PlayerController.Instance.ActivateShieldEvent -= ActivateMagicShield;
             }
         }
 
         public void Initialize()
         {
-            if (shieldActive) BreakMagicShield();
+            if (magicShieldActive) BreakMagicShield();
             isPlayer = gameObject.CompareTag("Player");
             isBoss = gameObject.CompareTag("Boss");
             isEnemy = gameObject.layer == LayerMask.NameToLayer("Enemy");
             maxHp = hpData.maxHp;
             if (hpData.startHp > maxHp) hpData.startHp = maxHp;
             hp = hpData.startHp;
+            immuneTime = hpData.immuneTime;
             shield = hpData.startShield;
             contactDamage = hpData.contactDamage;
             contactKnockback = hpData.contactKnockback;
@@ -138,17 +149,20 @@ namespace Player
             }
             if (takeDamage)
             {
-                if (!shieldActive)
+                if (!magicShieldActive)
                 {
-                    shield -= damage;
+                    shield -= damage; //shield isn't used at this point but logic is there and working for potential future development
                     if (shield < 0)
                     {
                         hp -= -shield;
                         shield = 0;
                         if (hp < 0) hp = 0;
                     }
-                    Debug.Log($"{gameObject.name} has taken damage: {damage}, current hp: {hp}");
                     
+                    Debug.Log($"{gameObject.name} has taken damage: {damage}, current hp: {hp}");
+                    ImmunityTime();
+                    
+                    //audio
                     if (isPlayer && damage > 0) AudioManager.Instance.PlayOneShot(FMODEvents.Instance.playerHurtSound, gameObject.transform.position);
                     else if (damage > 0) AudioManager.Instance.PlayOneShot(FMODEvents.Instance.enemyHurtSound, gameObject.transform.position);
                     
@@ -162,7 +176,6 @@ namespace Player
                 else
                 {
                     BreakMagicShield();
-                    Debug.Log("broke Magic Shield");
                 }
             }
         }
@@ -184,16 +197,19 @@ namespace Player
         {
             Debug.Log("Activating magic shield");
             magicShieldBubble.SetActive(true);
-            shieldActive = true;
+            magicShieldActive = true;
             AudioManager.Instance.PlayOneShot(FMODEvents.Instance.shieldCastSound, gameObject.transform.position);
         }
 
         private void BreakMagicShield()
         {
+            magicShieldActive = false;
             magicShieldBubble.SetActive(false);
-            shieldActive = false;
+            StartCoroutine(ImmunityTime());
             AudioManager.Instance.PlayOneShot(FMODEvents.Instance.shieldBreakSound, gameObject.transform.position);
         }
+        
+        //Die method does different things depending on who owns this HpController.
         private void Die()
         {
             DeathEvent?.Invoke();
@@ -220,10 +236,17 @@ namespace Player
             }
         }
 
-        private void UpdateHp()
+        private void UpgradeHp()
         {
             maxHp += PlayerStatController.Instance.extraHpUpgrade;
             UpdatedMaxHealth?.Invoke();
+        }
+
+        private IEnumerator ImmunityTime()
+        {
+            SetInvincible(true);
+            yield return new WaitForSeconds(immuneTime);
+            SetInvincible(false);
         }
 
         public void SetInvincible(bool invincible)
@@ -232,6 +255,7 @@ namespace Player
         }
     }
 
+    //class to send data with a TakeDamageEvent for things like knockback effects or AOE damage
     public class TakeDamageData
     {
         public int damage { get; private set; }

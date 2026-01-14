@@ -18,6 +18,7 @@ public class EnemyDieEventData : EventData
     //Overriding ToString method to display event information for debugging
     public override string ToString()
     {
+        base.ToString();
         if (enemyObject == null)
             return "Enemy object already destroyed";
         else

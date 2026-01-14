@@ -79,8 +79,6 @@ namespace Player
                 }
                 else Debug.LogWarning($"somehow trying to cast invalid amount of spells:{amount}");
                 
-                AudioManager.Instance.PlayOneShot(FMODEvents.Instance.castSound, transform.position);
-                
                 yield return new WaitForSeconds(delayBetweenSpells);
                 if (!wantsToAttack) attacking = false;
             }

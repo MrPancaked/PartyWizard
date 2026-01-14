@@ -16,7 +16,7 @@ namespace Player
         public AttackController attackController;
         public HpController hpController;
         
-        InputManager inputManager;
+        private InputManager inputManager;
 
         private void Awake()
         {
@@ -26,13 +26,16 @@ namespace Player
         
         private void OnDisable()
         {
-            inputManager.MoveAction.performed -= Move;
-            inputManager.MoveAction.canceled -= Move;
-            inputManager.HealAction.performed -= Heal;
-            inputManager.ShieldAction.performed -= Shield;
+            if (inputManager != null)
+            {
+                inputManager.MoveAction.performed -= Move;
+                inputManager.MoveAction.canceled -= Move;
+                inputManager.HealAction.performed -= Heal;
+                inputManager.ShieldAction.performed -= Shield;
     
-            inputManager.AttackAction.performed -= Attack;
-            inputManager.AttackAction.canceled -= StopAttack;
+                inputManager.AttackAction.performed -= Attack;
+                inputManager.AttackAction.canceled -= StopAttack;
+            }
         }
 
         private void Start()

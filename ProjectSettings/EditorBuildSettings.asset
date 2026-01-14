@@ -10,6 +10,6 @@ EditorBuildSettings:
     guid: 143f99edb6bda804d812e0a5df2b7305
   - enabled: 1
     path: Assets/Scenes/DungeonScene.unity
-    guid: 7fda5d1929f0d8e49b4860cc3e61ce8a
+    guid: 7d1796656ca9189479ff7d78eb719bc6
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

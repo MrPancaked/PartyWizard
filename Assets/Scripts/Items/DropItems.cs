@@ -13,14 +13,16 @@ public class DropItems : MonoBehaviour
 
     private void OnEnable()
     {
-        hpController.DeathEvent += DropItem;
+        if (hpController != null) 
+            hpController.DeathEvent += DropItem;
     }
 
     private void OnDisable()
     {
-        hpController.DeathEvent -= DropItem;
+        if  (hpController != null)
+            hpController.DeathEvent -= DropItem;
     }
-    private void DropItem()
+    public void DropItem()
     {
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
         foreach (GameObject item in items)
@@ -28,7 +30,9 @@ public class DropItems : MonoBehaviour
             GameObject droppedItem = Instantiate(item, transform.position, Quaternion.identity);
             Debug.Log($"dropped item: {droppedItem.name}");
             Rigidbody2D itemRb = droppedItem.GetComponent<Rigidbody2D>();
-            Vector2 dropDirection = rb.linearVelocity.normalized;
+            if (rb != null) {
+                Vector2 dropDirection = rb.linearVelocity.normalized;
+            }
             if (itemRb != null) itemRb.AddForce(Random.insideUnitCircle * 5f, ForceMode2D.Impulse);
         }
     }

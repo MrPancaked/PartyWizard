@@ -283,9 +283,8 @@ MonoBehaviour:
   - {fileID: 3371931195115675852, guid: a3f106f321d55f04dac6aa3dd6795290, type: 3}
   startSpell: {fileID: 3371931195115675852, guid: a3f106f321d55f04dac6aa3dd6795290, type: 3}
   projectileParent: {fileID: 0}
+  currentSpell: {fileID: 0}
   wantsToAttack: 0
-  isPlayer: 0
-  isEnemy: 0
 --- !u!114 &4223670104831844656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,10 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e16ddd7208a2a41a7d62b2c3d745a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovementController
-  rb: {fileID: 8609090005905523191}
-  movementData: {fileID: 0}
-  animator: {fileID: 2510375539213667626}
-  spriteRenderer: {fileID: 2116463600287889519}
+  movementData: {fileID: 11400000, guid: 1e7fda8440f0e0142906c36fc0300338, type: 2}
   moveDirection: {x: 0, y: 0}
 --- !u!114 &5972910012140075705
 MonoBehaviour:

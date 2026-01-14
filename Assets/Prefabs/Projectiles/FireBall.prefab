@@ -168,7 +168,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 5353841184698615464, guid: b9b5212ead6207f48923225244b58a8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -197,6 +197,8 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   spellData: {fileID: 11400000, guid: deba7e0550deaee41b188650c6ca90f1, type: 2}
   destroyEffectObject: {fileID: 679066021315823461, guid: c9f5ae89129ddd74898027d513f7f538, type: 3}
+  hurtPlayer: 0
+  hurtEnemy: 0
 --- !u!50 &6297893500592391658
 Rigidbody2D:
   serializedVersion: 5

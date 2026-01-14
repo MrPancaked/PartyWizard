@@ -4,6 +4,12 @@ using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
+/*
+ * This class keeps track of the players upgraded stats and gets the upgrade values from the inspector
+ * It also handles the upgrade menu on levelup.
+ * Not all upgrades are implemented yet.
+ */
 public class PlayerStatController : MonoBehaviour
 {
     public static PlayerStatController Instance;
@@ -100,30 +106,36 @@ public class PlayerStatController : MonoBehaviour
 
     private void InitializeUpgradeMenu()
     {
-        //clear upgrades after upgrading
-        foreach (Transform transform in upgradeUI.GetComponentsInChildren<Transform>())
+        if (upgradeUI != null)
         {
-            if (transform != upgradeUI.transform)
-                Destroy(transform.gameObject);
-        }
-        
-        List<int> alreadyPickedList = new List<int>();
-        for (int i = 0; i < upgradesPerLevel; i++)
-        {
-            int randomIndex = Random.Range(0, upgradesList.Count);
-            if (alreadyPickedList.Count < upgradesList.Count) //to prevent it going in an infitite loop
+            //clear upgrades after upgrading
+            foreach (Transform transform in upgradeUI.GetComponentsInChildren<Transform>())
             {
-                while (alreadyPickedList.Contains(randomIndex))
-                {
-                    randomIndex = Random.Range(0, upgradesList.Count);
-                }
+                if (transform != upgradeUI.transform)
+                    Destroy(transform.gameObject);
             }
-            alreadyPickedList.Add(randomIndex);
-            Instantiate(upgradesList[randomIndex], upgradeUI.transform);
-        }
         
-        Time.timeScale = 0f;
-        upgradeUI.SetActive(true);
+            List<int> alreadyPickedList = new List<int>();
+            for (int i = 0; i < upgradesPerLevel; i++)
+            {
+                int randomIndex = Random.Range(0, upgradesList.Count);
+                if (alreadyPickedList.Count < upgradesList.Count) //to prevent it going in an infitite loop
+                {
+                    while (alreadyPickedList.Contains(randomIndex))
+                    {
+                        randomIndex = Random.Range(0, upgradesList.Count);
+                    }
+                }
+                alreadyPickedList.Add(randomIndex);
+                Instantiate(upgradesList[randomIndex], upgradeUI.transform);
+            }
+        
+            Time.timeScale = 0f;
+            upgradeUI.SetActive(true);
+        }
+        else {
+             Debug.LogWarning($"{this.name}: No upgrade UI found");
+        }
     }
     
     private void CloseUpgradeMenu()

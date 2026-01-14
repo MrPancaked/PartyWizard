@@ -21,12 +21,14 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         gameManager = GameManager.Instance;
-        gameManager.SpawnEnemiesEvent += SpawnEnemies;
+        if (gameManager != null)
+            gameManager.SpawnEnemiesEvent += SpawnEnemies;
     }
 
     private void OnDisable()
     {
-        gameManager.SpawnEnemiesEvent -= SpawnEnemies;
+        if (gameManager != null)
+            gameManager.SpawnEnemiesEvent -= SpawnEnemies;
     }
 
     public void SpawnSkullsMethod()
@@ -87,7 +89,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void SpawnEnemies(EnemyWaveData enemies) // make this a coroutine
+    public void SpawnEnemies(EnemyWaveData enemies) // make this a coroutine
     {
         foreach (GameObject enemy in enemies.enemyWave)
         {

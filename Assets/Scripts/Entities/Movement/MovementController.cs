@@ -1,3 +1,4 @@
+using System;
 using System.Numerics;
 using FMOD.Studio;
 using UnityEngine;
@@ -52,9 +53,9 @@ namespace Player
         {
             if (moveDirection.magnitude > 0f)
             {
-                if (gameObject.CompareTag("Player") || gameObject.CompareTag("Boss"))
+                animator.Play("WalkAnimation");
+                if (!gameObject.CompareTag("Knight"))
                 {
-                    animator.Play("WalkAnimation");
                     PLAYBACK_STATE playbackState;
                     walkingSounds.getPlaybackState(out playbackState);
                     if (playbackState.Equals(PLAYBACK_STATE.STOPPED) || playbackState.Equals(PLAYBACK_STATE.STOPPING)) walkingSounds.start();
@@ -62,15 +63,17 @@ namespace Player
             }
             else
             {
-                if (gameObject.CompareTag("Player") || gameObject.CompareTag("Boss"))
-                {
-                    animator.Play("IdleAnimation");
-                    walkingSounds.stop(STOP_MODE.ALLOWFADEOUT);
-                }
+                animator.Play("IdleAnimation");
+                walkingSounds.stop(STOP_MODE.ALLOWFADEOUT);
             }
 
             if (moveDirection.x < -0.1f) spriteRenderer.flipX = true;
             else if (moveDirection.x > 0.1f) spriteRenderer.flipX = false;
+        }
+
+        private void OnDestroy()
+        {
+            walkingSounds.stop(STOP_MODE.ALLOWFADEOUT);
         }
     }
 }

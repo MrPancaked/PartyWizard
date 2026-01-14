@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-
+//ItemData is basically a reference to an instance of an Item using the CreateItem() method
 [CreateAssetMenu(fileName = "ItemData", menuName = "Scriptable Objects/ItemData")]
 public class ItemData : ScriptableObject
 {
@@ -9,8 +9,6 @@ public class ItemData : ScriptableObject
 
     [Header("Core properties")]
     public string itemName;
-    public int attack;
-    public int defense;
 
     [Header("Visuals")]
     public Sprite itemIcon;
@@ -35,12 +33,6 @@ public class Item
     [SerializeField]
     private string itemName;
     public string ItemName => itemName;
-    [SerializeField]
-    private int attack;
-    public int Attack => attack;
-    [SerializeField]
-    private int defense;
-    public int Defense => defense;
 
     [Header("Visuals")]
     public Sprite itemIcon;
@@ -50,8 +42,6 @@ public class Item
     {
         id = itemData.id;
         itemName = itemData.itemName;
-        attack = itemData.attack;
-        defense = itemData.defense;
 
         itemIcon = itemData.itemIcon;
         itemModel = itemData.itemModel;

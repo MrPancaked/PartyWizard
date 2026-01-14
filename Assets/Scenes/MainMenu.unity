@@ -7166,7 +7166,7 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
+    width: 0.99951196
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -7219,7 +7219,7 @@ MonoBehaviour:
   m_AssetsPPU: 16
   m_RefResolutionX: 480
   m_RefResolutionY: 270
-  m_CropFrame: 0
+  m_CropFrame: 4
   m_GridSnapping: 1
   m_FilterMode: 0
   m_UpscaleRT: 0
