@@ -1,8 +1,6 @@
-using System;
 using Player;
 using Player.FSM.States;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(AttackController))]
 [RequireComponent(typeof(MovementController))]

@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Random = UnityEngine.Random;
 
 namespace Player
 {
+    /*
+     * AttackController takes care of attacking for the player and enemies
+     * It's intended use was for projectiles only, which is why it instantiates a ProjectileController
+     * But the ProjectileController also works well for melee attacks too
+     */
     public class AttackController : MonoBehaviour
     {
         [Header("Spell amount Settings")]

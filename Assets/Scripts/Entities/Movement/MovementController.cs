@@ -7,6 +7,11 @@ using Vector2 = UnityEngine.Vector2;
 
 namespace Player
 {
+    /*
+     * class for handling the movement of players and enemies.
+     * Simply applies a force to the object in the moveDirection.
+     * moveDirection can be set externally (in the playerController or an FSM)
+     */
     [RequireComponent(typeof(Rigidbody2D))]
     public class MovementController : MonoBehaviour
     {
@@ -24,10 +29,13 @@ namespace Player
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+            
+            //set walking audio based on scene (different audio inside than outside)
             if (SceneManager.GetActiveScene().Equals(SceneManager.GetSceneByName("MainMenu"))) 
                 walkingSounds = AudioManager.Instance.CreateInstance(FMODEvents.Instance.outdoorWalkSound);
             else
                 walkingSounds = AudioManager.Instance.CreateInstance(FMODEvents.Instance.indoorWalkSound );
+            
             rb.linearDamping = movementData.friction;
         }
         private void FixedUpdate()

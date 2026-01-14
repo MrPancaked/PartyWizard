@@ -5,10 +5,12 @@ using Random = UnityEngine.Random;
 
 namespace Projectiles
 {
+    /*
+     * ProjectileController takes care of projectile behavior.
+     * It takes core projectile information from the SpellData scriptableObject
+     */
     public class ProjectileController : MonoBehaviour 
     {
-        //THE WAY THE PROJECTILE SPEED AND DIRECTION GETS MANAGED COULD ALSO BE HANDLED USING THE RB SYSTEM INSTEAD OF MANUALLY PROGRAMING BEHAVIOUR
-    
         [SerializeField] private Rigidbody2D rb;
         [HideInInspector] public float speed;
         [HideInInspector] public Vector2 direction;
@@ -30,11 +32,14 @@ namespace Projectiles
             Destroy(gameObject);
         }
 
-        private void AoeEffect() //do AOE stuff when destroyed could be put in separate method to be used multiple times among the spells path
+        //method for Damaging enemies within the range of spellData.aoeRadius
+        private void AoeEffect()
         {
             if (spellData.aoeEffect)
             {
                 AudioManager.Instance.PlayOneShot(FMODEvents.Instance.explosionSound, gameObject.transform.position);
+                
+                //Setting up layermask so it makes sure to only hit the right enemies
                 LayerMask layerMask = 0;
                 if (hurtEnemy) layerMask |= LayerMask.GetMask("Enemy");
                 if (hurtPlayer) layerMask |=  LayerMask.GetMask("Player");
@@ -44,12 +49,6 @@ namespace Projectiles
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(explosionPos, spellData.aoeRadius, layerMask);
                 foreach (Collider2D hit in colliders)
                 {
-                    Rigidbody2D hitRb = hit.GetComponent<Rigidbody2D>();
-                    if (hitRb != null)
-                    {
-                        Vector2 hitRbPos = hitRb.transform.position;
-                        //hitRb.AddForce((hitRbPos - explosionPos).normalized * spellData.aoePower, ForceMode2D.Impulse);
-                    }
                     HpController hpController = hit.gameObject.GetComponent<HpController>();
                     if (hpController != null)
                     {
@@ -59,6 +58,7 @@ namespace Projectiles
                 }
             }
         }
+        //Initializes the projectile
         public void Initiate(Vector2 castDirection, bool isPlayer, bool isEnemy)
         {
             hurtPlayer = isEnemy;
@@ -134,6 +134,7 @@ namespace Projectiles
             rb.linearVelocity = direction * speed;
         }
 
+        //Sets right layerExclusion for the projectile
         private void InitiateCollider()
         {
             Collider2D collider = gameObject.GetComponent<Collider2D>();
@@ -147,6 +148,8 @@ namespace Projectiles
             }
         }
 
+        //method to detach and stop attached particle system
+        //the particle system should destroy itself after finishing
         private void DoParticles()
         {
             if (destroyEffectObject != null) 
