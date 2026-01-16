@@ -20426,6 +20426,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1945399989797448915, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
+      propertyPath: startSpell
+      value: 
+      objectReference: {fileID: 3371931195115675852, guid: ee73e45fee820ff43ada9958fae9d794, type: 3}
+    - target: {fileID: 1945399989797448915, guid: 35f14c685c4c37f44bb1ce52fd3c9a9d, type: 3}
       propertyPath: projectileParent
       value: 
       objectReference: {fileID: 604630432}

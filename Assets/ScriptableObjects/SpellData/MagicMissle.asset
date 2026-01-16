@@ -12,18 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdcfa152d47446b4189e7bf66db1518d, type: 3}
   m_Name: MagicMissle
   m_EditorClassIdentifier: Assembly-CSharp::SpellData
+  melee: 0
   aoeEffect: 0
   aoeDamage: 1
   aoeRadius: 2
   aoeKnockback: 10
-  startSpeed: 20
-  endSpeed: 0
+  startSpeed: 1
+  endSpeed: 10000
   maxTimeAlive: 1
-  speedScaling: 0
-  directionChange: 1
+  directionChange: 0
   directionChangeStrength: 1
   knockback: 10
   damage: 1
-  hurtPlayer: 0
-  hurtEnemy: 1
   hurtProjectile: 0
