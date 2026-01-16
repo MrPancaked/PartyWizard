@@ -8372,15 +8372,11 @@ MonoBehaviour:
   noItem:
     id: 0
     itemName: NoItem
-    attack: 0
-    defense: 0
     itemIcon: {fileID: 21300000, guid: 773f37c605e54d74092805e59a66d2e5, type: 3}
     itemModel: {fileID: 0}
   notAvailableItemSlot:
     id: 2
     itemName: notAvailableItem
-    attack: 0
-    defense: 0
     itemIcon: {fileID: 21300000, guid: 9155786ed0b55064c9372580ac7c3bd1, type: 3}
     itemModel: {fileID: 0}
   listParent: {fileID: 584865346}

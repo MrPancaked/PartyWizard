@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6887988337145450246}
   - component: {fileID: 8512852142181489699}
+  - component: {fileID: -4501231372511272908}
   - component: {fileID: 8748312883965099386}
   - component: {fileID: 6297893500592391658}
   - component: {fileID: 5231903732204515179}
@@ -180,6 +181,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-4501231372511272908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3371931195115675852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 913cb57015544ce398279917626c2eb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Projectiles.LinearSpeedScaling
+  projectileController: {fileID: 8748312883965099386}
 --- !u!114 &8748312883965099386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,6 +211,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   spellData: {fileID: 11400000, guid: deba7e0550deaee41b188650c6ca90f1, type: 2}
   destroyEffectObject: {fileID: 679066021315823461, guid: c9f5ae89129ddd74898027d513f7f538, type: 3}
+  timeAlive: 0
   hurtPlayer: 0
   hurtEnemy: 0
 --- !u!50 &6297893500592391658

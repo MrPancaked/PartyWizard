@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdcfa152d47446b4189e7bf66db1518d, type: 3}
   m_Name: FireBall
   m_EditorClassIdentifier: Assembly-CSharp::SpellData
+  melee: 0
   aoeEffect: 1
   aoeDamage: 1
   aoeRadius: 1
@@ -19,7 +20,6 @@ MonoBehaviour:
   startSpeed: 20
   endSpeed: 0
   maxTimeAlive: 0.5
-  speedScaling: 1
   directionChange: 1
   directionChangeStrength: 1
   knockback: 10

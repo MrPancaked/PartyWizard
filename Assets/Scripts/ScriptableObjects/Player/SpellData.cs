@@ -21,7 +21,6 @@ namespace ScriptableObjects.Player
         public float startSpeed;
         public float endSpeed;
         public float maxTimeAlive;
-        public SpeedScaling speedScaling;
         public DirectionChange directionChange;
         public float directionChangeStrength;
         [Header("damage Settings")]

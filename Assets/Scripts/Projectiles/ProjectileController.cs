@@ -15,12 +15,12 @@ namespace Projectiles
         [SerializeField] private Rigidbody2D rb;
         [HideInInspector] public float speed;
         [HideInInspector] public Vector2 direction;
+        private SpeedScaling speedScaling;
         public ScriptableObjects.Player.SpellData spellData;
         [SerializeField] private ParticleSystem destroyEffectObject;
         
-        private float timeAlive;
+        [HideInInspector] public float timeAlive;
         private bool dying;
-        private float linearSpeedChange;
         private Vector2 randomCurveDirection;
 
         [HideInInspector] public bool hurtPlayer;
@@ -28,13 +28,14 @@ namespace Projectiles
         
         private void OnCollisionEnter2D(Collision2D other)
         {
-            OnParticleDeath();
+            OnProjectileDeath();
         }
 
-        private void OnParticleDeath()
+        private void OnProjectileDeath()
         {
             if (!dying)
             {
+                Debug.Log("projectile speed on death: " + speed);
                 dying = true;
                 if (spellData.aoeEffect)
                     AoeEffect();
@@ -73,6 +74,8 @@ namespace Projectiles
         //Initializes the projectile
         public void Initiate(Vector2 castDirection, bool isPlayer, bool isEnemy)
         {
+            speedScaling = GetComponent<SpeedScaling>();
+            
             hurtPlayer = isEnemy;
             hurtEnemy = isPlayer;
             transform.position = new Vector3(transform.position.x, transform.position.y, -0.1f);
@@ -82,7 +85,6 @@ namespace Projectiles
             direction = castDirection;
             timeAlive = 0;
             
-            linearSpeedChange = (spellData.endSpeed - spellData.startSpeed) / spellData.maxTimeAlive;
             randomCurveDirection = Random.insideUnitCircle.normalized;
             
             if (spellData.melee) AudioManager.Instance.PlayOneShot(FMODEvents.Instance.swordSlash, transform.position);
@@ -101,25 +103,18 @@ namespace Projectiles
             timeAlive += Time.fixedDeltaTime;
             if (timeAlive >= spellData.maxTimeAlive)
             {
-                OnParticleDeath();
+                OnProjectileDeath();
             }
         }
 
-        //Sets the projectiles speed based on the SpeedScaling setting
+        //Sets the projectiles speed based on the SpeedScaling strategy
         private void SetSpeed()
         {
-            switch (spellData.speedScaling)
+            if (speedScaling != null) // dont do speed scaling if there isnt any
             {
-                case (ScriptableObjects.Player.SpellData.SpeedScaling.None):
-                {
-                    break;
-                }
-                case (ScriptableObjects.Player.SpellData.SpeedScaling.Linear):
-                {
-                    speed += linearSpeedChange * Time.fixedDeltaTime;
-                    break;
-                }
+                speed = speedScaling.SetSpeed();
             }
+            
         }
 
         //Sets the projectile's direction based on DirectionChange setting
