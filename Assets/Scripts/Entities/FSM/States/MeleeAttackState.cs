@@ -6,8 +6,6 @@ namespace Player.FSM.States
     {
         private AttackController attackController;
         private GameObject swordObject;
-    
-        private float attackStartTime;
         private float attackDuration;
 
         public MeleeAttackState(AttackController pAttackController, float pDuration, GameObject pSwordObject)
@@ -19,7 +17,6 @@ namespace Player.FSM.States
         public override void Enter()
         {
             base.Enter();
-            attackStartTime = Time.time;
             InitiateAttacks();
         }
         private void InitiateAttacks()
@@ -38,7 +35,7 @@ namespace Player.FSM.States
         
         public bool AttackOver()
         {
-            return Time.time > attackStartTime + attackDuration;
+            return Time.time > startTime + attackDuration;
         }
     }
 }

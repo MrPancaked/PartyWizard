@@ -1,7 +1,7 @@
 using FMODUnity;
 using UnityEngine;
 /// <summary>
-/// This class holds all FMOD eventreferences.
+/// This class holds all FMOD eventreferences to easily play sounds from anywhere using the AudioManager
 /// Is a singleton so getting a reference is easy from anywhere in the project
 /// </summary>
 public class FMODEvents : MonoBehaviour

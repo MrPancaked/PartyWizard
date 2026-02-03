@@ -11,7 +11,6 @@ public class AreaAttackState : State
     private float attackDuration;
     private GameObject spell;
     
-    private float attackStartTime;
 
     public AreaAttackState(AttackController pAttackController, int pAmount, float pAngle, float pDelayBetweenSpells, float pAttackDuration, GameObject pSpell)
     {
@@ -25,7 +24,6 @@ public class AreaAttackState : State
     public override void Enter()
     {
         base.Enter();
-        attackStartTime = Time.time;
         InitiateAttacks();
     }
     private void InitiateAttacks()
@@ -45,6 +43,6 @@ public class AreaAttackState : State
 
     public bool AttackOver()
     {
-        return Time.time > attackStartTime + attackDuration;
+        return Time.time > startTime + attackDuration;
     }
 }
