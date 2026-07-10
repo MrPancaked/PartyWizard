@@ -51,6 +51,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2116463600287889519
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -96,6 +97,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 393974556005117273, guid: 7e3baa1b5635e7c4280a281cf2e124ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -105,7 +107,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &2510375539213667626
 Animator:
@@ -281,7 +282,7 @@ MonoBehaviour:
   spellPrefabs:
   - {fileID: 3371931195115675852, guid: ee73e45fee820ff43ada9958fae9d794, type: 3}
   - {fileID: 3371931195115675852, guid: a3f106f321d55f04dac6aa3dd6795290, type: 3}
-  startSpell: {fileID: 3371931195115675852, guid: a3f106f321d55f04dac6aa3dd6795290, type: 3}
+  startSpell: {fileID: 3371931195115675852, guid: ee73e45fee820ff43ada9958fae9d794, type: 3}
   projectileParent: {fileID: 0}
   currentSpell: {fileID: 0}
   wantsToAttack: 0
@@ -478,6 +479,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3799902901827032243
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -523,6 +525,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 0239b31e7be146846a6d6f33e366745c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -532,7 +535,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!58 &8472522840509600372
 CircleCollider2D:

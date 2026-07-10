@@ -34,6 +34,15 @@ namespace Player
             if (amount < 1) amount = 1;
             isPlayer = gameObject.CompareTag("Player");
             isEnemy = gameObject.layer == LayerMask.NameToLayer("Enemy");
+            
+            if (isPlayer)
+                EventBus<SpellCastAmountUpgradeEventData>.OnEventPublished += UpgradeSpellCastAmount;
+        }
+
+        private void OnDisable()
+        {
+            if (isPlayer)
+                EventBus<SpellCastAmountUpgradeEventData>.OnEventPublished -= UpgradeSpellCastAmount;
         }
 
         private void Update()
@@ -82,6 +91,12 @@ namespace Player
                 yield return new WaitForSeconds(delayBetweenSpells);
                 if (!wantsToAttack) attacking = false;
             }
+        }
+
+        private void UpgradeSpellCastAmount(SpellCastAmountUpgradeEventData eventData)
+        {
+            amount += eventData.amount;
+            angle += 5f;
         }
 
         private Vector2 RotateVector(Vector2 direction, float angle)

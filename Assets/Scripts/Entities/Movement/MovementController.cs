@@ -25,11 +25,16 @@ namespace Player
     
         [HideInInspector] public Vector2 moveDirection;
 
+        private float movementSpeed;
+
         private void Start()
         {
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+            
+            if (gameObject.layer == LayerMask.NameToLayer("Player"))
+                EventBus<MovementSpeedUpgradeEventData>.OnEventPublished += UpgradeSpeed;
             
             //set walking audio based on scene (different audio inside than outside)
             if (SceneManager.GetActiveScene().Equals(SceneManager.GetSceneByName("MainMenu"))) 
@@ -38,6 +43,13 @@ namespace Player
                 walkingSounds = AudioManager.Instance.CreateInstance(FMODEvents.Instance.indoorWalkSound );
             
             rb.linearDamping = movementData.friction;
+            movementSpeed = movementData.speed;
+        }
+
+        private void OnDisable()
+        {
+            if (gameObject.layer == LayerMask.NameToLayer("Player"))
+                EventBus<MovementSpeedUpgradeEventData>.OnEventPublished -= UpgradeSpeed;
         }
         private void FixedUpdate()
         {
@@ -46,7 +58,7 @@ namespace Player
         }
         public void Move()
         {
-            rb.AddForce(moveDirection * movementData.speed, ForceMode2D.Force);
+            rb.AddForce(moveDirection * movementSpeed, ForceMode2D.Force);
         }
     
         private void UpdateSprite() //maybe place in separate class to be reused by different sprites
@@ -69,6 +81,12 @@ namespace Player
 
             if (moveDirection.x < -0.1f) spriteRenderer.flipX = true;
             else if (moveDirection.x > 0.1f) spriteRenderer.flipX = false;
+        }
+
+        private void UpgradeSpeed(MovementSpeedUpgradeEventData eventData)
+        {
+            movementSpeed += eventData.movementSpeedUpgrade;
+            Debug.Log($"new movementSpeed: {movementSpeed}");
         }
 
         private void OnDestroy()

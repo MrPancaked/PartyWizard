@@ -17,8 +17,7 @@ namespace Player
     {
         public Action ActivateShieldEvent;
         public static PlayerController Instance;
-
-        public ScriptableObjects.Player.MovementData movementData;
+        
         public MovementController movementController;
         
         public AttackController attackController;

@@ -17,11 +17,11 @@ MonoBehaviour:
   aoeDamage: 1
   aoeRadius: 2
   aoeKnockback: 10
-  startSpeed: 1
-  endSpeed: 10000
+  startSpeed: 15
+  endSpeed: 15
   maxTimeAlive: 1
-  directionChange: 0
-  directionChangeStrength: 1
+  directionChange: 1
+  directionChangeStrength: 0.2
   knockback: 10
   damage: 1
   hurtProjectile: 0

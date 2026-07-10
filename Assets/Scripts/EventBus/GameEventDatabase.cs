@@ -97,7 +97,7 @@ public class PlayerUpgradeEventData : EventData
     public Upgrade upgrade;
     public PlayerUpgradeEventData()
     {
-        name = "PlayerUpgradeEvent";
+        name = "Player Upgrade Event";
     }
 }
 /// <summary>
@@ -108,6 +108,28 @@ public class ExtraHpUpgradeEventData : PlayerUpgradeEventData
     public ExtraHpUpgradeEventData(ExtraHpUpgrade pUpgrade)
     {
         upgrade = pUpgrade;
-        name = "ExtraHpUpgradeEvent";
+        name = "Extra Hp Upgrade Event";
+    }
+}
+
+public class MovementSpeedUpgradeEventData : PlayerUpgradeEventData
+{
+    public float movementSpeedUpgrade;
+    public MovementSpeedUpgradeEventData(MovementSpeedUpgrade pUpgrade, float upgradeAmount)
+    {
+        upgrade = pUpgrade;
+        name = "Movement Speed Upgrade Event";
+        movementSpeedUpgrade = upgradeAmount;
+    }
+}
+
+public class SpellCastAmountUpgradeEventData : PlayerUpgradeEventData
+{
+    public int amount;
+    public SpellCastAmountUpgradeEventData(SpellCastAmountUpgrade pUpgrade, int upgradeAmount)
+    {
+        upgrade = pUpgrade;
+        name = "Movement Speed Upgrade Event";
+        amount = upgradeAmount;
     }
 }
