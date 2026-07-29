@@ -125,7 +125,7 @@ public class PlayerStatController : MonoBehaviour
                 ChooseUpgradesFromList(upgradesList, upgradesPerLevel);
             }
             
-        
+            GameManager.Instance.PauseEvent.Invoke();
             Time.timeScale = 0f;
             upgradeUI.SetActive(true);
         }
@@ -154,6 +154,7 @@ public class PlayerStatController : MonoBehaviour
     
     public void CloseUpgradeMenu()
     {
+        GameManager.Instance.UnPauseEvent.Invoke();
         Time.timeScale = 1f;
         upgradeUI.SetActive(false);
     }

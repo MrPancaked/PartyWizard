@@ -7,6 +7,7 @@ public class DropItems : MonoBehaviour
 {
     [SerializeField] private HpController hpController;
     [SerializeField] private GameObject[] items;
+    [SerializeField] private float dropChance = 1f;
 
     private void Awake()
     {
@@ -26,13 +27,16 @@ public class DropItems : MonoBehaviour
     }
     public void DropItem()
     {
-        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
         foreach (GameObject item in items)
         {
-            GameObject droppedItem = Instantiate(item, transform.position, Quaternion.identity);
-            Debug.Log($"dropped item: {droppedItem.name}");
-            Rigidbody2D itemRb = droppedItem.GetComponent<Rigidbody2D>();
-            if (itemRb != null) itemRb.AddForce(Random.insideUnitCircle * 5f, ForceMode2D.Impulse); // make item drop in a random direction
+            if (Random.value <= dropChance)
+            {
+                GameObject droppedItem = Instantiate(item, transform.position, Quaternion.identity);
+                Debug.Log($"dropped item: {droppedItem.name}");
+                Rigidbody2D itemRb = droppedItem.GetComponent<Rigidbody2D>();
+                if (itemRb != null) itemRb.AddForce(Random.insideUnitCircle * 5f, ForceMode2D.Impulse); // make item drop in a random direction
+            }
+            
         }
     }
 }
