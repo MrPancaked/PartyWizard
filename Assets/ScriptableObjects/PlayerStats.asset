@@ -18,10 +18,9 @@ MonoBehaviour:
   damageMultiplier: 1
   flatKnockback: 0
   knockbackMultiplier: 1
-  speed: 0
+  movementSpeed: 0
   xpMultiplier: 1
   pickUpRange: 0
   inventorySlots: 0
-  spellCastDelay: 0
-  spellCastAmount: 0
-  movementSpeed: 0
+  spellCastDelay: 0.4
+  spellCastAmount: 1

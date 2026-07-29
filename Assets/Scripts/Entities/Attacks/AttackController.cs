@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Projectiles;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,11 +18,11 @@ namespace Player
         public float angle;
         public float delayBetweenSpells;
     
-        [SerializeField] private GameObject[] spellPrefabs;
-        [SerializeField] private GameObject startSpell;
+        [SerializeField] private ProjectileController[] spellPrefabs;
+        [SerializeField] private ProjectileController startSpell;
         [SerializeField] private Transform projectileParent;
 
-        [HideInInspector] public GameObject currentSpell;
+        [HideInInspector] public ProjectileController currentSpell;
         private bool attacking;
         [HideInInspector] public bool wantsToAttack;
         private bool isPlayer;
@@ -34,15 +35,31 @@ namespace Player
             if (amount < 1) amount = 1;
             isPlayer = gameObject.CompareTag("Player");
             isEnemy = gameObject.layer == LayerMask.NameToLayer("Enemy");
-            
+
             if (isPlayer)
+            {
                 EventBus<SpellCastAmountUpgradeEventData>.OnEventPublished += UpgradeSpellCastAmount;
+                EventBus<SpellUpgradeEventData>.OnEventPublished += UpgradeSpell;
+
+                InitializePlayerStats();
+            }
+                
+        }
+
+        private void InitializePlayerStats()
+        {
+            PlayerStats playerStartingStats = PlayerStatController.Instance.startingStats;
+            amount = playerStartingStats.spellCastAmount;
+            delayBetweenSpells = playerStartingStats.spellCastDelay;
         }
 
         private void OnDisable()
         {
             if (isPlayer)
+            {
                 EventBus<SpellCastAmountUpgradeEventData>.OnEventPublished -= UpgradeSpellCastAmount;
+                EventBus<SpellUpgradeEventData>.OnEventPublished -= UpgradeSpell;
+            }
         }
 
         private void Update()
@@ -76,15 +93,13 @@ namespace Player
                     {
                         Vector2 castDirection = RotateVector(direction, angleInterval * i);
                         var projectileInstance = Instantiate(currentSpell, (Vector2)transform.position + 0.5f * castDirection, transform.rotation, projectileParent);
-                        var projectileController = projectileInstance.GetComponent<Projectiles.ProjectileController>();
-                        projectileController.Initiate(castDirection, isPlayer, isEnemy);
+                        projectileInstance.Initiate(castDirection, isPlayer, isEnemy);
                     }
                 }
                 else if (amount == 1)
                 {
                     var projectileInstance = Instantiate(currentSpell, (Vector2)transform.position + 0.5f * direction, transform.rotation, projectileParent);
-                    var projectileController = projectileInstance.GetComponent<Projectiles.ProjectileController>();
-                    projectileController.Initiate(direction, isPlayer, isEnemy);
+                    projectileInstance.Initiate(direction, isPlayer, isEnemy);
                 }
                 else Debug.LogWarning($"somehow trying to cast invalid amount of spells:{amount}");
                 
@@ -97,6 +112,13 @@ namespace Player
         {
             amount += eventData.amount;
             angle += 5f;
+        }
+
+        private void UpgradeSpell(SpellUpgradeEventData eventData)
+        {
+            currentSpell = eventData.spellPrefab;
+            amount = PlayerStatController.Instance.startingStats.spellCastAmount;
+            delayBetweenSpells = PlayerStatController.Instance.startingStats.spellCastDelay;
         }
 
         private Vector2 RotateVector(Vector2 direction, float angle)

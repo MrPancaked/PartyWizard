@@ -32,9 +32,12 @@ namespace Player
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
-            
+
             if (gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
                 EventBus<MovementSpeedUpgradeEventData>.OnEventPublished += UpgradeSpeed;
+                EventBus<SpellUpgradeEventData>.OnNoParamEventPublished += ResetMovementSpeed;
+            }
             
             //set walking audio based on scene (different audio inside than outside)
             if (SceneManager.GetActiveScene().Equals(SceneManager.GetSceneByName("MainMenu"))) 
@@ -49,7 +52,10 @@ namespace Player
         private void OnDisable()
         {
             if (gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
                 EventBus<MovementSpeedUpgradeEventData>.OnEventPublished -= UpgradeSpeed;
+                EventBus<SpellUpgradeEventData>.OnNoParamEventPublished -= ResetMovementSpeed;
+            }
         }
         private void FixedUpdate()
         {
@@ -87,6 +93,11 @@ namespace Player
         {
             movementSpeed += eventData.movementSpeedUpgrade;
             Debug.Log($"new movementSpeed: {movementSpeed}");
+        }
+
+        private void ResetMovementSpeed()
+        {
+            movementSpeed = movementData.speed;
         }
 
         private void OnDestroy()

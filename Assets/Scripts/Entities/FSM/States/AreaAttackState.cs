@@ -1,4 +1,5 @@
 using Player;
+using Projectiles;
 using UnityEngine;
 
 public class AreaAttackState : State
@@ -9,10 +10,10 @@ public class AreaAttackState : State
     private float angle;
     private float delayBetweenSpells;
     private float attackDuration;
-    private GameObject spell;
+    private ProjectileController spell;
     
 
-    public AreaAttackState(AttackController pAttackController, int pAmount, float pAngle, float pDelayBetweenSpells, float pAttackDuration, GameObject pSpell)
+    public AreaAttackState(AttackController pAttackController, int pAmount, float pAngle, float pDelayBetweenSpells, float pAttackDuration, ProjectileController pSpell)
     {
         attackController = pAttackController;
         amount = pAmount;

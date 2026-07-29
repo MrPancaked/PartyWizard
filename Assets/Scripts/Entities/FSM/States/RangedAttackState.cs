@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Projectiles;
+using UnityEngine;
 
 namespace Player.FSM.States
 {
@@ -10,11 +11,11 @@ namespace Player.FSM.States
         private float angle;
         private float delayBetweenSpells;
         private float attackDuration;
-        private GameObject spell;
+        private ProjectileController spell;
     
         private float attackStartTime;
 
-        public RangedAttackState(AttackController pAttackController, int pAmount, float pAngle, float pDelayBetweenSpells, float pAttackDuration, GameObject pSpell)
+        public RangedAttackState(AttackController pAttackController, int pAmount, float pAngle, float pDelayBetweenSpells, float pAttackDuration, ProjectileController pSpell)
         {
             attackController = pAttackController;
             amount = pAmount;

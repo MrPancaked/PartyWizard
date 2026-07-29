@@ -14,7 +14,7 @@ public class PlayerStatController : MonoBehaviour
 {
     public static PlayerStatController Instance;
     
-    [SerializeField] private PlayerStats startingStats;
+    public PlayerStats startingStats;
     
     //player stat variables
     [HideInInspector] public int extraHp;
@@ -51,8 +51,10 @@ public class PlayerStatController : MonoBehaviour
     
     [SerializeField] private LevelController levelController;
     [SerializeField] private GameObject upgradeUI;
+    [SerializeField] private GameObject UpgradeLayout;
     [SerializeField] private TextMeshProUGUI playerStatsText;
     [SerializeField] private List<GameObject> upgradesList;
+    [SerializeField] private List<GameObject> specialUpgradesList;
     [SerializeField] private int upgradesPerLevel;
     
     private void Awake()
@@ -65,14 +67,13 @@ public class PlayerStatController : MonoBehaviour
     {
         levelController.LevelUpEvent += InitializeUpgradeMenu;
         EventBus<PlayerUpgradeEventData>.OnNoParamEventPublished += CloseUpgradeMenu;
-        EventBus<PlayerUpgradeEventData>.OnNoParamEventPublished += UpdatePlayerStats;
+        EventBus<PlayerUpgradeEventData>.OnNoParamEventPublished += UpdatePlayerStatsText;
     }
     private void OnDisable()
     {
         levelController.LevelUpEvent -= InitializeUpgradeMenu;
         EventBus<PlayerUpgradeEventData>.OnNoParamEventPublished -= CloseUpgradeMenu;
-        EventBus<PlayerUpgradeEventData>.OnNoParamEventPublished -= UpdatePlayerStats;
-        
+        EventBus<PlayerUpgradeEventData>.OnNoParamEventPublished -= UpdatePlayerStatsText;
     }
 
     private void Start()
@@ -82,7 +83,7 @@ public class PlayerStatController : MonoBehaviour
         if (upgradeUI != null) upgradeUI.SetActive(false);
     }
 
-    private void InitializeStats()
+    public void InitializeStats()
     {
         extraHp  = startingStats.extraHp;
         
@@ -101,34 +102,29 @@ public class PlayerStatController : MonoBehaviour
         spellCastDelay = startingStats.spellCastDelay;
         spellCastAmount = startingStats.spellCastAmount;
         
-        UpdatePlayerStats();
+        UpdatePlayerStatsText();
     }
 
     private void InitializeUpgradeMenu()
     {
-        if (upgradeUI != null)
+        if (UpgradeLayout != null)
         {
             //clear upgrades after upgrading
-            foreach (Transform transform in upgradeUI.GetComponentsInChildren<Transform>())
+            foreach (Transform transform in UpgradeLayout.GetComponentsInChildren<Transform>())
             {
-                if (transform != upgradeUI.transform)
+                if (transform != UpgradeLayout.transform)
                     Destroy(transform.gameObject);
             }
-        
-            List<int> alreadyPickedList = new List<int>();
-            for (int i = 0; i < upgradesPerLevel; i++)
+
+            if (levelController.level % 5 == 0)
             {
-                int randomIndex = Random.Range(0, upgradesList.Count);
-                if (alreadyPickedList.Count < upgradesList.Count) //to prevent it going in an infitite loop
-                {
-                    while (alreadyPickedList.Contains(randomIndex))
-                    {
-                        randomIndex = Random.Range(0, upgradesList.Count);
-                    }
-                }
-                alreadyPickedList.Add(randomIndex);
-                Instantiate(upgradesList[randomIndex], upgradeUI.transform);
+                ChooseUpgradesFromList(specialUpgradesList, 1);
             }
+            else
+            {
+                ChooseUpgradesFromList(upgradesList, upgradesPerLevel);
+            }
+            
         
             Time.timeScale = 0f;
             upgradeUI.SetActive(true);
@@ -137,14 +133,32 @@ public class PlayerStatController : MonoBehaviour
              Debug.LogWarning($"{this.name}: No upgrade UI found");
         }
     }
+
+    private void ChooseUpgradesFromList(List<GameObject> upgradesList, int upgradesAmount)
+    {
+        List<int> alreadyPickedList = new List<int>();
+        for (int i = 0; i < upgradesAmount; i++)
+        {
+            int randomIndex = Random.Range(0, upgradesList.Count);
+            if (alreadyPickedList.Count < upgradesList.Count) //to prevent it going in an infitite loop
+            {
+                while (alreadyPickedList.Contains(randomIndex))
+                {
+                    randomIndex = Random.Range(0, upgradesList.Count);
+                }
+            }
+            alreadyPickedList.Add(randomIndex);
+            Instantiate(upgradesList[randomIndex].gameObject, UpgradeLayout.transform);
+        }
+    }
     
-    private void CloseUpgradeMenu()
+    public void CloseUpgradeMenu()
     {
         Time.timeScale = 1f;
         upgradeUI.SetActive(false);
     }
 
-    private void UpdatePlayerStats()
+    private void UpdatePlayerStatsText()
     {
         if (playerStatsText != null)
         {
@@ -173,6 +187,6 @@ public class PlayerStatController : MonoBehaviour
             flatDamage -= 999;
             damageMultiplier -= 999;
         }
-        UpdatePlayerStats();
+        UpdatePlayerStatsText();
     }
 }

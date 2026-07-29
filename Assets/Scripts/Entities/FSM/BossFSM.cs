@@ -1,5 +1,6 @@
 using Player;
 using Player.FSM.States;
+using Projectiles;
 using UnityEngine;
 
 [RequireComponent(typeof(AttackController))]
@@ -14,13 +15,13 @@ public class BossFSM : MonoBehaviour
     [SerializeField] private float moveDuration;
     [SerializeField] private float minRangeToPlayer;
     [Header("Area Attacks")] 
-    [SerializeField] private GameObject areaSpell;
+    [SerializeField] private ProjectileController areaSpell;
     [SerializeField] private int areaAmount;
     [SerializeField] private float areaAngle;
     [SerializeField] private float areaDelayBetweenSpells;
     [SerializeField] private float areaAttackDuration;
     [Header("ranged attacks")] 
-    [SerializeField] private GameObject rangedSpell;
+    [SerializeField] private ProjectileController rangedSpell;
     [SerializeField] private int rangedAmount;
     [SerializeField] private float rangedAngle;
     [SerializeField] private float rangedDelayBetweenSpells;

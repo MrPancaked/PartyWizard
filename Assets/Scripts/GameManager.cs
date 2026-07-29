@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
         RoomStartEvent?.Invoke(); //closing door and stop sucking items
         
         round++;
-        roundCounter.text = $"Round: {round}";
+        roundCounter.text = $"Round: {round} / {enemyWaves.Count}";
         
         yield return StartCoroutine(NewRoundAnimation()); // start countdown
         Debug.Log("New round");

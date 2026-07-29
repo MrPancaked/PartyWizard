@@ -12,7 +12,6 @@ namespace Projectiles
         }
         public override float SetSpeed()
         {
-            Debug.Log("Linear speed: " + linearSpeedChange * projectileController.timeAlive);
             return spellData.startSpeed + linearSpeedChange * projectileController.timeAlive;
         }
     }

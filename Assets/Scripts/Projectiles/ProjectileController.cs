@@ -35,7 +35,6 @@ namespace Projectiles
         {
             if (!dying)
             {
-                Debug.Log("projectile speed on death: " + speed);
                 dying = true;
                 if (spellData.aoeEffect)
                     AoeEffect();

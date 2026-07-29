@@ -50,6 +50,7 @@ namespace Player
             if (isPlayer)
             {
                 EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished += UpgradeHp;
+                EventBus<SpellUpgradeEventData>.OnNoParamEventPublished += ResetHp;
                 if (magicShieldBubble != null)
                 {
                     PlayerController.Instance.ActivateShieldEvent += ActivateMagicShield;
@@ -68,6 +69,7 @@ namespace Player
             if (isPlayer)
             {
                 EventBus<ExtraHpUpgradeEventData>.OnNoParamEventPublished -= UpgradeHp;
+                EventBus<SpellUpgradeEventData>.OnNoParamEventPublished -= ResetHp;
                 if (magicShieldBubble != null) PlayerController.Instance.ActivateShieldEvent -= ActivateMagicShield;
             }
         }
@@ -87,6 +89,13 @@ namespace Player
             contactKnockback = hpData.contactKnockback;
             takeDamage = hpData.takeDamage;
         }
+        public void ResetHp()
+        {
+            maxHp = hpData.maxHp;
+            if (hpData.startHp > maxHp) hpData.startHp = maxHp;
+            hp = hpData.startHp;
+            UpdatedMaxHealth?.Invoke();
+        }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
@@ -100,7 +109,6 @@ namespace Player
                     
                     TakeDamageData takeDamageData = new TakeDamageData(receivedDamage, collidedObj.transform.position, otherHpController.contactKnockback);
                     TakeDamage(takeDamageData);
-                    
                 }
                 else if (collidedObj.layer == LayerMask.NameToLayer("Projectile"))
                 {

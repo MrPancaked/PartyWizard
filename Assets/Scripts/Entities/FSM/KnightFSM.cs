@@ -1,4 +1,5 @@
 ﻿using Player.FSM.States;
+using Projectiles;
 using UnityEngine;
 
 namespace Player.FSM
@@ -11,7 +12,7 @@ namespace Player.FSM
         [Header("Movement")]
         [SerializeField] private float minRangeToPlayer;
         [Header("attacks")] 
-        [SerializeField] private GameObject swordObject;
+        [SerializeField] private ProjectileController swordObject;
         [SerializeField] private float duration;
         [Header("idle")]
         [SerializeField] private float idleDuration;

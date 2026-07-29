@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿using Projectiles;
+using UnityEngine;
 
 namespace Player.FSM.States
 {
     public class MeleeAttackState : State
     {
         private AttackController attackController;
-        private GameObject swordObject;
+        private ProjectileController swordObject;
         private float attackDuration;
 
-        public MeleeAttackState(AttackController pAttackController, float pDuration, GameObject pSwordObject)
+        public MeleeAttackState(AttackController pAttackController, float pDuration, ProjectileController pSwordObject)
         {
             attackController = pAttackController;
             attackDuration = pDuration;

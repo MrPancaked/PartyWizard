@@ -1,3 +1,4 @@
+using Projectiles;
 using UnityEngine;
 // All game events are listed here
 
@@ -131,5 +132,17 @@ public class SpellCastAmountUpgradeEventData : PlayerUpgradeEventData
         upgrade = pUpgrade;
         name = "Movement Speed Upgrade Event";
         amount = upgradeAmount;
+    }
+}
+
+public class SpellUpgradeEventData : PlayerUpgradeEventData
+{
+    public ProjectileController spellPrefab;
+
+    public SpellUpgradeEventData(SpellUpgrade pUpgrade, ProjectileController spellPrefab)
+    {
+        upgrade = pUpgrade;
+        this.spellPrefab = spellPrefab;
+        name = "Spell Upgrade Event";
     }
 }
