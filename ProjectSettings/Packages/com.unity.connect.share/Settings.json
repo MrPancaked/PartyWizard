@@ -1,0 +1,11 @@
+{
+    "m_Dictionary": {
+        "m_DictionaryValues": [
+            {
+                "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "buildOutputDirList",
+                "value": "{\"m_Value\":\"E:/Documents/School/GameDev/Builds/PartyWizard/WebBuild5;E:/Documents/School/GameDev/Builds/PartyWizard/WebBuild4;E:/Documents/School/GameDev/Builds/PartyWizard/WebBuild3;E:/Documents/School/GameDev/Builds/PartyWizard/WebBuild2;E:/Documents/School/GameDev/Builds/PartyWizard/WebBuild1;;;;;\"}"
+            }
+        ]
+    }
+}

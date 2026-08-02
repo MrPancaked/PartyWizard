@@ -6,10 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/StartGameScreen.unity
+    guid: d2a2d72f817bd544b9e05d7f0c630149
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 143f99edb6bda804d812e0a5df2b7305
   - enabled: 1
     path: Assets/Scenes/DungeonScene.unity
     guid: 7d1796656ca9189479ff7d78eb719bc6
   m_configObjects: {}
-  m_UseUCBPForAssetBundles: 0
